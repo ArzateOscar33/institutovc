@@ -1,28 +1,50 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title ><?php echo TITLE .' - ' . $data['title']; ?></title>
+    <link rel="apple-touch-icon" sizes="57x57" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL;?>assets/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="<?php echo BASE_URL;?>assets/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<?php echo BASE_URL;?>assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="<?php echo BASE_URL;?>assets/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<?php echo BASE_URL;?>assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="apple-touch-icon" href="<?php echo BASE_URL . 'assets/img/apple-icon.png';?>">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL .'assets/img/favicon.ico' ?>">
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/templatemo.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL .'assets/css/bootstrap.min.css' ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL .'assets/css/templatemo.css' ?>">
+    <link rel="stylesheet" href="<?php echo BASE_URL .'assets/css/custom.css' ?>">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-<!--
+    <link rel="stylesheet" href="<?php echo BASE_URL .'assets/css/fontawesome.min.css' ?>">
+   <!-- Slick -->
+   <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
+
     
-TemplateMo 559 Zay Shop
-
-https://templatemo.com/tm-559-zay-shop
-
--->
 </head>
 
 <body>
@@ -52,8 +74,8 @@ https://templatemo.com/tm-559-zay-shop
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-                Zay
+            <a class="navbar-brand text-success logo h1 align-self-center" href="<?php echo BASE_URL;?>">
+               <?php echo TITLE;?>
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,16 +86,16 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
+                            <a class="nav-link" href="<?php echo BASE_URL  ?>">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
+                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/about' ?>"> Servicios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
+                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/shop' ?>">Tienda de Armazones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
+                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/contacto' ?>">Contacto</a>
                         </li>
                     </ul>
                 </div>

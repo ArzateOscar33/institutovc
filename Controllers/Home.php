@@ -10,4 +10,9 @@ class Home extends Controller
         $data['title'] = 'Pagina Principal';
         $this->views->getView('home', "index", $data);
     }
-}
+   
+
+
+
+
+}//class

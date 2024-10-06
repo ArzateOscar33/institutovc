@@ -5,7 +5,7 @@ const USER = "root";
 const PASS = "";
 const DB = "institutovc";
 const CHARSET = "charset=utf8";
-const TITLE = "SHOP";
+const TITLE = "Instituto Visual California";
 const MONEDA = "USD";
 const CLIENT_ID = "";
 ?>
