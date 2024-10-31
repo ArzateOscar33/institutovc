@@ -1,3 +1,45 @@
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fas fa-cart-arrow-down"></i> Carrito</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <div class="table-responsive" >
+        <table class="table table-bordered table-striped table-hover" id="tableListaCarrito">
+            <thead>
+                <tr>
+                    <th  >#</th>
+                    <th  >Prtoducto</th>
+                    <th  >Precio</th>
+                    <th  >Cantidad</th>
+                    <th  >Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="">
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                </tr>
+            </tbody>
+        </table>
+       </div>
+       <div class="modal-footer">
+        <h3 id="totalGeneral"></h3>
+       </div>
+      </div>
+      </div>
+      </div>
+      </div>
+ 
+
+ 
  <!-- Start Footer -->
  <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
@@ -99,4 +141,11 @@
     <script src="<?php echo BASE_URL;?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/templatemo.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/custom.js"></script>
+    <script src="<?php echo BASE_URL;?>assets/js/sweetalert2.all.min.js"></script>
+    <script>
+        const base_url='<?php echo BASE_URL;?>';
+    </script>
+    
+    <script src="<?php echo BASE_URL;?>assets/js/modulos/details.js"></script>
+    <script src="<?php echo BASE_URL;?>assets/js/carrito.js"></script>
     <!-- End Script -->

@@ -131,14 +131,14 @@
                        
 
                             <form action="" method="GET">
-                                <input type="hidden" name="product-title" value="Activewear">
+                                <input type="hidden" id="idProducto"  value="<?php echo $data['producto']['id']?>">
                                 <div class="row">
 
                                     <div class="col-auto">
                                         <ul class="list-inline pb-3">
                                             <li class="list-inline-item text-right">
                                                 Cantidad
-                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                                <input type="hidden"  id="product-quanity" value="1">
                                             </li>
                                             <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
                                             <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
@@ -151,7 +151,7 @@
                                         <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Comprar</button>
                                     </div>
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Agregar al Carrito</button>
+                                        <button type="button" class="btn btn-success btn-lg" id="btnAddCart" >Agregar al Carrito</button>
                                     </div>
                                 </div>
                             </form>
@@ -180,9 +180,9 @@
                             <img class="card-img rounded-0 img-fluid" src="<?php echo $relacion['imagen']; ?> ">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white btnAddDeseo" href="#" prod="<?php echo $relacion['id']; ?>"><i class="far fa-heart"></i></a></li>
                                     <li><a class="btn btn-success text-white mt-2" href="<?php echo BASE_URL .'principal/detail/'.$relacion['id']?>"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2 btnAddCarrito" href="#" prod="<?php echo $relacion['id']; ?>" ><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>
                             </div>
                         </div>
