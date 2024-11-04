@@ -38,10 +38,10 @@ class Principal extends Controller
 
         
     }
-     //vista Contacto
-     public function contacto(){
-        $data['title']='Contactanos';
-        $this->views->getView('principal',"contact",$data);
+     //vista Agendar
+     public function agendar(){
+        $data['title']='Agenda tu Cita';
+        $this->views->getView('principal',"agendar",$data);
     }
 
     //vista categorias
