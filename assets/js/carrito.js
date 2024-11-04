@@ -79,12 +79,15 @@ function cantidadDeseo(){
 }
 
 //agregar productos al carrito carrito
-function agregarCarrito(idProducto,cantidad){
+function agregarCarrito(idProducto,cantidad,accion=false){
     if(localStorage.getItem('listaCarrito')==null){
         listaCarrito=[];
     }else{
         let listaExiste=JSON.parse(localStorage.getItem('listaCarrito'));
 for(let i=0;i<listaExiste.length;i++){
+if (accion) {
+    eliminarListaDeseo(idProducto);  
+}
     if(listaCarrito[i]['idProducto']==idProducto){
         Swal.fire({
             title: "Aviso",
@@ -103,7 +106,7 @@ listaCarrito.concat(localStorage.getItem('listaCarrito'));
 localStorage.setItem('listaCarrito',JSON.stringify(listaCarrito));
 Swal.fire({
     title: "Aviso",
-    text: "PRODUCTO AGREGADO ALCARRITO ",
+    text: "PRODUCTO AGREGADO AL CARRITO ",
     icon: "success"
   });
 cantidadCarrito();
@@ -139,16 +142,44 @@ function cantidadCarrito(){
                         <td> <span class="badge bg-warning">${res.moneda + ' '+producto.precio}</span></td>
                         <td><span class="badge bg-primary">${ producto.cantidad}</td>
                         <td> ${producto.subTotal}</td>
-                         <td> <button class="btn btn-danger" type="button "> <i class="fas fa-times-circle"></i></button></td>
+                         <td> <button class="btn btn-danger btnEliminarCarrito" type="button" prod="${ producto.id}"> <i class="fas fa-times-circle"></i></button></td>
                          </tr>`;
         });
         
     tableListaCarrito.innerHTML=html;
     document.querySelector('#totalGeneral').textContent=res.total;
-   // btnEliminarDeseo();
+    btnEliminarCarrito();
     }
     }
+}
 
-    
+function btnEliminarCarrito(){
 
+    let listaEliminar=document.querySelectorAll('.btnEliminarCarrito');
+    console.log(listaEliminar);
+    for (let i = 0; i < listaEliminar.length; i++) {
+        listaEliminar[i].addEventListener('click',function(){
+            let idProducto=listaEliminar[i].getAttribute('prod');
+            eliminarListaCarrito(idProducto);
+        });
+        
+    }
+}
+
+function eliminarListaCarrito(idProducto) {
+ 
+    for (let index = 0; index < listaCarrito.length; index++) {
+         if(listaCarrito[index]['idProducto']==idProducto){
+            listaCarrito.splice(index,1);
+
+         }
+    }
+localStorage.setItem('listaCarrito',JSON.stringify(listaCarrito));
+getListaCarrito();
+cantidadCarrito();
+Swal.fire({
+    title: "Aviso",
+    text: "PRODUCTO ELIMINADO DEL CARRITO ",
+    icon: "success"
+  });
 }

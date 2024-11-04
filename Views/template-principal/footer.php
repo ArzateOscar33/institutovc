@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
        <div class="table-responsive" >
-        <table class="table table-bordered table-striped table-hover" id="tableListaCarrito">
+        <table class="table table-bordered table-striped table-hover align-middle" id="tableListaCarrito">
             <thead>
                 <tr>
                     <th  >#</th>

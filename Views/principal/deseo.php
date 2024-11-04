@@ -18,7 +18,7 @@
             <div class="card mb-4 product-wap rounded-0">
               <div class="card text-center">
                  <div class="card-body shadow-lg">
-                   <table class="table table-borderer" id="tableListaDeseo">
+                   <table class="table-responsive table table-borderer align-middle" id="tableListaDeseo">
                     <thead>
                         <tr>
                         <th>#</th>
@@ -26,7 +26,7 @@
                         <th>Precio</th>
                         <th>Cantidad</th>
                         <th></th>
-                        <th></th>
+                        
                         </tr>
                     </thead>
                     <tbody>
