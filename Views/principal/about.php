@@ -104,7 +104,20 @@
         </div>
     </section>
     <!--End Brands-->
-
+ <!-- Start Section -->
+ <section class="container py-5">
+        <div class="row text-center pt-5 pb-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1"><b>Ubicanos en el Mapa </b></h1>
+                <p>
+                    Ubicanos en el mapa de una manera rapida y sencilla
+                </p>
+            </div>
+            
+        </div>
+        
+    </section>
+    <!-- End Section -->
     <?php include_once 'Views/template-principal/footer.php'?>
 
     <!-- Start Script -->

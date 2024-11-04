@@ -77,9 +77,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo BASE_URL . 'principal/about' ?>">Sobre Nosotros</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL . 'principal/ubicacion' ?>"> Ubicación</a>
-                        </li>
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
