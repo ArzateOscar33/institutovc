@@ -149,4 +149,6 @@ function cantidadCarrito(){
     }
     }
 
+    
+
 }

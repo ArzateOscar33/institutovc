@@ -28,7 +28,7 @@ class PrincipalModel extends Query{
     }
     //obetener total productos relacionados con la cateogira
     public function getTotalProductosCat($id_categoria){
-        $sql = "SELECT COUNT(*) AS total FROM productos WHERE id_categoria =$id_categoria";
+        $sql = "SELECT COUNT(*) AS total FROM productos WHERE id_categoria =$id_categoria" ;
         return $this->select($sql);   
        }
 

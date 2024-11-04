@@ -6,12 +6,12 @@ class HomeModel extends Query{
         parent::__construct();
     }
     public function getCategorias(){
-        $sql= "Select * From categorias";
+        $sql= "Select * From categorias LIMIT 6";
         return $this ->selectAll($sql);
     }//function getCategorias
 
     public function getNuevoProducto(){
-        $sql= "Select * From productos ORDER BY id DESC LIMIT 12";
+        $sql= "Select * From productos ORDER BY id DESC LIMIT 3";
         return $this ->selectAll($sql);
     }//function getCategorias
 
