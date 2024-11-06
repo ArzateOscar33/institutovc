@@ -32,14 +32,114 @@
        </div>
        <div class="modal-footer">
         <h3 id="totalGeneral"></h3>
+        <a class="btn btn-outline-primary " href="<?php echo BASE_URL.'clientes';?>">Procesar Pedido</a>
        </div>
       </div>
       </div>
       </div>
       </div>
  
+<!--Login directo -->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  ">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h1 class="modal-title fs-5" id="titleLogin"> Iniciar Sesión</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body m-3">
+        <form action="" method="get" class="mb-3">
+            <div class="text-center">
+            <img class="img-thumbnail rounded-circle" src="<?php echo BASE_URL .'assets/img/logo.jpg';?>" alt="" width="100">
+            </div>
+            <div class="row">
+            <div class="col-md-12" id="frmLogin">
+            <div class="form-group mb-3">
+                <label for="correoLogin" class="form-label"> <i class="fas fa-envelope"></i>Correo</label>
+                <input
+                    type="text"
+                    name="correoLogin"
+                    id="correoLogin"
+                    class="form-control"
+                    placeholder="Correo Electronico"
+                />
+                <label for="claveLogin" class="form-label"><i class="fas fa-key"></i>Contraseña</label>
+                <input
+                    type="text"
+                    name="claveLogin"
+                    id="claveLogin"
+                    class="form-control"
+                    placeholder="Contraseña"
+                />
+            <a href="#" id="btnRegister">¿Todavia no tienes una Cuenta?</a>
+            <div class="float-end">
+       <button class="btn btn-primary float-end btn-lg" type="button" id="loguearse">Login </button>
+        </div>
+            </div>
+            
+     
 
- 
+
+            </div>
+                   <!--formulario de registro-->
+                   <div class="col-md-12 d-none" id="frmRegister">
+            <div class="form-group mb-3">
+                <label for="apellidoPaterno" class="form-label"> <i class="fas fa-list"></i>Apellido Paterno</label>
+                <input
+                    type="text"
+                    name="nombreCliente"
+                    id="apellidoPaternoRegistro"
+                    class="form-control"
+                    placeholder="Apellido Paterno"
+                />
+                <label for="apellidoMaternoRegistro" class="form-label"> <i class="fas fa-list"></i>Apellido Materno</label>
+                <input
+                    type="text"
+                    name="apellidoMaternoRegistro"
+                    id="apellidoMaternoRegistro"
+                    class="form-control"
+                    placeholder="Apellido Materno"
+                />
+                <label for="nombreCliente" class="form-label"> <i class="fas fa-list"></i>Nombre</label>
+                <input
+                    type="text"
+                    name="nombreCliente"
+                    id="nombreRegistro"
+                    class="form-control"
+                    placeholder="Nombre Completo"
+                />
+                <label for="correoRegistro" class="form-label"> <i class="fas fa-envelope"></i>Correo</label>
+                <input
+                    type="text"
+                    name="correoRegistro"
+                    id="correoRegistro"
+                    class="form-control"
+                    placeholder="Correo Electronico"
+                />
+                <label for="claveRegistro" class="form-label"><i class="fas fa-key"></i>Contraseña</label>
+                <input
+                    type="text"
+                    name="claveRegistro"
+                    id="claveRegistro"
+                    class="form-control"
+                    placeholder="Contraseña"
+                />
+            </div>
+            <a href="#" id="btnLogin">Ya tienes una Cuenta</a>
+            <div class="float-end">
+       <button class="btn btn-primary btn-lg float-end" type="button" id="registrarse">Registrarse </button>
+        </div>
+            </div>
+           
+        </form>
+      
+
+
+       </div>
+
+      </div>
+      </div>
+      </div>
  <!-- Start Footer -->
  <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
@@ -130,4 +230,5 @@
     
     <script src="<?php echo BASE_URL;?>assets/js/modulos/details.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/carrito.js"></script>
+    <script src="<?php echo BASE_URL;?>assets/js/login.js"></script>
     <!-- End Script -->
