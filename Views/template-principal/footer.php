@@ -140,6 +140,7 @@
       </div>
       </div>
       </div>
+</div>
  <!-- Start Footer -->
  <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
