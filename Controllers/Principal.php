@@ -18,7 +18,7 @@ class Principal extends Controller
      //vista SHOP
      public function shop($page){
         $pagina=(empty($page)) ? 1: $page;
-        $porPagina=20;
+        $porPagina=21;
         $desde=($pagina-1)*$porPagina;
         $data['title']='Nuestros Productos';
         $data['productos']= $this->model->getProductos($desde,$porPagina);
