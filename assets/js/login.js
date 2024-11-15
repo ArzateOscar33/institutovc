@@ -9,10 +9,6 @@ const apellidoM = document.querySelector('#apellidoMaternoRegistro');
 const nombreRegistro = document.querySelector('#nombreRegistro');
 const correoRegistro = document.querySelector('#correoRegistro');
 const claveRegistro = document.querySelector('#claveRegistro');
-
-
-
-
 const loguearse = document.querySelector('#loguearse');
 document.addEventListener("DOMContentLoaded",function(){
 btnRegister.addEventListener('click',function(){
@@ -47,7 +43,7 @@ registrarse.addEventListener("click",function(){
       })
      if (res.icono=='success') {
         setTimeout(()=>{
-            window.location.reload();
+            enviarCorreo(correoRegistro.value,res.token);
         },2000);
      }
 
@@ -57,3 +53,30 @@ registrarse.addEventListener("click",function(){
 });
 
 });
+
+function enviarCorreo(correo,token) {
+    let formData=new FormData();
+    formData.append("token",token);
+    formData.append("correo",correo);
+    const url=base_url+'clientes/enviarCorreo';
+    const http = new XMLHttpRequest();
+    http.open('POST',url,true);
+    http.send(formData);
+    http.onreadystatechange=function(){
+    if(this.readyState==4 && this.status==200){
+        
+     const res=JSON.parse(this.responseText);
+     Swal.fire({
+        title: "Aviso",
+        text: res.msg,
+        icon:res.icono
+      })
+     if (res.icono=='success') {
+        setTimeout(()=>{
+            window.location.reload();
+        },2000);
+     }
+
+    }
+    };
+}
