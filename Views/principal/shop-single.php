@@ -50,10 +50,10 @@
                                 </div>
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Comprar</button>
+                                        <button type="button" class="btn  btnAddDeseo btn-success btn-lg"  id="btnAddDeseoSingle" prod="<?php echo $data['producto']['id']; ?>">Añadir a Lista de Deseos</button>
                                     </div>
                                     <div class="col d-grid">
-                                        <button type="button" class="btn btn-success btn-lg" id="btnAddCart" >Agregar al Carrito</button>
+                                        <button type="button" class="btn btn-success btnAddCart btn-lg" id="btnAddCart" >Agregar al Carrito</button>
                                     </div>
                                 </div>
                             </form>

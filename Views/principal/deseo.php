@@ -10,7 +10,7 @@
         <div>
             <div class="h3">
             <?php echo ucfirst($data['title']); ?>
-            </div>
+            </div> 
         </div>
     </div>
     <div class="row">

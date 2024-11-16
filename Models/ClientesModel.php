@@ -18,6 +18,27 @@ class ClientesModel extends Query{
        return $res;
     }//function registroDirecto
 
+    public function getToken($token){
+        $sql= "Select * From clientes WHERE token='$token' ";
+        return $this->select($sql);
+    }//function getToken
+
+    public function actualizarVerify($id){
+        $sql= "UPDATE clientes SET token=?,verify=? WHERE id=?";
+        $datos=array(null,1,$id);
+       $data= $this->save($sql,$datos);
+       if($data==1){
+        $res=$data;
+       }else{
+        $res=0;
+       }
+       return $res;
+    }
+
+    public function getVerificar($correo){
+        $sql= "Select * From clientes WHERE correo='$correo' ";
+        return $this->select($sql);
+    }//function getToken
 }
  
 ?>

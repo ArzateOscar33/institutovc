@@ -30,9 +30,14 @@
             </tbody>
         </table>
        </div>
-       <div class="modal-footer">
+       <div class="d-flex justify-content-around mb-3">
         <h3 id="totalGeneral"></h3>
-        <a class="btn btn-outline-primary " href="<?php echo BASE_URL.'clientes';?>">Procesar Pedido</a>
+        <?php if (!empty($_SESSION['correoCliente'])) { ?>
+         <a class="btn btn-outline-primary " href="<?php echo BASE_URL.'clientes';?>">Procesar Pedido</a>
+        <?php } else{ ?>
+        <a class="btn btn-outline-primary " href="#" onclick="abrirModalLogin();"> Login</a>
+
+       <?php }?>
        </div>
       </div>
       </div>
@@ -73,7 +78,7 @@
                 />
             <a href="#" id="btnRegister">¿Todavia no tienes una Cuenta?</a>
             <div class="float-end">
-       <button class="btn btn-primary float-end btn-lg" type="button" id="loguearse">Login </button>
+       <button class="btn btn-primary float-end btn-lg" type="button" id="login">Login </button>
         </div>
             </div>
             
@@ -142,11 +147,11 @@
       </div>
 </div>
  <!-- Start Footer -->
- <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
+ <footer class="bg-dark" id="tempaltemo_footer" >
+        <div class="container pt-4">
             <div class="row">
 
-                <div class="col-md-6 pt-5">
+                <div class="col-md-6 pt-5" >
                     <h2 class="h2 text-success border-bottom pb-3 border-light logo">Instituto Visual California</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
@@ -177,8 +182,8 @@
                 </div>
 
             </div>
-
-            <div class="row text-light mb-4">
+ 
+            <div class="row text-light mb-4 pt-5">
                 <div class="col-12 mb-3">
                     <div class="w-100 my-3 border-top border-light"></div>
                 </div>
@@ -195,16 +200,19 @@
                 </div>
                 
             </div>
+            
         </div>
-
-        <div class="w-100 bg-black py-3">
+ 
+        <div class="w-100 bg-black py-3 pt-4">
             <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
+                <div class="row pt-4">
+                    <div class="col-12 mb-4">
                         <p class="text-left text-light">
+                           
                             Copyright &copy; 2024 Instituto Visual California 
                             | Pagina Creada por  <a rel="sponsored" href="#" target="_blank">ArzaTech</a>
                         </p>
+                        
                     </div>
                 </div>
             </div>

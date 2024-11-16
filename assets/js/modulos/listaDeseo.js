@@ -66,7 +66,7 @@ Swal.fire({
   });
 }
 function btnAgregarProducto(){
-
+    btnEliminarDeseo();
     let listaAgregar=document.querySelectorAll('.btnAddCart');
     
     for (let i = 0; i < listaAgregar.length; i++) {
