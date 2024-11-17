@@ -1,4 +1,6 @@
 <?php
+
+
 class Principal extends Controller
 {
     public function __construct() {
@@ -102,6 +104,7 @@ class Principal extends Controller
                 $total+=$subTotal;
             }
             $array['total']=number_format($total,2);
+            $array['totalPayPal']=number_format($total, 2, '.', '');
             $array['moneda']=MONEDA;
             echo json_encode($array,JSON_UNESCAPED_UNICODE);
             die();

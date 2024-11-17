@@ -13,8 +13,7 @@ const claveRegistro = document.querySelector("#claveRegistro");
 //inputs de login
 const login = document.querySelector("#login");
 const correoLogin = document.querySelector("#correoLogin");
-const claveLogin = document.querySelector("#claveLogin");
-const btnModalLogin=document.querySelector("#btnModalLogin");
+const claveLogin = document.querySelector("#claveLogin"); 
 
 const modalLogin = new bootstrap.Modal(document.getElementById('modalLogin'));
 
@@ -99,10 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			};
 		}
 	}); 
-	btnModalLogin.addEventListener("click",function () {
-		modalLogin.show();
-		
-	})
+ 
 });
 
 function enviarCorreo(correo, token) {

@@ -1,4 +1,9 @@
 <?php
+// SDK de Mercado Pago
+use MercadoPago\MercadoPagoConfig;
+use MercadoPago\Client\Preference\PreferenceClient;
+
+require_once 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -10,7 +15,7 @@ class Clientes extends Controller
     public function __construct()
     {
         parent::__construct();
-        session_start(); 
+        session_start();
     }
     public function index()
     {
@@ -19,6 +24,7 @@ class Clientes extends Controller
         }
         $data['title'] = 'Tu Perfil';
         $data['verificar'] = $this->model->getVerificar($_SESSION['correoCliente']);
+    
         $this->views->getView('principal', "perfil", $data);
     }
     public function registroDirecto()
@@ -102,36 +108,36 @@ class Clientes extends Controller
         die();
     }
 
-//login directo
-public function loginDirecto()
-{
-    if (isset($_POST['correoLogin']) && isset($_POST['claveLogin'])) {
-        if (empty($_POST['correoLogin']) || empty($_POST['claveLogin'])) {
-            $mensaje = array('msg' => 'TODOS LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
-        } else { 
-            $correo = $_POST['correoLogin'];
-            $clave = $_POST['claveLogin'];
-            $verificar = $this->model->getVerificar($correo);
-            if (!empty($verificar)) {
-                if (password_verify($clave,$verificar['clave'])) {
-                    $_SESSION['correoCliente'] = $verificar['correo'];
-                    $_SESSION['nombreCliente'] = $verificar['nombre'];
-                    $_SESSION['apellidoPCliente'] = $verificar['apellidoP'];
-
-                    $mensaje = array('msg' => 'Ok', 'icono' => 'success' );
-                } else {
-
-                    $mensaje = array('msg' => 'CONTRASEÑA INCORRECTA', 'icono' => 'error');
-                }
+    //login directo
+    public function loginDirecto()
+    {
+        if (isset($_POST['correoLogin']) && isset($_POST['claveLogin'])) {
+            if (empty($_POST['correoLogin']) || empty($_POST['claveLogin'])) {
+                $mensaje = array('msg' => 'TODOS LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
             } else {
-                $mensaje = array('msg' => 'EL CORREO NO EXISTE ', 'icono' => 'warning');
-            }
-        }
+                $correo = $_POST['correoLogin'];
+                $clave = $_POST['claveLogin'];
+                $verificar = $this->model->getVerificar($correo);
+                if (!empty($verificar)) {
+                    if (password_verify($clave, $verificar['clave'])) {
+                        $_SESSION['correoCliente'] = $verificar['correo'];
+                        $_SESSION['nombreCliente'] = $verificar['nombre'];
+                        $_SESSION['apellidoPCliente'] = $verificar['apellidoP'];
 
-        echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
-        die();
-    } //if
-}
+                        $mensaje = array('msg' => 'Ok', 'icono' => 'success');
+                    } else {
+
+                        $mensaje = array('msg' => 'CONTRASEÑA INCORRECTA', 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'EL CORREO NO EXISTE ', 'icono' => 'warning');
+                }
+            }
+
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        } //if
+    }
 
 
     public function verificarCorreo($token)
