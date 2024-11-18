@@ -149,4 +149,34 @@ class Clientes extends Controller
             header('Location: ' . BASE_URL . 'clientes');
         } //if
     }
+
+//registrar pedidos 
+public function registrarPedido(){
+    $datos=file_get_contents('php://input');
+    $json=json_decode($datos,true);
+   if(is_array($json)){
+        $id_transaccion=$json['id'];
+        $monto=$json['purchase_units'][0]['amount'];
+        $estado=$json['status'];
+        $fecha=date('Y-m-d H:i:s');
+        $email=$json['payer']['email_address'];
+        $nombre=$json['payer']['name']['given_name'];
+        $apellido=$json['payer']['name']['surname'];
+       // $direccion=['purchase_units'][0]['shiping']['address']['address_line_1'];
+        //$ciudad=['purchase_units'][0]['shiping']['address']['address_area_2'];
+        $email_user=$_SESSION['correoCliente'];
+       $data= $this->model->registrarPedido($id_transaccion,
+        $monto,
+        $estado,
+        $fecha,
+        $email,
+        $nombre,
+        $apellido,
+        $email_user);
+        print_r($data);
+    }
+    //RECUERDA MODIFICAR EL CODIGO PARA SELECCIONAR LA DIRECCION DEL USUARIO DE PAYPAL
+   print_r($json);
+}
+
 }//class

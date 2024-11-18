@@ -6,7 +6,7 @@ const PASS = "";
 const DB = "institutovc";
 const CHARSET = "charset=utf8";
 const TITLE = "Instituto Visual California";
-const MONEDA = "USD";
+const MONEDA = "MXN";
 //PAYPAL
 const CLIENT_ID = "Abqqe-znWCZaUj5Az23YcOtK3IzRYrjdtuh8ZHJ6iU_rYlMorAxT45abRaVEM3L22cs99-EZ9EgLi02u";
 
