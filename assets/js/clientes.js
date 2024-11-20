@@ -1,10 +1,31 @@
 const tableLista = document.querySelector('#tableListaProductos tbody');
 let productosjson = [];
+const tblPendientes=document.querySelector('#tblPendientes');
 
 document.addEventListener("DOMContentLoaded", function () {
     if (tableLista) { 
         getListaProductos();
     }
+    //cargar datos pendientes con DataTables
+    $('#tblPendientes').DataTable({
+        ajax: {
+            url: base_url + 'clientes/listarPendientes',
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'id_transaccion' },
+            { data: 'monto' },
+            { data: 'fecha' },
+            { data: 'accion' }
+        ],
+        language: {
+            //
+            url:'//cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json',
+},
+dom,
+buttons
+
+    });
 });
 
 //ver carrito
@@ -123,6 +144,9 @@ function registrarPedido(datos) {
     };
 }
 
+function verPedido(idPedido){
+
+}
 //credenciales de prueba
 //sb-u6blu34135729@personal.example.com
 //&-:fI0#I

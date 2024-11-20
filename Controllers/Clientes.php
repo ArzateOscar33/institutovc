@@ -187,7 +187,15 @@ public function registrarPedido(){
    echo json_encode($mensaje);
    die();
 }
-
+//lsitar productos pendientes
+public function listarPendientes(){
+    $data=$this->model->getPedidos(1);
+    for ($i=0; $i < count($data); $i++) { 
+        $data[$i]['accion']='<div class="text-center"><button class="btn btn-primary" type="button" onClick="verPedido('.$data[$i]['id'].')><i class="fas fa-eye"></i></button></div>';
+    }
+    echo json_encode($data);
+    die();
+}
 
 
 }//class
