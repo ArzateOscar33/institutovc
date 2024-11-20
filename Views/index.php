@@ -162,7 +162,4 @@ include_once 'Views/template-principal/header.php';
     <?php 
 include_once 'Views/template-principal/footer.php';
 ?>
-
-</body>
-
-</html>
+ 

@@ -48,6 +48,4 @@
 
 <?php include_once 'Views/template-principal/footer.php' ?>
 <script src="<?php echo BASE_URL .'assets/js/modulos/listaDeseo.js';?>"></script>
-</body>
-
-</html>
+ 

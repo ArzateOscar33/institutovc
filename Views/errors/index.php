@@ -20,6 +20,3 @@
         </main>
     </div>
  
-</body>
- 
-</html>

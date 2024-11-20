@@ -154,29 +154,40 @@ class Clientes extends Controller
 public function registrarPedido(){
     $datos=file_get_contents('php://input');
     $json=json_decode($datos,true);
-   if(is_array($json)){
-        $id_transaccion=$json['id'];
-        $monto=$json['purchase_units'][0]['amount'];
-        $estado=$json['status'];
+    $pedidos=$json['pedidos'];
+    $productos=$json['productos'];
+   if(is_array($pedidos) && is_array($productos)){
+        $id_transaccion=$pedidos['id'];
+        $monto=$pedidos['purchase_units'][0]['amount']['value'];
+        $estado=$pedidos['status'];
         $fecha=date('Y-m-d H:i:s');
-        $email=$json['payer']['email_address'];
-        $nombre=$json['payer']['name']['given_name'];
-        $apellido=$json['payer']['name']['surname'];
+        $email=$pedidos['payer']['email_address'];
+        $nombre=$pedidos['payer']['name']['given_name'];
+        $apellido=$pedidos['payer']['name']['surname'];
+        //NOTA BUSCAR EN EL ARREGLO LA DIRECCION DEL USUARIO REGISTRADO 
        // $direccion=['purchase_units'][0]['shiping']['address']['address_line_1'];
         //$ciudad=['purchase_units'][0]['shiping']['address']['address_area_2'];
         $email_user=$_SESSION['correoCliente'];
-       $data= $this->model->registrarPedido($id_transaccion,
-        $monto,
-        $estado,
-        $fecha,
-        $email,
-        $nombre,
-        $apellido,
-        $email_user);
-        print_r($data);
+       $data= $this->model->registrarPedido($id_transaccion, $monto,$estado, $fecha,$email,$nombre,$apellido,$email_user);
+        if ($data>0) {
+            foreach ($productos as $producto ) {
+               $temp= $this->model->getProducto($producto['idProducto']);
+               $this->model->registrarDetalle($temp['nombre'],$temp['precio'],$producto['cantidad'],$data);
+               
+            }  
+            $mensaje=array('msg'=>'pedido registrado','icono'=>'success');
+        } else {
+            $mensaje=array('msg'=>'error al registrar el pedido','icono'=>'error');
+        } 
+    }else{
+        $mensaje=array('msg'=>'error fatal con los datos','icono'=>'error');
     }
     //RECUERDA MODIFICAR EL CODIGO PARA SELECCIONAR LA DIRECCION DEL USUARIO DE PAYPAL
-   print_r($json);
+   //print_r($json);
+   echo json_encode($mensaje);
+   die();
 }
+
+
 
 }//class

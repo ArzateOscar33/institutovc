@@ -129,13 +129,14 @@
     <!-- Start Footer -->
     <?php include_once 'Views/template-principal/footer.php'?>
     <!-- End Footer -->
-
+  
     <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.6.0.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/templatemo.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/all.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
     <!-- End Script -->
 
     <!-- Start Slider Script -->
@@ -173,8 +174,9 @@
             ]
         });
     </script>
+        <script src="<?php echo BASE_URL;?>assets/js/modulos/details.js"></script>
     <!-- End Slider Script -->
 
-</body>
+    </body>
 
 </html>

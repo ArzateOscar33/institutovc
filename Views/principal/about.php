@@ -127,6 +127,4 @@
     <script src="assets/js/templatemo.js"></script>
     <script src="assets/js/custom.js"></script>
     <!-- End Script -->
-</body>
-
-</html>
+ 

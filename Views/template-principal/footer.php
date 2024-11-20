@@ -231,8 +231,7 @@
     <script>
         const base_url='<?php echo BASE_URL;?>';
     </script>
-    
-    <script src="<?php echo BASE_URL;?>assets/js/modulos/details.js"></script>
+     
     <script src="<?php echo BASE_URL;?>assets/js/carrito.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/login.js"></script>
     <!-- End Script -->
