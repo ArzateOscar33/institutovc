@@ -92,14 +92,15 @@
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fas fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#" id="verCarrito">
+                    
+                    <a class="nav-icon position-relative text-decoration-none <?php echo ($data['perfil']=='no') ? '' : 'd-none'; ?>" href="#" id="verCarrito">
                         <i class="fas fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="btnCantidadCarrito">0</span>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="<?php echo BASE_URL . 'principal/deseo';?>">
+                    <a class="nav-icon position-relative text-decoration-none <?php echo ($data['perfil']=='no') ? '' : 'd-none'; ?>" href="<?php echo BASE_URL . 'principal/deseo';?>">
                         <i class="fas fa-fw fa-heart text-dark mr-1"></i>
                         <span id="btnCantidadDeseo" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">0</span>
-                    </a>
+                    </a> 
                     <?php if (!empty($_SESSION['correoCliente'])) { ?>
                     <a class="nav-icon position-relative text-decoration-none" href="<?php echo BASE_URL.'clientes' ?>"  >
                       <img class="img-thumbnail" src="<?php echo BASE_URL .'assets/img/clientes/cliente.png'?>" alt="-logo cliente-" width="35">
@@ -122,14 +123,18 @@
             <div class="w-100 pt-1 mb-5 text-right">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+            <div class="modal-content modal-body border-0 p-0">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Buscar Producto ...">
                     <button type="submit" class="input-group-text bg-success text-light">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
                 </div>
-            </form>
+                
+            <div class="row" id="resultBusqueda">
+
+</div>
+            </div>
         </div>
     </div>
 </body>

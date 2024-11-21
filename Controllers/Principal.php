@@ -7,18 +7,17 @@ class Principal extends Controller
         parent::__construct();
         session_start();
     }
-    public function index()
-    {
-        
-    }
+    
     //vista about
     public function about(){
+        $data['perfil']='no';
         $data['title']='Sobre Nosotros';
         $this->views->getView('principal',"about",$data);
     }
 
      //vista SHOP
      public function shop($page){
+        $data['perfil']='no';
         $pagina=(empty($page)) ? 1: $page;
         $porPagina=21;
         $desde=($pagina-1)*$porPagina;
@@ -31,6 +30,7 @@ class Principal extends Controller
     }
     //vista detalle
     public function detail($id_producto){
+        $data['perfil']='no';
         $data['producto']=$this->model->getProducto($id_producto);
         $id_categoria=$data['producto']['id_categoria'];
         if (empty($data['producto'])) {
@@ -45,12 +45,14 @@ class Principal extends Controller
     }
      //vista Agendar
      public function agendar(){
+        $data['perfil']='no';
         $data['title']='Agenda tu Cita';
         $this->views->getView('principal',"agendar",$data);
     }
 
     //vista categorias
     public function categorias($datos){ 
+        $data['perfil']='no';
         $id_categoria=1;
         $page=1;
 
@@ -83,6 +85,7 @@ class Principal extends Controller
 
          //vista deseos
          public function deseo(){
+            $data['perfil']='no';
             $data['title']='Tu lista de Deseos';
             $this->views->getView('principal',"deseo",$data);
         }
@@ -115,7 +118,11 @@ class Principal extends Controller
             echo json_encode($array,JSON_UNESCAPED_UNICODE);
             die();
         }
-
+public function busqueda($valor){
+$data=$this->model->getBusqueda($valor);
+echo json_encode($data,JSON_UNESCAPED_UNICODE);
+die();
+}
 
 
 }//class

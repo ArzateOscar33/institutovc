@@ -22,6 +22,7 @@ class Clientes extends Controller
         if (empty($_SESSION['correoCliente'])) {
             header('Location: ' . BASE_URL);
         }
+        $data['perfil']='si';
         $data['title'] = 'Tu Perfil';
         $data['verificar'] = $this->model->getVerificar($_SESSION['correoCliente']);
     
@@ -191,11 +192,19 @@ public function registrarPedido(){
 public function listarPendientes(){
     $data=$this->model->getPedidos(1);
     for ($i=0; $i < count($data); $i++) { 
-        $data[$i]['accion']='<div class="text-center"><button class="btn btn-primary" type="button" onClick="verPedido('.$data[$i]['id'].')><i class="fas fa-eye"></i></button></div>';
+        $data[$i]['accion']='<div class="text-center"><button class="btn btn-primary" type="button" onClick="verPedido('.$data[$i]['id'].')"><i class="fas fa-eye"></i></button></div>';
     }
     echo json_encode($data);
     die();
 }
-
-
+public function verPedido($idPedido){
+    $data['productos']=$this->model->verPedido($idPedido);
+    $data['moneda']=MONEDA;
+    echo json_encode($data);
+    die();
+}
+public function salir(){
+    session_destroy();
+    header('Location: '.BASE_URL);
+}
 }//class
