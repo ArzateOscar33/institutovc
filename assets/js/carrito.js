@@ -143,7 +143,7 @@ function cantidadCarrito(){
                        </td>
                         <td>${producto.nombre}</td>
                         <td> <span class="badge bg-warning">${res.moneda + ' '+producto.precio}</span></td>
-                        <td><span class="badge bg-primary">${ producto.cantidad}</td>
+                        <td width="100"><input type="number" class="form-control agregarCantidad" id="${ producto.id}" value="${ producto.cantidad}"></td>
                         <td> ${producto.subTotal}</td>
                          <td> <button class="btn btn-danger btnEliminarCarrito" type="button" prod="${ producto.id}"> <i class="fas fa-times-circle"></i></button></td>
                          </tr>`;
@@ -152,6 +152,7 @@ function cantidadCarrito(){
     tableListaCarrito.innerHTML=html;
     document.querySelector('#totalGeneral').textContent=res.total;
     btnEliminarCarrito();
+    cambiarCantidad();
     }
     }
 }
@@ -185,4 +186,25 @@ Swal.fire({
     text: "PRODUCTO ELIMINADO DEL CARRITO ",
     icon: "success"
   });
+}
+
+//cambair cantidad del carrito
+function cambiarCantidad() {
+    let listaCantidad = document.querySelectorAll('.agregarCantidad');
+    for (let i = 0; i < listaCantidad.length; i++) {
+        listaCantidad[i].addEventListener('change', function () {
+            let idProducto = listaCantidad[i].id;
+            let cantidad = listaCantidad[i].value
+            incrementarCantidad(idProducto, cantidad);
+        })
+    }
+}
+
+function incrementarCantidad(idProducto, cantidad) {
+    for (let i = 0; i < listaCarrito.length; i++) {
+        if (listaCarrito[i]['idProducto'] == idProducto) {
+            listaCarrito[i].cantidad = cantidad;
+        }
+    }
+    localStorage.setItem('listaCarrito', JSON.stringify(listaCarrito));
 }

@@ -1,6 +1,10 @@
 const tableLista = document.querySelector("#tableListaProductos tbody");
+const tblPendientes = document.querySelector('#tblPendientes');
 let productosjson = [];
-const tblPendientes = document.querySelector("#tblPendientes");
+let tblCalificacion;
+const estadoEnviado = document.querySelector('#estadoEnviado');
+const estadoProceso = document.querySelector('#estadoProceso');
+const estadoCompletado = document.querySelector('#estadoCompletado');
 
 document.addEventListener("DOMContentLoaded", function () {
 	if (tableLista) {
@@ -18,10 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			{ data: "fecha" },
 			{ data: "accion" },
 		],
-		language: {
-			//
-			url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/es-MX.json",
-		},
+		lenguage,
 		dom,
 		buttons,
 	});
@@ -152,30 +153,60 @@ function registrarPedido(datos) {
 }
 
 function verPedido(idPedido) {
-	const mPedido = new bootstrap.Modal(document.getElementById("modalPedido"));
-	const url = base_url + "clientes/verPedido/"+idPedido;
-	const http = new XMLHttpRequest();
-	http.open("GET", url, true);
-	http.send();
-	http.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			const res = JSON.parse(this.responseText);
-
-            let html='';
+    estadoEnviado.classList.remove('services-icon-wap');
+    estadoProceso.classList.remove('services-icon-wap');
+    estadoCompletado.classList.remove('services-icon-wap');
+    const mPedido = new bootstrap.Modal(document.getElementById('modalPedido'));
+    const url = base_url + 'clientes/verPedido/' + idPedido;
+    const http = new XMLHttpRequest();
+    http.open('GET', url, true);
+    http.send();
+    http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            const res = JSON.parse(this.responseText);
+            let html = '';
+            if (res.pedido.proceso == 1) {
+                estadoEnviado.classList.add('services-icon-wap');
+            } else if (res.pedido.proceso == 2) {
+                estadoProceso.classList.add('services-icon-wap');
+            } else {
+                estadoCompletado.classList.add('services-icon-wap');
+            }
             res.productos.forEach(row => {
-                let subTotal=parseFloat(row.precio)*parseInt(row.cantidad);
-                html +=`<tr> 
-                            <td>${row.producto}</td>
-                            <td> <span class="badge bg-warning">${res.moneda + ' '+row.precio}</span></td>
-                            <td><span class="badge bg-primary">${ row.cantidad}</td>
-                            <td> ${subTotal.toFixed(2)}</td>
-                              </tr>`;
+                let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
+                html += `<tr>
+                    <td>${row.producto}</td>
+                    <td><span class="badge bg-warning">${res.moneda + ' ' + row.precio}</span></td>
+                    <td><span class="badge bg-primary">${row.cantidad}</span></td>
+                    <td>${subTotal.toFixed(2)}</td>
+                </tr>`;
             });
-            
-            document.querySelector('#tablePedidos tbody').innerHTML=html;
-			mPedido.show();
-		}
-	};
+            document.querySelector('#tablePedidos tbody').innerHTML = html;
+            mPedido.show();
+        }
+    }
+
+}
+
+function agregarCalificacion(id_producto, cantidad) {
+    const url = base_url + 'clientes/agregarCalificacion';
+    const http = new XMLHttpRequest();
+    http.open('POST', url, true);
+    http.send(JSON.stringify({
+        id_producto: id_producto,
+        cantidad: cantidad
+    }));
+    http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            const res = JSON.parse(this.responseText);
+            alertaPerzanalizada(res.msg, res.icono);
+            if (res.icono == 'success') {
+                tblCalificacion.ajax.reload();
+            }
+        }
+    }
 }
 //credenciales de prueba
 //sb-u6blu34135729@personal.example.com

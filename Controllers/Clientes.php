@@ -191,7 +191,7 @@ public function registrarPedido(){
 }
 //lsitar productos pendientes
 public function listarPendientes(){
-    $data=$this->model->getPedidos(1);
+    $data=$this->model->getPedidos();
     for ($i=0; $i < count($data); $i++) { 
         $data[$i]['accion']='<div class="text-center"><button class="btn btn-primary" type="button" onClick="verPedido('.$data[$i]['id'].')"><i class="fas fa-eye"></i></button></div>';
     }
@@ -199,8 +199,9 @@ public function listarPendientes(){
     die();
 }
 public function verPedido($idPedido){
-    $data['productos']=$this->model->verPedido($idPedido);
-    $data['moneda']=MONEDA;
+    $data['pedido'] = $this->model->getPedido($idPedido);
+    $data['productos'] = $this->model->verPedidos($idPedido);
+    $data['moneda'] = MONEDA;
     echo json_encode($data);
     die();
 }

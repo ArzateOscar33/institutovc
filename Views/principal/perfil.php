@@ -9,11 +9,8 @@
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Pago</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pendientes-tab" data-bs-toggle="tab" data-bs-target="#pendientes-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Pendientes</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="completados-tab" data-bs-toggle="tab" data-bs-target="#completados-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Completados</button>
-      </li>
+        <button class="nav-link" id="pendientes-tab" data-bs-toggle="tab" data-bs-target="#pendientes-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Pedidos</button>
+      </li> 
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -121,8 +118,7 @@
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="completados-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
-    </div>
+       </div>
 
 
   <?php } else { ?>
@@ -204,7 +200,7 @@
 
 <script src="<?php echo BASE_URL . 'assets/DataTables/datatables.min.js'; ?>"></script>
 
-<script src="<?php echo BASE_URL . 'assets/js/es-MX.js'; ?>"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/es-MX.js"></script>
 <!-- Include the PayPal JavaScript SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&currency=<?php echo MONEDA; ?>"></script>
 
