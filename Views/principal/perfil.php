@@ -1,4 +1,4 @@
-<?php include_once 'Views/template-principal/header.php';
+<?php include_once 'Views/template/header.php';
 ?>
 
 <!-- Start Content -->
@@ -198,7 +198,7 @@
 
 
 
-<?php include_once 'Views/template-principal/footer.php' ?>
+<?php include_once 'Views/template/footer.php' ?>
 
 <script src="<?php echo BASE_URL . 'assets/js/clientes.js'; ?>"></script>
 

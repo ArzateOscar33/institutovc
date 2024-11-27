@@ -1,5 +1,5 @@
 <?php
-include_once 'Views/template-principal/header.php';
+include_once 'Views/template/header.php';
 
 ?>
 
@@ -160,6 +160,6 @@ include_once 'Views/template-principal/header.php';
     <script src="assets/js/custom.js"></script>
     <!-- End Script -->
     <?php 
-include_once 'Views/template-principal/footer.php';
+include_once 'Views/template/footer.php';
 ?>
  

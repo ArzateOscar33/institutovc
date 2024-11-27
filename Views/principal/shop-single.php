@@ -1,4 +1,4 @@
-<?php include_once 'Views/template-principal/header.php'?>
+<?php include_once 'Views/template/header.php'?>
 
 
     <!-- Open Content -->
@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="<?php  echo $data['producto']['imagen']; ?> " alt="Card image cap" id="product-detail">
+                        <img class="card-img img-fluid" src="<?php  echo /*BASE_URL .*/ $data['producto']['imagen']; ?> " alt="Card image cap" id="product-detail">
                     </div>
                 </div>
                 <!-- col end -->
@@ -79,7 +79,7 @@
                 <div class="p-2 pb-3">
                     <div class="product-wap card rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="<?php echo $relacion['imagen']; ?> ">
+                            <img class="card-img rounded-0 img-fluid" src="<?php echo /*BASE_URL .*/$relacion['imagen']; ?> ">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <li><a class="btn btn-success text-white btnAddDeseo" href="#" prod="<?php echo $relacion['id']; ?>"><i class="far fa-heart"></i></a></li>
@@ -127,7 +127,7 @@
 
 
     <!-- Start Footer -->
-    <?php include_once 'Views/template-principal/footer.php'?>
+    <?php include_once 'Views/template/footer.php'?>
     <!-- End Footer -->
   
     <!-- Start Script -->

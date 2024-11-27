@@ -1,4 +1,4 @@
-<?php include_once 'Views/template-principal/header.php' ?>
+<?php include_once 'Views/template/header.php' ?>
 
 <!-- Start Section -->
 <section class="container py-5">
@@ -118,7 +118,7 @@
 
 </section>
 <!-- End Section -->
-<?php include_once 'Views/template-principal/footer.php' ?>
+<?php include_once 'Views/template/footer.php' ?>
 
 <!-- Start Script -->
 <script src="assets/js/jquery-1.11.0.min.js"></script>
