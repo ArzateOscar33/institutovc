@@ -31,6 +31,8 @@ function productosMinimos() {
             gradientStroke3.addColorStop(0, "#7f00ff");
             gradientStroke3.addColorStop(1, "#e100ff");
 
+            
+
             var myChart = new Chart(ctx, {
                 type: "pie",
                 data: {

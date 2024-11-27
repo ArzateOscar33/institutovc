@@ -7,7 +7,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <p class="mb-0 text-secondary">Pedidos Pendientes</p>
-                        <h4 class="my-1 text-warning"><?php  //echo $data['pendientes']['total']; ?></h4>
+                        <h4 class="my-1 text-warning"><?php  echo $data['pendientes']['total']; ?></h4>
                     </div>
                     <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class='fas fa-exclamation-circle'></i>
                     </div>
@@ -21,7 +21,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <p class="mb-0 text-secondary">Pedidos en Proceso</p>
-                        <h4 class="my-1 text-info"><?php  //echo $data['procesos']['total']; ?></h4>
+                        <h4 class="my-1 text-info"><?php  echo $data['procesos']['total']; ?></h4>
                     </div>
                     <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class='fas fa-spinner'></i>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <p class="mb-0 text-secondary">Pedidos Finalizados</p>
-                        <h4 class="my-1 text-success"><?php  //echo $data['finalizados']['total']; ?></h4>
+                        <h4 class="my-1 text-success"><?php  echo $data['finalizados']['total']; ?></h4>
                     </div>
                     <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='fas fa-check-circle'></i>
                     </div>
@@ -49,9 +49,23 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <p class="mb-0 text-secondary">Total Productos</p>
-                        <h4 class="my-1 text-warning"><?php  //echo $data['productos']['total']; ?></h4>
+                        <h4 class="my-1 text-warning"><?php  echo $data['productos']['total']; ?></h4>
                     </div>
                     <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class='bx bxs-group'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card radius-10 border-start border-0 border-3 border-warning">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-secondary">Citas Pendientes</p>
+                        <h4 class="my-1 text-warning"><?php  echo $data['productos']['total']; ?></h4>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class='fas fa-exclamation-circle'></i>
                     </div>
                 </div>
             </div>
@@ -74,11 +88,11 @@
                 </div>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Finalizados <span class="badge bg-success rounded-pill"><?php  //echo $data['finalizados']['total']; ?></span>
+                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Finalizados <span class="badge bg-success rounded-pill"><?php  echo $data['finalizados']['total']; ?></span>
                 </li>
-                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Proceso <span class="badge bg-primary rounded-pill"><?php  //echo $data['procesos']['total']; ?></span>
+                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Proceso <span class="badge bg-primary rounded-pill"><?php  echo $data['procesos']['total']; ?></span>
                 </li>
-                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Pendientes <span class="badge bg-warning text-dark rounded-pill"><?php  //echo $data['pendientes']['total']; ?></span>
+                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Pendientes <span class="badge bg-warning text-dark rounded-pill"><?php  echo $data['pendientes']['total']; ?></span>
                 </li>
             </ul>
         </div>
@@ -155,9 +169,9 @@
                     gradientStroke2,
                     gradientStroke3
                 ],
-                data: [<?php  //echo $data['pendientes']['total']; ?>, 
-                <?php  //echo $data['procesos']['total']; ?>, 
-                <?php  //echo $data['finalizados']['total']; ?>],
+                data: [<?php  echo $data['pendientes']['total']; ?>, 
+                <?php  echo $data['procesos']['total']; ?>, 
+                <?php  echo $data['finalizados']['total']; ?>],
                 borderWidth: [1, 1, 1]
             }]
         },
@@ -178,7 +192,7 @@
     });
 </script>
 
-<script src="<?php  //echo BASE_URL; ?>assets/js/index.js"></script>
+<script src="<?php  echo BASE_URL; ?>assets/js/index.js"></script>
 
 </body>
 

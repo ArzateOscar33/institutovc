@@ -1,7 +1,8 @@
 <?php
 class Admin extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         session_start();
     }
@@ -40,9 +41,42 @@ class Admin extends Controller
         die();
     }
 
-    public function home(){
-        $data['title']='Panel Administrativo';
-        $this->views->getView('admin/administracion',"index",$data);
+    public function home()
+    {
+        if (empty($_SESSION['nombre_usuario'])) {
+            header('Location: '. BASE_URL . 'admin');
+            exit;
+        }
+        $data['title'] = 'Panel Administrativo';
+        $data['pendientes'] = $this->model->getTotales(1);
+        $data['procesos'] = $this->model->getTotales(2);
+        $data['finalizados'] = $this->model->getTotales(3);
+        $data['productos'] = $this->model->getProductos();
+        $this->views->getView('admin/administracion', "index", $data);
+    }
+
+    public function productosMinimos()
+    {
+        if (empty($_SESSION['nombre_usuario'])) {
+            header('Location: '. BASE_URL . 'admin');
+            exit;
+        }
+        $data = $this->model->productosMinimos();
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+
+    }
+
+    public function topProductos()
+    {
+        if (empty($_SESSION['nombre_usuario'])) {
+            header('Location: '. BASE_URL . 'admin');
+            exit;
+        }
+        $data = $this->model->topProductos();
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+
     }
 
     public function salir()
@@ -50,6 +84,4 @@ class Admin extends Controller
         session_destroy();
         header('Location: ' . BASE_URL);
     }
-
-
-}//class
+}

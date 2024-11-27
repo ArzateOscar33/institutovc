@@ -134,7 +134,8 @@ function registrarPedido(datos) {
 		if (this.readyState == 4 && this.status == 200) {
 			try {
 				// console.log(this.responseText); // Útil para verificar qué está devolviendo el servidor
-				const res = JSON.parse(this.responseText); // Analiza la respuesta JSON
+				const res = JSON.parse(this.responseText); 
+				console.log(res);// Analiza la respuesta JSON
 				Swal.fire("Aviso", res.msg, res.icono);
 				if (res.icono == "success") {
 					localStorage.removeItem("listaCarrito");

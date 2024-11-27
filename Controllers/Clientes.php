@@ -165,6 +165,7 @@ public function registrarPedido(){
         $email=$pedidos['payer']['email_address'];
         $nombre=$pedidos['payer']['name']['given_name'];
         $apellido=$pedidos['payer']['name']['surname'];
+        //$productoId=;
         //NOTA BUSCAR EN EL ARREGLO LA DIRECCION DEL USUARIO REGISTRADO 
        // $direccion=['purchase_units'][0]['shiping']['address']['address_line_1'];
         //$ciudad=['purchase_units'][0]['shiping']['address']['address_area_2'];
@@ -173,7 +174,7 @@ public function registrarPedido(){
         if ($data>0) {
             foreach ($productos as $producto ) {
                $temp= $this->model->getProducto($producto['idProducto']);
-               $this->model->registrarDetalle($temp['nombre'],$temp['precio'],$producto['cantidad'],$data);
+               $this->model->registrarDetalle($temp['nombre'],$temp['precio'],$producto['cantidad'],$data,$producto['idProducto']);
                
             }  
             $mensaje=array('msg'=>'pedido registrado','icono'=>'success');

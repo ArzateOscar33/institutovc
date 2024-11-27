@@ -234,4 +234,4 @@
      
     <script src="<?php echo BASE_URL;?>assets/js/carrito.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/login.js"></script>
-    <!-- End Script -->
+    <!-- End Script --> 

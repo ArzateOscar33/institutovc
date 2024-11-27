@@ -53,7 +53,8 @@ class ClientesModel extends Query
         $email,
         $nombre,
         $apellido,
-        $email_user
+        $email_user,
+        
     ) {
         $sql = "INSERT INTO pedidos(id_transaccion,monto,estado,fecha,email,nombre,apellido,email_user) VALUES (?,?,?,?,?,?,?,?)";
         $datos = array($id_transaccion,
@@ -63,7 +64,8 @@ class ClientesModel extends Query
         $email,
         $nombre,
         $apellido,
-        $email_user);
+        $email_user,
+       );
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;

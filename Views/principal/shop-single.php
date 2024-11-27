@@ -174,7 +174,7 @@
             ]
         });
     </script>
-        <script src="<?php echo BASE_URL;?>assets/js/modulos/details.js"></script>
+        <script src="<?php echo BASE_URL;?>assets/js/modulos/detail.js"></script>
     <!-- End Slider Script -->
 
     </body>
