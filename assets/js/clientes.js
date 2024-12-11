@@ -26,6 +26,24 @@ document.addEventListener("DOMContentLoaded", function () {
 		dom,
 		buttons,
 	});
+	
+    tblCalificacion = $('#tblProductos').DataTable({
+        ajax: {
+            url: base_url + 'clientes/listarProductos',
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'id_producto' },
+            { data: 'producto' },
+            { data: 'precio' },
+            { data: 'cantidad' },
+            { data: 'calificacion' }
+        ],
+        lenguage,
+        dom,
+        buttons
+
+    });
 });
 
 //ver carrito
@@ -146,6 +164,7 @@ function registrarPedido(datos) {
 				}
 			} catch (error) {
 				console.error("Error al analizar JSON:", error, this.responseText);
+				
 				Swal.fire("Error", "Ocurrió un problema con el servidor", "error");
 			}
 		}
@@ -189,6 +208,8 @@ function verPedido(idPedido) {
 
 }
 
+ 
+
 function agregarCalificacion(id_producto, cantidad) {
     const url = base_url + 'clientes/agregarCalificacion';
     const http = new XMLHttpRequest();
@@ -208,6 +229,9 @@ function agregarCalificacion(id_producto, cantidad) {
         }
     }
 }
+
 //credenciales de prueba
 //sb-u6blu34135729@personal.example.com
 //&-:fI0#I
+
+

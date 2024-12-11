@@ -48,7 +48,52 @@ class PrincipalModel extends Query{
         $sql="SELECT * FROM productos WHERE nombre LIKE '%".$valor."%' OR descripcion LIKE '%".$valor."%' LIMIT 6";
         return $this->selectAll($sql);   
        }
+//citas
 
+public function registrarCita($apellidoP, $apellidoM, $nombre, $correo, $telefono ,$fecha,$hora,$token)
+{
+    $sql = "INSERT INTO citas(apellidoP,apellidoM,nombre,correo,telefono,fecha,hora,token) VALUES (?,?,?,?,?,?,?,?)";
+    $datos = array($apellidoP, $apellidoM, $nombre, $correo, $telefono ,$fecha,$hora,$token);
+    $data = $this->insertar($sql, $datos);
+    if ($data > 0) {
+        $res = $data;
+    } else {
+        $res = 0;
+    }
+    return $res;
+} //function registroDirecto
+
+public function getToken($token)
+{
+    $sql = "Select * From citas WHERE token='$token' ";
+    return $this->select($sql);
+} //function getToken
+
+public function actualizarVerify($id)
+{
+    $sql = "UPDATE citas SET token=?,verify=? WHERE id=?";
+    $datos = array(null, 1, $id);
+    $data = $this->save($sql, $datos);
+    if ($data == 1) {
+        $res = $data;
+    } else {
+        $res = 0;
+    }
+    return $res;
+}
+
+public function getVerificar($correo)
+{
+    $sql = "Select * From citas WHERE correo='$correo' ";
+    return $this->select($sql);
+} //function getToken
+
+
+public function getHorariosDisponibles($fecha)
+{
+$sql = "SELECT hora FROM citas WHERE fecha=?"; 
+ return $this->select($sql);
+}
 }
  
 ?>

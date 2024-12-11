@@ -7,7 +7,7 @@ class AdminModel extends Query{
     }
     public function getUsuario($correo)
     {
-        $sql = "SELECT * FROM usuarios WHERE correo = '$correo'";
+        $sql = "SELECT * FROM usuario WHERE correo = '$correo'";
         return $this->select($sql);
     }
     public function getTotales($estado)

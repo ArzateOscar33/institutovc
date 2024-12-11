@@ -10,7 +10,10 @@
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="pendientes-tab" data-bs-toggle="tab" data-bs-target="#pendientes-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Pedidos</button>
-      </li> 
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos-tab-pane" type="button" role="tab" aria-controls="productos-tab-pane" aria-selected="false">Productos</button>
+      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -48,13 +51,13 @@
                   <i class="fas fa-user"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="<?php echo BASE_URL.'clientes/salir';?>"><i class="fas fa-times-circle"></i>Cerrar Sesión</a></li>
+                  <li><a class="dropdown-item" href="<?php echo BASE_URL . 'clientes/salir'; ?>"><i class="fas fa-times-circle"></i>Cerrar Sesión</a></li>
                 </ul>
               </div>
 
               <div class="card-body text-center">
                 <img
-                  src="<?php echo BASE_URL . 'assets/img/banner_img_004.png'; ?>"
+                  src="<?php echo BASE_URL . 'assets/img/user_foto.png'; ?>"
                   class="img-thumbnail rounded-circle"
                   alt=""
                   width="150" />
@@ -73,19 +76,7 @@
                         <div id="paypal-button-container"></div>
                       </div>
                     </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Otros Metodos de Pago
-                      </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-
-                      </div>
-                    </div>
-                  </div>
+                  </div> 
                 </div>
 
 
@@ -94,6 +85,7 @@
 
           </div>
         </div>
+
       </div>
       <div class="tab-pane fade" id="pendientes-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="col-12">
@@ -106,7 +98,7 @@
                       <th>#</th>
                       <th>Monto</th>
                       <th>Fecha</th>
-                      <th>Fecha</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -118,8 +110,33 @@
           </div>
         </div>
       </div>
-       </div>
+      
+    </div>
 
+    <div class="tab-pane fade" id="productos-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="col-12">
+          <div class="card shadow-lg">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="tblProductos" class="table table-bordered table-striped table-hover" style="width:100%;">
+                  <thead class="bg-dark text-white">
+                    <tr>
+                      <th>#</th>
+                      <th>Producto</th>
+                      <th>Precio</th>
+                      <th>Cantidad</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <?php } else { ?>
     <div class="alert alert-danger text-center" role="alert">

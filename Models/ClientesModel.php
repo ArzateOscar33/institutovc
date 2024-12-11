@@ -53,10 +53,9 @@ class ClientesModel extends Query
         $email,
         $nombre,
         $apellido,
-        $email_user,
-        
+        $id_cliente,
     ) {
-        $sql = "INSERT INTO pedidos(id_transaccion,monto,estado,fecha,email,nombre,apellido,email_user) VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO pedidos(id_transaccion,monto,estado,fecha,email,nombre,apellido,id_cliente) VALUES (?,?,?,?,?,?,?,?)";
         $datos = array($id_transaccion,
         $monto,
         $estado,
@@ -64,7 +63,7 @@ class ClientesModel extends Query
         $email,
         $nombre,
         $apellido,
-        $email_user,
+        $id_cliente,
        );
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
@@ -94,8 +93,8 @@ class ClientesModel extends Query
         return $res;
     }
 
-    public function getPedidos(){
-        $sql = "SELECT * FROM pedidos ";
+    public function getPedidos($id_cliente){
+        $sql = "SELECT * FROM pedidos WHERE id_cliente=$id_cliente ";
         return $this->selectAll($sql);
 
     }
@@ -114,5 +113,41 @@ class ClientesModel extends Query
         $sql = "SELECT d.* FROM pedidos p INNER JOIN detalle_pedidos d ON p.id= d.id_pedido WHERE p.id = $idPedido";
         return $this->selectAll($sql);
 
+    }
+    public function getProductos($id_cliente)
+    {
+        $sql = "SELECT d.producto, d.precio, SUM(d.cantidad) AS cantidad, d.id_producto FROM pedidos p INNER JOIN detalle_pedidos d ON p.id = d.id_pedido WHERE p.id_cliente = $id_cliente GROUP BY d.id_producto";
+        return $this->selectAll($sql);
+    }
+    public function comprobarCalificacion($id_producto, $id_cliente)
+    {
+        $sql = "SELECT * FROM calificaciones WHERE id_producto = $id_producto AND id_cliente = $id_cliente";
+        return $this->select($sql);
+    }
+
+    public function agregarCalificacion($cantidad, $id_producto, $id_cliente)
+    {
+        $sql = "INSERT INTO calificaciones (cantidad, id_producto, id_cliente) VALUES (?,?,?)";
+        $datos = array($cantidad, $id_producto, $id_cliente);
+        $data = $this->insertar($sql, $datos);
+        if ($data > 0) {
+            $res = $data;
+        } else {
+            $res = 0;
+        }
+        return $res;
+    }
+
+    public function cambiarCalificacion($cantidad, $id_producto, $id_cliente)
+    {
+        $sql = "UPDATE calificaciones SET cantidad=? WHERE id_producto=? AND id_cliente=?";
+        $datos = array($cantidad, $id_producto, $id_cliente);
+        $data = $this->save($sql, $datos);
+        if ($data == 1) {
+            $res = 1;
+        } else {
+            $res = 0;
+        }
+        return $res;
     }
 }

@@ -47,11 +47,8 @@ function agregarDeseo(idProducto){
         let listaExiste=JSON.parse(localStorage.getItem('listaDeseo'));
 for(let i=0;i<listaExiste.length;i++){
     if(listaDeseo[i]['idProducto']==idProducto){
-        Swal.fire({
-            title: "Aviso",
-            text: "EL PRODUCTO YA ESTA EN TU LISTA DE DESEOS ",
-            icon: "warning"
-          });
+     
+          alertaPersonalizada("EL PRODUCTO YA ESTA EN TU LISTA DE DESEOS ","warning");
           return;
     }
 }
@@ -62,11 +59,8 @@ listaDeseo.concat(localStorage.getItem('listaDeseo'));
         "cantidad":1
     })
 localStorage.setItem('listaDeseo',JSON.stringify(listaDeseo));
-Swal.fire({
-    title: "Aviso",
-    text: "PRODUCTO AGREGADO A LA LISTA DE DESEOS",
-    icon: "success"
-  });
+ 
+  alertaPersonalizada("PRODUCTO AGREGADO A LA LISTA DE DESEOS","success")
 cantidadDeseo();
 }
 
@@ -92,11 +86,8 @@ if (accion) {
     eliminarListaDeseo(idProducto);  
 }
     if(listaCarrito[i]['idProducto']==idProducto){
-        Swal.fire({
-            title: "Aviso",
-            text: "EL PRODUCTO YA ESTA AGREGADO ",
-            icon: "warning"
-          })
+ 
+          alertaPersonalizada("EL PRODUCTO YA ESTA AGREGADO ","warning");
           return;
     }
 }
@@ -107,11 +98,8 @@ listaCarrito.concat(localStorage.getItem('listaCarrito'));
         "cantidad":cantidad,
     });
 localStorage.setItem('listaCarrito',JSON.stringify(listaCarrito));
-Swal.fire({
-    title: "Aviso",
-    text: "PRODUCTO AGREGADO AL CARRITO ",
-    icon: "success"
-  });
+ 
+  alertaPersonalizada("PRODUCTO AGREGADO AL CARRITO","success")
 cantidadCarrito();
 }
 
@@ -181,11 +169,8 @@ function eliminarListaCarrito(idProducto) {
 localStorage.setItem('listaCarrito',JSON.stringify(listaCarrito));
 getListaCarrito();
 cantidadCarrito();
-Swal.fire({
-    title: "Aviso",
-    text: "PRODUCTO ELIMINADO DEL CARRITO ",
-    icon: "success"
-  });
+ 
+  alertaPersonalizada("PRODUCTO ELIMINADO DEL CARRITO","success")
 }
 
 //cambair cantidad del carrito
@@ -208,3 +193,25 @@ function incrementarCantidad(idProducto, cantidad) {
     }
     localStorage.setItem('listaCarrito', JSON.stringify(listaCarrito));
 }
+
+function alertaPersonalizada(mensaje, type, titulo = '') {
+    toastr[type](mensaje, titulo)
+
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  }

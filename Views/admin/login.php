@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--favicon-->
-    <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon-32x32.png" type="image/png" />
+    <!--<link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon-32x32.png" type="image/png" />->
     <!--plugins-->
     <link href="<?php echo BASE_URL; ?>assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
     <link href="<?php echo BASE_URL; ?>assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
@@ -54,7 +54,7 @@
                                                     <input type="password" class="form-control border-end-0" id="clave" name="clave" value="" placeholder="Contraseña"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 text-end"> <a href="authentication-forgot-password.html">Olvidaste tu contraseña ?</a>
+                                            <div class="col-md-12 text-end"> <a href="authentication-forgot-password.html"> </a>
                                             </div>
                                             <div class="col-12">
                                                 <div class="d-grid">

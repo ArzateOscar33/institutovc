@@ -228,10 +228,36 @@
     <script src="<?php echo BASE_URL;?>assets/js/templatemo.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/custom.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/sweetalert2.all.min.js"></script>
-    <script>
-        const base_url='<?php echo BASE_URL;?>';
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+  const base_url = '<?php echo BASE_URL; ?>';
+
+  function alertaPerzanalizada(mensaje, type, titulo = '') {
+    toastr[type](mensaje, titulo)
+
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  }
+</script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  
      
     <script src="<?php echo BASE_URL;?>assets/js/carrito.js"></script>
     <script src="<?php echo BASE_URL;?>assets/js/login.js"></script>
+   
     <!-- End Script --> 
