@@ -50,10 +50,10 @@ class PrincipalModel extends Query{
        }
 //citas
 
-public function registrarCita($apellidoP, $apellidoM, $nombre, $correo, $telefono ,$fecha,$hora,$token)
+public function registrarCita($apellidoP, $apellidoM, $nombre, $correo, $telefono ,$fecha,$id_hora,$token)
 {
-    $sql = "INSERT INTO citas(apellidoP,apellidoM,nombre,correo,telefono,fecha,hora,token) VALUES (?,?,?,?,?,?,?,?)";
-    $datos = array($apellidoP, $apellidoM, $nombre, $correo, $telefono ,$fecha,$hora,$token);
+    $sql = "INSERT INTO citas(apellidoP,apellidoM,nombre,correo,telefono,fecha,id_hora,token) VALUES (?,?,?,?,?,?,?,?)";
+    $datos = array($apellidoP, $apellidoM, $nombre, $correo, $telefono ,$fecha,$id_hora,$token);
     $data = $this->insertar($sql, $datos);
     if ($data > 0) {
         $res = $data;
@@ -89,12 +89,23 @@ public function getVerificar($correo)
 } //function getToken
 
 
-public function verificarHorario($fecha, $hora)
-{
-    $sql = "SELECT * FROM citas WHERE fecha = ? AND hora = ?";
-    $datos = array($fecha, $hora);
-    return $this->select($sql, $datos);
+ 
+
+public function obtenerHorariosDisponibles($fechaCita) {
+    $sql = "SELECT h.id_horario,DATE_FORMAT(h.horario, '%H:%i') as horario
+    FROM horarios h 
+    LEFT JOIN citas c 
+    ON h.id_horario = c.id_hora 
+    AND c.fecha = '$fechaCita' 
+    AND c.estado = 1 
+    WHERE c.id_hora 
+    IS NULL 
+    AND h.estado = 0;";
+    
+    return $this->selectAll($sql);
 }
+
+ 
 }
  
 ?>

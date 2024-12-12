@@ -167,11 +167,11 @@ class Principal extends Controller
                 $nombre = $_POST['iNombre'];
                 $correo = $_POST['iCorreo'];
                 $telefono = $_POST['iTelefono'];
-                $token = md5($correo);
-    
+                $token = md5($fecha . '-' . $hora);
+
                 $resultado = $this->model->registrarCita($apellidoP, $apellidoM, $nombre, $correo, $telefono, $fecha, $hora, $token);
                 if ($resultado > 0) {
-                    $mensaje = array('msg' => 'Cita registrada con éxito', 'icono' => 'success','token' => $token);
+                    $mensaje = array('msg' => 'Cita registrada con éxito', 'icono' => 'success', 'token' => $token);
                 } else {
                     $mensaje = array('msg' => 'Error al registrar la cita', 'icono' => 'error');
                 }
@@ -211,9 +211,18 @@ class Principal extends Controller
                 // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
                 //Content
-                $mail->isHTML(true);                                  //Set email format to HTML
-                $mail->Subject = 'Mensaje desde : ' . TITLE .' CONFIRMA TU CITA ';
-                $mail->Body = 'Para confirmar tu cita  <a href="' . BASE_URL . 'principal/verificarCorreoAgenda/' . $_POST['token'] . '">CLIC AQUI</a>';
+                $mail->isHTML(true); 
+                // Aquí construimos el mensaje dinámico
+                $mensaje_cuerpo = "Estimado/a " .  ",<br><br>";
+                $mensaje_cuerpo .= "Se ha registrado tu cita con los siguientes datos:<br>";
+                $mensaje_cuerpo .= "Fecha: " .  "<br>";
+                $mensaje_cuerpo .= "Hora: " .  "<br><br>";
+                $mensaje_cuerpo .= "Para confirmar tu cita, por favor haz clic en el siguiente enlace:<br>";
+                $mensaje_cuerpo .= "<a href='" . BASE_URL . "principal/verificarCorreoAgenda/" . $_POST['token'] . "'>CLIC AQUI</a>";
+
+                //Set email format to HTML
+                $mail->Subject = 'Mensaje desde : ' . TITLE . ' CONFIRMA TU CITA ';
+                $mail->Body = $mensaje_cuerpo;
                 $mail->AltBody = 'GRACIAS POR LA PREFERENCIA ';
 
                 $mail->send();
@@ -240,26 +249,14 @@ class Principal extends Controller
     //obtener  horarios disponibles para una fecha
 
     // Método para obtener horarios disponibles
-    public function obtenerHorarios()
-    {
-       // if (isset($_POST['fecha'])) {
-            $fecha = $_POST['fecha'];
-
-            // Consultar horarios reservados
-            $horariosReservados = $this->model->getHorariosReservados($fecha);
-
-            // Lista de horarios totales
-            $horariosTotales = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
-
-            // Calcular horarios disponibles
-            $data['horarios'] = array_diff($horariosTotales, $horariosReservados);
-
-            echo json_encode($data, JSON_UNESCAPED_UNICODE);
-            die();
-    /*} else {
-            $mensaje = array('msg' => 'Fecha no proporcionada', 'icono' => 'error');
-            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
-            die();
-        }*/
+    public function getHorariosDisponibles() {
+        if (isset($_POST['fechaCita'])) {
+            $fechaCita = $_POST['fechaCita'];
+            $horarios = $this->model->obtenerHorariosDisponibles($fechaCita);
+            echo json_encode($horarios, JSON_UNESCAPED_UNICODE);
+        } else {
+            echo json_encode(array('msg' => 'Fecha no proporcionada', 'icono' => 'error'), JSON_UNESCAPED_UNICODE);
+        }
+        die();
     }
 }//class

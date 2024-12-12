@@ -43,18 +43,16 @@
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="">Selecciona la fecha de tu cita</label>
-                    <input type="date" class="form-control mt-1" name="fechaCita" id="fechaCita" placeholder="12/10/2024">
+                    <input type="date" class="form-control mt-1" name="fechaCita" id="fechaCita"  >
                 </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="">Selecciona el Horario de tu Cita</label>
+                    <label for="fechaCita">Selecciona el Horario de tu Cita</label>
                    
                         
                     <select class="form-select" aria-label="Default select example" name="selectHorarios" id="selectHorarios">
                      
-                    <option selected value=" 15:00">15:00 </option>
-                    <option value=" 11:00">11:00 </option>
-                    <option value=" 12:00">12:00 </option>
-                    <option value=" 13:00">13:00 </option>
+                    <option  value="">Selecciona un horario</option>
+                     
                     </select>
                     
                 </div>

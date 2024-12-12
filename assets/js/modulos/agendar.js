@@ -3,9 +3,9 @@ const iapPaterno = document.querySelector("#iapPaterno");
 const iapMaterno = document.querySelector("#iapMaterno");
 const iNombre = document.querySelector("#iNombre");
 const iCorreo = document.querySelector("#iCorreo");
-const iTelefono = document.querySelector("#iTelefono"); 
-const fechaCita = document.querySelector("#fechaCita"); 
-const selectHorarios = document.querySelector("#selectHorarios"); 
+const iTelefono = document.querySelector("#iTelefono");
+const fechaCita = document.querySelector("#fechaCita");
+const selectHorarios = document.querySelector("#selectHorarios");
 
 // Establecer fecha mínima (hoy)
 const hoy = new Date();
@@ -13,28 +13,51 @@ const fechaMinima = hoy.toISOString().split("T")[0];
 fechaCita.setAttribute("min", fechaMinima);
 
 const btnAgendar = document.querySelector("#btnAgendar");
-document.addEventListener("DOMContentLoaded", function() { 
- // Deshabilitar domingos
- fechaCita.addEventListener("change", function () {
-    const fechaSeleccionada = new Date(this.value);
-    if (fechaSeleccionada.getDay() === 0) {//siendo 0 domingo, 1 lunes,2 martes etc etc
-        Swal.fire("Aviso", "Los domingos no hay citas,seleccione otra fecha", "warning");
-        this.value = ""; // Limpiar el valor seleccionado
-    }
-});
+document.addEventListener("DOMContentLoaded", function () {
+    // Deshabilitar domingos
+    fechaCita.addEventListener("change", function () {
+        const fechaSeleccionada = fechaCita.value;
 
-  //MODIFICAR PARA APARECER Y DESAPARECER HORARIOS
-    /* btnRegister.addEventListener("click", function () {
-		formLogin.classList.add("d-none");
-		formRegister.classList.remove("d-none");
-	});
-	btnLogin.addEventListener("click", function () {
-		formLogin.classList.remove("d-none");
-		formRegister.classList.add("d-none");
-	});*/
+        if (fechaSeleccionada) {
+            const url = base_url + "principal/getHorariosDisponibles";
+            const formData = new FormData();
+            formData.append("fechaCita", fechaSeleccionada);
+
+            const http = new XMLHttpRequest();
+            http.open("POST", url, true);
+            http.send(formData);
+
+            http.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    try {
+                        const horarios = JSON.parse(this.responseText);
+                        selectHorarios.innerHTML = '<option value="">Selecciona un horario</option>';
+                        if (Array.isArray(horarios) && horarios.length > 0) {
+                            horarios.forEach(horario => {
+                                const option = document.createElement("option");
+                                option.value = horario.id_horario;
+                                option.textContent = horario.horario;
+                                selectHorarios.appendChild(option);
+                            });
+                        } else {
+                            Swal.fire("Aviso", "No hay horarios disponibles para esta fecha", "warning");
+                        }
+                    } catch (error) {
+                        console.error("Error al procesar la respuesta:", error);
+                    }
+                }
+            };
+        } else {
+            selectHorarios.innerHTML = '<option value="">Selecciona un horario</option>';
+        }
+    });
+
+
+
+
     frmAgendar.addEventListener("submit", function (e) {
         e.preventDefault();
-    
+
         if (
             iapPaterno.value === "" ||
             iapMaterno.value === "" ||
@@ -51,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const http = new XMLHttpRequest();
             http.open("POST", url, true);
             http.send(formData);
-    
+
             http.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
                     try {
@@ -63,8 +86,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         });
                         if (res.icono === "success") {
                             setTimeout(() => {
-                               // window.location.reload();
-                                enviarCorreoAgenda(iCorreo.value,res.token);
+                                // window.location.reload();
+                                enviarCorreoAgenda(iCorreo.value, res.token);
                             }, 2000);
                         }
                     } catch (error) {
@@ -75,38 +98,40 @@ document.addEventListener("DOMContentLoaded", function() {
             };
         }
     });
+
+    function alertas(msg, icono) {
+        Swal.fire("Aviso?", msg.toUpperCase(), icono);
+    }
     
-    });
+    function enviarCorreoAgenda(correo, token) {
+        let formData = new FormData();
+        formData.append("token", token);
+        formData.append("iCorreo", correo);
+        const url = base_url + "principal/enviarCorreoAgenda";
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(formData);
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                const res = JSON.parse(this.responseText);
+                console.log(res);
+                Swal.fire({
+                    title: "Aviso",
+                    text: res.msg,
+                    icon: res.icono,
+                });
+                if (res.icono == "success") {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
+            }
+        };
+    }
+
+});
 
 
 
 
 
-function alertas(msg, icono) {
-    Swal.fire("Aviso?", msg.toUpperCase(), icono);
-}
-
-function enviarCorreoAgenda(correo, token) {
-	let formData = new FormData();
-	formData.append("token", token);
-	formData.append("iCorreo", correo);
-	const url = base_url + "principal/enviarCorreoAgenda";
-	const http = new XMLHttpRequest();
-	http.open("POST", url, true);
-	http.send(formData);
-	http.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			const res = JSON.parse(this.responseText);
-			Swal.fire({
-				title: "Aviso",
-				text: res.msg,
-				icon: res.icono,
-			});
-			if (res.icono == "success") {
-				setTimeout(() => {
-					//window.location.reload();
-				}, 2000);
-			}
-		}
-	};
-}
