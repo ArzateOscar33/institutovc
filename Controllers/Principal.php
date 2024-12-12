@@ -171,7 +171,7 @@ class Principal extends Controller
     
                 $resultado = $this->model->registrarCita($apellidoP, $apellidoM, $nombre, $correo, $telefono, $fecha, $hora, $token);
                 if ($resultado > 0) {
-                    $mensaje = array('msg' => 'Cita registrada con éxito', 'icono' => 'success');
+                    $mensaje = array('msg' => 'Cita registrada con éxito', 'icono' => 'success','token' => $token);
                 } else {
                     $mensaje = array('msg' => 'Error al registrar la cita', 'icono' => 'error');
                 }
@@ -184,9 +184,9 @@ class Principal extends Controller
         }
     }
 
-    public function enviarCorreo()
+    public function enviarCorreoAgenda()
     {
-        if (isset($_POST['correo']) && isset($_POST['token'])) {
+        if (isset($_POST['iCorreo']) && isset($_POST['token'])) {
             //Create an instance; passing `true` enables exceptions
             $mail = new PHPMailer(true);
 
@@ -203,7 +203,7 @@ class Principal extends Controller
 
                 //Recipients
                 $mail->setFrom('arzateoscar33@gmail.com', TITLE);
-                $mail->addAddress($_POST['correo']);     //Add a recipient
+                $mail->addAddress($_POST['iCorreo']);     //Add a recipient
 
 
                 //Attachments
@@ -213,11 +213,11 @@ class Principal extends Controller
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = 'Mensaje desde : ' . TITLE .' CONFIRMA TU CITA ';
-                $mail->Body = 'Para confirmar tu cita  <a href="' . BASE_URL . 'citas/verificarCorreo/' . $_POST['token'] . '">CLIC AQUI</a>';
+                $mail->Body = 'Para confirmar tu cita  <a href="' . BASE_URL . 'principal/verificarCorreoAgenda/' . $_POST['token'] . '">CLIC AQUI</a>';
                 $mail->AltBody = 'GRACIAS POR LA PREFERENCIA ';
 
                 $mail->send();
-                $mensaje = array('msg' => 'CORREO ENVIADO,REVISAR SU BANDEJA DE ENTRADA - SPAN', 'icono' => 'success');
+                $mensaje = array('msg' => 'CORREO ENVIADO,CONFIRME SU CITA,REVISAR SU BANDEJA DE ENTRADA - SPAN', 'icono' => 'success');
             } catch (Exception $e) {
                 $mensaje = array('msg' => 'Error al enviar Correo: ' . $mail->ErrorInfo, 'icono' => 'error');
             }
@@ -227,13 +227,13 @@ class Principal extends Controller
         echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function verificarCorreo($token)
+    public function verificarCorreoAgenda($token)
     {
         $verificar = $this->model->getToken($token);
         if (!empty($verificar)) {
-            $data = $this->model->actualizarVerify($verificar['id']);
-
-            header('Location: ' . BASE_URL . 'citas');
+            $data = $this->model->actualizarVerify($verificar['id_cita']);
+            print_r($data);
+            header('Location: ' . BASE_URL);
         } //if
     }
 

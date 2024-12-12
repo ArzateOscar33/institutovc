@@ -69,10 +69,10 @@ public function getToken($token)
     return $this->select($sql);
 } //function getToken
 
-public function actualizarVerify($id)
+public function actualizarVerify($id_cita)
 {
-    $sql = "UPDATE citas SET token=?,verify=? WHERE id=?";
-    $datos = array(null, 1, $id);
+    $sql = "UPDATE citas SET token=?,verify=? WHERE id_cita=?";
+    $datos = array(null, 1, $id_cita);
     $data = $this->save($sql, $datos);
     if ($data == 1) {
         $res = $data;
@@ -89,10 +89,11 @@ public function getVerificar($correo)
 } //function getToken
 
 
-public function getHorariosDisponibles($fecha)
+public function verificarHorario($fecha, $hora)
 {
-$sql = "SELECT hora FROM citas WHERE fecha=?"; 
- return $this->select($sql);
+    $sql = "SELECT * FROM citas WHERE fecha = ? AND hora = ?";
+    $datos = array($fecha, $hora);
+    return $this->select($sql, $datos);
 }
 }
  

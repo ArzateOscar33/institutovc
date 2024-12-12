@@ -7,11 +7,22 @@ const iTelefono = document.querySelector("#iTelefono");
 const fechaCita = document.querySelector("#fechaCita"); 
 const selectHorarios = document.querySelector("#selectHorarios"); 
 
-
+// Establecer fecha mínima (hoy)
+const hoy = new Date();
+const fechaMinima = hoy.toISOString().split("T")[0];
+fechaCita.setAttribute("min", fechaMinima);
 
 const btnAgendar = document.querySelector("#btnAgendar");
 document.addEventListener("DOMContentLoaded", function() { 
- 
+ // Deshabilitar domingos
+ fechaCita.addEventListener("change", function () {
+    const fechaSeleccionada = new Date(this.value);
+    if (fechaSeleccionada.getDay() === 0) {//siendo 0 domingo, 1 lunes,2 martes etc etc
+        Swal.fire("Aviso", "Los domingos no hay citas,seleccione otra fecha", "warning");
+        this.value = ""; // Limpiar el valor seleccionado
+    }
+});
+
   //MODIFICAR PARA APARECER Y DESAPARECER HORARIOS
     /* btnRegister.addEventListener("click", function () {
 		formLogin.classList.add("d-none");
@@ -52,7 +63,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         });
                         if (res.icono === "success") {
                             setTimeout(() => {
-                                window.location.reload();
+                               // window.location.reload();
+                                enviarCorreoAgenda(iCorreo.value,res.token);
                             }, 2000);
                         }
                     } catch (error) {
@@ -74,11 +86,11 @@ function alertas(msg, icono) {
     Swal.fire("Aviso?", msg.toUpperCase(), icono);
 }
 
-function enviarCorreo(correo, token) {
+function enviarCorreoAgenda(correo, token) {
 	let formData = new FormData();
 	formData.append("token", token);
-	formData.append("correo", correo);
-	const url = base_url + "principal/enviarCorreo";
+	formData.append("iCorreo", correo);
+	const url = base_url + "principal/enviarCorreoAgenda";
 	const http = new XMLHttpRequest();
 	http.open("POST", url, true);
 	http.send(formData);
@@ -92,7 +104,7 @@ function enviarCorreo(correo, token) {
 			});
 			if (res.icono == "success") {
 				setTimeout(() => {
-					window.location.reload();
+					//window.location.reload();
 				}, 2000);
 			}
 		}
