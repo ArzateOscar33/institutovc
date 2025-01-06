@@ -130,6 +130,11 @@ class Citas extends Controller
          die();
      }
 
+     public function listar(){
+        $data=$this->model->listarCitas();
+        echo json_encode($data,JSON_UNESCAPED_UNICODE);
+        die();
+     }
 
 
 

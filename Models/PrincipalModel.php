@@ -71,8 +71,8 @@ public function getToken($token)
 
 public function actualizarVerify($id_cita)
 {
-    $sql = "UPDATE citas SET token=?,verify=? WHERE id_cita=?";
-    $datos = array(null, 1, $id_cita);
+    $sql = "UPDATE citas SET token=?,verify=? ,color=? WHERE id_cita=?";
+    $datos = array(null, 1, '#37b607',$id_cita);
     $data = $this->save($sql, $datos);
     if ($data == 1) {
         $res = $data;

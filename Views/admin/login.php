@@ -13,7 +13,7 @@
     <link href="<?php echo BASE_URL; ?>assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
     <!-- loader-->
     <link href="<?php echo BASE_URL; ?>assets/css/pace.min.css" rel="stylesheet" />
-    <script src="<?php echo BASE_URL; ?>assets/js/pace.min.js"></script>
+   <!--plugins <script src="<?php echo BASE_URL; ?>assets/js/pace.min.js"></script>-->
     <!-- Bootstrap CSS -->
     <link href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/bootstrap-extended.css" rel="stylesheet">

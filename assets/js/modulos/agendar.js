@@ -7,33 +7,41 @@ const iTelefono = document.querySelector("#iTelefono");
 const fechaCita = document.querySelector("#fechaCita");
 const selectHorarios = document.querySelector("#selectHorarios");
 
-// Establecer fecha mínima (hoy)
+// Establecer fecha mínima (día siguiente a hoy)
 const hoy = new Date();
-const fechaMinima = hoy.toISOString().split("T")[0];
+const fechaMinima = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1)
+    .toISOString()
+    .split("T")[0];
 fechaCita.setAttribute("min", fechaMinima);
 
 const btnAgendar = document.querySelector("#btnAgendar");
 document.addEventListener("DOMContentLoaded", function () {
     // Deshabilitar domingos
     fechaCita.addEventListener("change", function () {
-        const fechaSeleccionada = fechaCita.value;
-
+        const fechaSeleccionada = new Date(fechaCita.value);
+    
+        if (fechaSeleccionada.getDay() === 0) { // 0 es domingo
+            Swal.fire("Aviso", "No se permiten citas los domingos", "warning");
+            fechaCita.value = ""; // Limpia la selección
+            return;
+        }
+    
         if (fechaSeleccionada) {
             const url = base_url + "principal/getHorariosDisponibles";
             const formData = new FormData();
-            formData.append("fechaCita", fechaSeleccionada);
-
+            formData.append("fechaCita", fechaSeleccionada.toISOString().split("T")[0]);
+    
             const http = new XMLHttpRequest();
             http.open("POST", url, true);
             http.send(formData);
-
+    
             http.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
                     try {
                         const horarios = JSON.parse(this.responseText);
                         selectHorarios.innerHTML = '<option value="">Selecciona un horario</option>';
                         if (Array.isArray(horarios) && horarios.length > 0) {
-                            horarios.forEach(horario => {
+                            horarios.forEach((horario) => {
                                 const option = document.createElement("option");
                                 option.value = horario.id_horario;
                                 option.textContent = horario.horario;
@@ -51,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectHorarios.innerHTML = '<option value="">Selecciona un horario</option>';
         }
     });
+    
 
 
 

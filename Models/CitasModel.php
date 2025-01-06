@@ -33,8 +33,8 @@ class CitasModel extends Query{
     
     public function actualizarVerify($id_cita)
     {
-        $sql = "UPDATE citas SET token=?,verify=? WHERE id_cita=?";
-        $datos = array(null, 1, $id_cita);
+        $sql = "UPDATE citas SET token=?,verify=?,color=? WHERE id_cita=?";
+        $datos = array(null, 1, '#37b607',$id_cita);
         $data = $this->save($sql, $datos);
         if ($data == 1) {
             $res = $data;
@@ -67,5 +67,14 @@ class CitasModel extends Query{
         return $this->selectAll($sql);
     }
     
+    public function listarCitas(){
+        $sql = "SELECT 
+                CONCAT(apellidoP, ' ', apellidoM, ' ', nombre) AS title,
+                CONCAT(fecha, 'T', DATE_FORMAT(horario, '%H:%i:%s')) AS start,
+                color
+            FROM citas
+            INNER JOIN horarios ON citas.id_hora = horarios.id_horario";
+    return $this->selectAll($sql);
+    }
 }
 ?>
