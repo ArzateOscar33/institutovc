@@ -136,7 +136,16 @@ class Citas extends Controller
         die();
      }
 
-
+public function eliminarCita($id_cita){
+    $data=$this->model->eliminarCita($id_cita);
+    if($data==1){
+        $mensaje = array('msg' => 'CITA ELIMINADA', 'icono' => 'success');
+    }else{
+        $mensaje = array('msg' => 'Error al eliminar cita', 'icono' => 'warning');
+    }
+    echo json_encode($mensaje,JSON_UNESCAPED_UNICODE);
+    die();
+}
 
    
 }

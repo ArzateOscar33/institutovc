@@ -71,10 +71,23 @@ class CitasModel extends Query{
         $sql = "SELECT 
                 CONCAT(apellidoP, ' ', apellidoM, ' ', nombre) AS title,
                 CONCAT(fecha, 'T', DATE_FORMAT(horario, '%H:%i:%s')) AS start,
-                color
+                color,
+                id_cita AS id
             FROM citas
             INNER JOIN horarios ON citas.id_hora = horarios.id_horario";
     return $this->selectAll($sql);
     }
+public function eliminarCita($id_cita){
+    $sql = "DELETE FROM citas WHERE id_cita=?";
+    $datos = array($id_cita);
+    $data = $this->save($sql, $datos);
+    if ($data == 1) {
+        $res = $data;
+    } else {
+        $res = 0;
+    }
+    return $res;
+}
+
 }
 ?>

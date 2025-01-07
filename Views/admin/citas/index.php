@@ -23,11 +23,15 @@
 
 
                                         <div class="row">
+                                            
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="fechaCitaAgenda" type="date" disabled="true" >
                                                 <label for="start" class="form-label">Fecha De La Cita</label>
                                                 <div class="row">
-
+                                                <div class="form-group col-md-12 mb-3">
+                                                        <label for="">Folio de la Cita </label>
+                                                        <input disabled="true" type="text" class="form-control mt-1" name="" id="id_Cita" placeholder="">
+                                                    </div>
                                                     <div class="form-group col-md-12 mb-3">
                                                         <label for="">Nombre del Paciente</label>
                                                         <input disabled="true" type="text" class="form-control mt-1" name="nombrePaciente" id="nombrePaciente" placeholder="">
