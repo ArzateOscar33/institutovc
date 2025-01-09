@@ -35,7 +35,7 @@
         <?php if (!empty($_SESSION['correoCliente'])) { ?>
          <a class="btn btn-outline-primary " href="<?php echo BASE_URL.'clientes';?>">Procesar Pedido</a>
         <?php } else{ ?>
-        <a class="btn btn-outline-primary " href="#" onclick="abrirModalLogin();"> Login</a>
+        <a class="btn btn-outline-primary mb-4" href="#" onclick="abrirModalLogin();"> Login</a>
 
        <?php }?>
        </div>
@@ -55,12 +55,12 @@
       <div class="modal-body m-3">
         <form action="" method="get" class="mb-3">
             <div class="text-center">
-            <img class="img-thumbnail rounded-circle" src="<?php echo BASE_URL .'assets/img/logo.jpg';?>" alt="" width="100">
+            <img class="img-thumbnail rounded-circle" src="<?php echo BASE_URL .'assets/img/user_foto.png';?>" alt="" width="100">
             </div>
             <div class="row">
             <div class="col-md-12" id="frmLogin">
             <div class="form-group mb-3">
-                <label for="correoLogin" class="form-label"> <i class="fas fa-envelope"></i>Correo</label>
+                <label for="correoLogin" class="form-label"> <i class="fas fa-envelope"> </i> Correo</label>
                 <input
                     type="text"
                     name="correoLogin"
@@ -68,17 +68,17 @@
                     class="form-control"
                     placeholder="Correo Electronico"
                 />
-                <label for="claveLogin" class="form-label"><i class="fas fa-key"></i>Contraseña</label>
+                <label for="claveLogin" class="form-label"><i class="fas fa-key"> </i> Contraseña</label>
                 <input
-                    type="text"
+                    type="password"
                     name="claveLogin"
                     id="claveLogin"
                     class="form-control"
                     placeholder="Contraseña"
                 />
             <a href="#" id="btnRegister">¿Todavia no tienes una Cuenta?</a>
-            <div class="float-end">
-       <button class="btn btn-primary float-end btn-lg" type="button" id="login">Login </button>
+            <div class="float-end mt-3">
+       <button class="btn btn-primary float-end btn-lg " type="button" id="login">Login </button>
         </div>
             </div>
             
@@ -89,7 +89,7 @@
                    <!--formulario de registro-->
                    <div class="col-md-12 d-none" id="frmRegister">
             <div class="form-group mb-3">
-                <label for="apellidoPaterno" class="form-label"> <i class="fas fa-list"></i>Apellido Paterno</label>
+                <label for="apellidoPaterno" class="form-label"> <i class="fas fa-user-friends"></i> Apellido Paterno</label>
                 <input
                     type="text"
                     name="nombreCliente"
@@ -97,7 +97,7 @@
                     class="form-control"
                     placeholder="Apellido Paterno"
                 />
-                <label for="apellidoMaternoRegistro" class="form-label"> <i class="fas fa-list"></i>Apellido Materno</label>
+                <label for="apellidoMaternoRegistro" class="form-label"> <i class="fas fa-user-friends"></i> Apellido Materno</label>
                 <input
                     type="text"
                     name="apellidoMaternoRegistro"
@@ -105,7 +105,7 @@
                     class="form-control"
                     placeholder="Apellido Materno"
                 />
-                <label for="nombreCliente" class="form-label"> <i class="fas fa-list"></i>Nombre</label>
+                <label for="nombreCliente" class="form-label"> <i class="fas fa-list"></i> Nombre</label>
                 <input
                     type="text"
                     name="nombreCliente"
@@ -113,7 +113,7 @@
                     class="form-control"
                     placeholder="Nombre Completo"
                 />
-                <label for="correoRegistro" class="form-label"> <i class="fas fa-envelope"></i>Correo</label>
+                <label for="correoRegistro" class="form-label"> <i class="fas fa-envelope"></i> Correo</label>
                 <input
                     type="text"
                     name="correoRegistro"
@@ -121,9 +121,9 @@
                     class="form-control"
                     placeholder="Correo Electronico"
                 />
-                <label for="claveRegistro" class="form-label"><i class="fas fa-key"></i>Contraseña</label>
+                <label for="claveRegistro" class="form-label"><i class="fas fa-key"></i> Contraseña</label>
                 <input
-                    type="text"
+                    type="password"
                     name="claveRegistro"
                     id="claveRegistro"
                     class="form-control"
@@ -155,8 +155,8 @@
                     <h2 class="h2 text-success border-bottom pb-3 border-light logo">Instituto Visual California</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            Otay, Blvd. Alberto Limón Padilla 1-8-8, La Pechuga, Fovissste, 22457 Tijuana, B.C.
+                            <i class="fas fa-map-marker-alt fa-fw" href=""></i>
+                           <a class="text-decoration-none" href="https://www.google.com/maps/place/Instituto+Visual+California/@32.5326146,-116.9474636,17z/data=!3m1!4b1!4m6!3m5!1s0x80d9471dc77f80dd:0x77e78ae8607ee6d!8m2!3d32.5326146!4d-116.9448887!16s%2Fg%2F11t5dx4wvp?entry=ttu&g_ep=EgoyMDI1MDEwNy4wIKXMDSoASAFQAw%3D%3D"> Otay, Blvd. Alberto Limón Padilla 1-8-8, La Pechuga, Fovissste, 22457 Tijuana, B.C.</a>
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
@@ -173,11 +173,11 @@
                 <div class="col-md-6 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Mas Informacion</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Inicio</a></li>
-                        <li><a class="text-decoration-none" href="#">Servicios</a></li>
-                        <li><a class="text-decoration-none" href="#">Agenda tu Cita</a></li>
-                        <li><a class="text-decoration-none" href="#">Tienda de Armazones</a></li>
-                        <li><a class="text-decoration-none" href="#">Ubicacion</a></li>
+                        <li><a class="text-decoration-none" href="<?php echo BASE_URL  ?>">Inicio</a></li>
+                       
+                        <li><a class="text-decoration-none" href="<?php echo BASE_URL . 'principal/agendar'?>">Agenda tu Cita</a></li>
+                        <li><a class="text-decoration-none" href="<?php echo BASE_URL . 'principal/shop'?>">Tienda de Armazones</a></li>
+                        <li><a class="text-decoration-none" href="<?php echo BASE_URL . 'principal/about'?>">Sobre Nosotros</a></li>
                     </ul>
                 </div>
 

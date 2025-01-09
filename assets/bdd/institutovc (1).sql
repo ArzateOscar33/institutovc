@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2024 a las 13:43:18
+-- Servidor: localhost:3306
+-- Tiempo de generación: 09-01-2025 a las 14:27:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,13 +39,14 @@ CREATE TABLE `calificaciones` (
 --
 
 INSERT INTO `calificaciones` (`id`, `cantidad`, `id_producto`, `id_cliente`) VALUES
-(1, 5, 1, 3),
-(2, 4, 2, 3),
-(3, 4, 3, 3),
+(1, 3, 1, 3),
+(2, 5, 2, 3),
+(3, 5, 3, 3),
 (4, 3, 5, 3),
 (5, 5, 9, 3),
 (6, 5, 1003, 3),
-(7, 3, 1001, 3);
+(7, 5, 1001, 3),
+(8, 5, 1002, 3);
 
 -- --------------------------------------------------------
 
@@ -1078,16 +1079,28 @@ INSERT INTO `categorias` (`id`, `categoria`, `imagen`, `estado`) VALUES
 CREATE TABLE `citas` (
   `id_cita` int(11) NOT NULL,
   `apellidoP` varchar(50) NOT NULL,
-  `apellidoM` int(50) NOT NULL,
-  `nombre` int(50) NOT NULL,
-  `correo` int(100) NOT NULL,
+  `apellidoM` varchar(50) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
   `telefono` varchar(10) NOT NULL,
   `fecha` date NOT NULL,
-  `hora` time NOT NULL,
+  `id_hora` int(11) NOT NULL,
   `token` varchar(100) DEFAULT NULL,
   `verify` int(11) NOT NULL DEFAULT 0,
-  `estado` int(11) NOT NULL DEFAULT 1
+  `estado` int(11) NOT NULL DEFAULT 1,
+  `color` varchar(25) NOT NULL DEFAULT '#01b8f7'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `citas`
+--
+
+INSERT INTO `citas` (`id_cita`, `apellidoP`, `apellidoM`, `nombre`, `correo`, `telefono`, `fecha`, `id_hora`, `token`, `verify`, `estado`, `color`) VALUES
+(6, 'Arzate', 'Arzate Martinez', 'Oscar', 'oscaytzr21@gmail.com', '6644913156', '2025-01-07', 1, 'cf7b14339679128fa4656bb0276d5fef', 0, 1, '#01b8f7'),
+(7, 'Arzate', 'Arzate Martinez', 'Oscar', 'oscaytzr21@gmail.com', '6644913156', '2025-01-07', 2, '9983fe9f84b0a53e82be8b82aa28391b', 0, 1, '#01b8f7'),
+(11, 'ARZATE', 'MARTINEZ', 'OSCAR', 'arzateoscar333@gmail.com', '6644913156', '2025-01-07', 3, NULL, 1, 1, '#37b607'),
+(14, 'Arzate', 'Arzate Martinez', 'Oscar', 'oscaytzr21@gmail.com', '6644913156', '2025-01-10', 2, 'f749cd93fc926051101f748675246a03', 0, 1, '#01b8f7'),
+(15, 'Arzate', 'Arzate Martinez', 'Oscar', 'arzateoscar333@gmail.com', '6644913156', '2025-01-10', 1, 'a62ca4c996680e020c3b2dbf3b8d0905', 0, 1, '#01b8f7');
 
 -- --------------------------------------------------------
 
@@ -1147,7 +1160,35 @@ INSERT INTO `detalle_pedidos` (`id`, `producto`, `precio`, `cantidad`, `id_pedid
 (7, 'Flour Dark Rye', 0.10, 1, 6, 3),
 (8, 'Salmon Steak - Cohoe 6 Oz', 625.83, 1, 6, 5),
 (9, 'Snapple Lemon Tea', 750.47, 1, 6, 9),
-(10, 'RayBan Modelo Negro 1', 200.00, 4, 7, 1001);
+(10, 'RayBan Modelo Negro 1', 200.00, 4, 7, 1001),
+(11, 'Apple - Fuji', 0.01, 1, 8, 2),
+(12, 'Apple - Fuji', 0.01, 1, 9, 2),
+(13, 'Flour Dark Rye', 0.10, 6, 10, 3),
+(14, 'RayBan', 50.00, 1, 10, 1002);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `horarios`
+--
+
+CREATE TABLE `horarios` (
+  `id_horario` int(11) NOT NULL,
+  `horario` time NOT NULL,
+  `estado` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `horarios`
+--
+
+INSERT INTO `horarios` (`id_horario`, `horario`, `estado`) VALUES
+(1, '08:00:00', 0),
+(2, '09:00:00', 0),
+(3, '10:00:00', 0),
+(4, '11:00:00', 0),
+(5, '12:00:00', 1),
+(6, '13:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1177,10 +1218,13 @@ INSERT INTO `pedidos` (`id`, `id_transaccion`, `monto`, `estado`, `fecha`, `emai
 (1, '2F445274Y32615053', 0.01, 'COMPLETED', '2024-11-26', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '3'),
 (2, '0LA08499628789931', 95.00, 'COMPLETED', '2024-11-26', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '2'),
 (3, '7P887818E6807281L', 0.10, 'COMPLETED', '2024-11-26', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '1'),
-(4, '4HP69578B94720335', 0.05, 'COMPLETED', '2024-11-26', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '1'),
+(4, '4HP69578B94720335', 0.05, 'COMPLETED', '2024-11-26', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '2'),
 (5, '0BL46102D9604152G', 3752.35, 'COMPLETED', '2024-11-27', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '3'),
 (6, '2D127176JJ933681K', 1376.40, 'COMPLETED', '2024-11-28', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '1'),
-(7, '2J8052535H4518700', 800.00, 'COMPLETED', '2024-11-28', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '3');
+(7, '2J8052535H4518700', 800.00, 'COMPLETED', '2024-11-28', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '3'),
+(8, '17J48965VK221914E', 0.01, 'COMPLETED', '2024-12-11', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '2'),
+(9, '9CU23056C2460305P', 0.01, 'COMPLETED', '2024-12-17', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '3'),
+(10, '236598479C5077244', 50.60, 'COMPLETED', '2024-12-21', 'sb-u6blu34135729@personal.example.com', 'John', 'Doe', NULL, 3, '3');
 
 -- --------------------------------------------------------
 
@@ -2232,8 +2276,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombres`, `apellidos`, `correo`, `clave`, `perfil`, `estado`) VALUES
-(1, 'Oscar  gabriel', 'Arzate', 'arzateoscar33@gmail.com', '$2y$10$ybPSDgxLefA2D2C7K/OeDuGNjbX8LLTRulyI1wkGJq.N1PXUnYXWq', NULL, 1),
-(4, 'Jose Manuel', 'Canseco', 'jose@gmail.com', '$2y$10$g2RBSp1Tw8gkGgIcBjEMuOeg2StgI2Ek0Mvqx59d9Ig.cOhRM2T3W', NULL, 1),
+(1, 'Oscar', 'Arzate', 'arzateoscar33@gmail.com', '$2y$10$ybPSDgxLefA2D2C7K/OeDuGNjbX8LLTRulyI1wkGJq.N1PXUnYXWq', NULL, 1),
+(4, 'Jose Manuel', 'Canseco', 'jose@gmail.com', '$2y$10$g2RBSp1Tw8gkGgIcBjEMuOeg2StgI2Ek0Mvqx59d9Ig.cOhRM2T3W', NULL, 0),
 (5, 'Jose Arturo', 'Escalante Ponce', 'jos3e@gmail.com', '$2y$10$g7im9.NpwA.6eVXGGb9bh.ZUohWWRIlU24.Rh32oc6R1hJ/XJgg1a', NULL, 1),
 (6, 'Benjamin', 'Ramirez Martinez', 'pruebaabenjamin@gmail.com', '$2y$10$rvHRNPilGQT9MHymonZwCuiKhJecjZEs8ZfkbSwRIt5IapYLOZevq', NULL, 0),
 (7, 'Jose Arturo', 'Canseco', 'jose2dsa@gmail.com', '$2y$10$Lnut8Kpy5sjdOsDXq0/6/eACFMQaTWD34aTOP8Bm2fQ1g6TC7rD6y', NULL, 0),
@@ -2260,7 +2304,8 @@ ALTER TABLE `categorias`
 -- Indices de la tabla `citas`
 --
 ALTER TABLE `citas`
-  ADD PRIMARY KEY (`id_cita`);
+  ADD PRIMARY KEY (`id_cita`),
+  ADD KEY `id_hora_idhorario` (`id_hora`);
 
 --
 -- Indices de la tabla `clientes`
@@ -2275,6 +2320,12 @@ ALTER TABLE `detalle_pedidos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pedidos_id_pedidos` (`id_pedido`),
   ADD KEY `id_productoxid` (`id_producto`);
+
+--
+-- Indices de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  ADD PRIMARY KEY (`id_horario`);
 
 --
 -- Indices de la tabla `pedidos`
@@ -2303,7 +2354,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -2315,7 +2366,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -2327,13 +2378,19 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `detalle_pedidos`
 --
 ALTER TABLE `detalle_pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -2350,6 +2407,12 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `citas`
+--
+ALTER TABLE `citas`
+  ADD CONSTRAINT `id_hora_idhorario` FOREIGN KEY (`id_hora`) REFERENCES `horarios` (`id_horario`);
 
 --
 -- Filtros para la tabla `detalle_pedidos`

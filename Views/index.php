@@ -25,7 +25,7 @@ include_once 'Views/template/header.php';
                             <p>
                                 En Instituto Visual California, encontrarás las gafas perfectas para ti. ¡Visítanos y descubre nuestra amplia variedad de modelos!
                                 <br>
-                                <a rel="sponsored" class="text-success" href="#" target="_blank">Agenda tu Cita</a>,
+                                <a rel="sponsored" class="text-success" href="<?php echo BASE_URL . 'principal/agendar'?>"  >Agenda tu Cita</a>,
 
                             </p>
                         </div>
@@ -102,7 +102,7 @@ include_once 'Views/template/header.php';
             <div class="col-12 col-md-2 p-5 mt-3">
                 <a href="<?php echo BASE_URL . 'principal/categorias/' . $categoria['id']; ?>"><img src="<?php echo $categoria['imagen'] ?>" class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3"><?php echo $categoria['categoria']; ?> </h5>
-                <p class="text-center"><a class="btn btn-success">Ir a Tienda</a></p>
+             
             </div>
 
         <?php  } ?>

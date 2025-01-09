@@ -1,17 +1,46 @@
 <?php include_once 'Views/template/header.php' ?>
-
+<style>
+        .card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: #fff;
+        }
+        .mission-icon {
+            background-color: #f39c12;
+        }
+        .vision-icon {
+            background-color: #27ae60;
+        }
+        .values-icon {
+            background-color: #2980b9;
+        }
+    </style>
 <!-- Start Section -->
 <section class="container py-5">
     <div class="row text-center pt-5 pb-3">
         <div class="col-lg-6 m-auto">
             <h1 class="h1"><b>Sobre Nosotros </b></h1>
-            <p>Soy Marcela W. Hernández Acedes, optometrista egresada con honores de la Universidad Xochicalco.
-                Mi pasión por la salud visual me llevó a especializarme en el cuidado de tus ojos.
-                En mi óptica, te ofrezco una atención personalizada y tratamientos de vanguardia,
-                respaldados por los conocimientos adquiridos en mi formación académica.
-                Confía en mi experiencia para cuidar de tu visión.
+            <p>En Instituto Visual California, estamos a la vanguardia de la tecnología óptica. Ofrecemos las últimas novedades en lentes y tratamientos para mejorar tu visión y tu calidad de vida.
+
+Pero no solo nos preocupamos por tu salud visual. También estamos comprometidos con nuestra comunidad. A través de diversas iniciativas, buscamos promover la importancia de la salud ocular y garantizar el acceso a servicios ópticos de calidad para todos.
+
             </p>
-            <img class="img-fluid" src="../assets/img/wen.jpg" alt="">
+             
         </div>
 
     </div>
@@ -23,83 +52,56 @@
 <section class="bg-light py-5">
     <div class="container my-4">
         <div class="row text-center py-3">
-            <div class="col-lg-6 m-auto">
-                <h1 class="h1">Nuestras Marcas </h1>
-                <p>
-                    En el <b>Instituto Visual California</b> tenemos las mejores marcas de armazonez y lentes de contacto
-                </p>
-            </div>
-            <div class="col-lg-9 m-auto tempaltemo-carousel">
-                <div class="row d-flex flex-row">
-                    <!--Controls-->
-                    <div class="col-1 align-self-center">
-                        <a class="h1" href="#templatemo-slide-brand" role="button" data-bs-slide="prev">
-                            <i class="text-light fas fa-chevron-left"></i>
-                        </a>
+            <div class="col-lg-12 m-auto">
+                <h1 class="h1">Mision, Vision y Valores</h1>
+                <div class="container py-5">
+        <div class="row g-4">
+            <!-- Mission Card -->
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <div class="icon-box mission-icon">
+                        <i class="fas fa-rocket"></i>
                     </div>
-                    <!--End Controls-->
-
-                    <!--Carousel Wrapper-->
-                    <div class="col">
-                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="templatemo-slide-brand" data-bs-ride="carousel">
-                            <!--Slides-->
-                            <div class="carousel-inner product-links-wap" role="listbox">
-
-                                <!--First slide-->
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_001.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_002.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_003.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_004.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--End First slide-->
-
-                                <!--Second slide-->
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_005.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_006.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_007.png'; ?> " alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="<?php echo BASE_URL . 'assets/img/brand_002.png'; ?>" alt="Brand Logo"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--End Second slide-->
-
-
-
-                            </div>
-                            <!--End Slides-->
-                        </div>
-                    </div>
-                    <!--End Carousel Wrapper-->
-
-                    <!--Controls-->
-                    <div class="col-1 align-self-center">
-                        <a class="h1" href="#templatemo-slide-brand" role="button" data-bs-slide="next">
-                            <i class="text-light fas fa-chevron-right"></i>
-                        </a>
-                    </div>
-                    <!--End Controls-->
+                    <h4 class="card-title fw-bold text-warning">MISION</h4> 
+                    <p class="card-text">
+                    Proveer servicios ópticos de alta calidad, ofreciendo una atención
+personalizada y profesional que mejore la salud visual de nuestros
+clientes. Nos comprometemos a ofrecer una amplia gama de productos
+ópticos, incluyendo lentes y monturas de la mejor calidad, acompañados
+de un servicio excepcional que supere las expectativas de nuestros
+clientes.
+                    </p>
                 </div>
             </div>
+            <!-- Vision Card -->
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <div class="icon-box vision-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-success">VISION</h4> 
+                    <p class="card-text">Ser líderes en el sector óptico, reconocidos por nuestra excelencia en
+el cuidado visual y por la innovación en nuestros servicios y productos.
+Aspiramos a expandir nuestra presencia a nivel regional, brindando
+soluciones visuales de vanguardia y contribuyendo al bienestar visual
+de la comunidad.</p>
+                </div>
+            </div>
+            <!-- Values Card -->
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <div class="icon-box values-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4 class="card-title fw-bold text-primary">VALORES</h4> 
+                    <p class="card-text"><ul>
+      <li><strong>Excelencia:</strong> Buscamos siempre la perfección en cada detalle, desde la atención al cliente hasta la calidad de nuestros productos.</li>
+      <li><strong>Confianza:</strong> Construimos relaciones sólidas y duraderas basadas en la transparencia y la honestidad con nuestros clientes.</li>
+      <li><strong>Profesionalismo:</strong> Contamos con un equipo altamente capacitado y actualizado en las últimas tendencias y tecnologías del sector óptico.</li>
+      </ul> </p>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </section>
@@ -113,7 +115,25 @@
                 Ubicanos en el mapa de una manera rapida y sencilla
             </p>
         </div>
-
+<!-- Map Section -->
+<div class="row mt-5">
+            <div class="col-12"> 
+                <div class="card shadow-sm">
+                    <div class="card-body p-0">
+                    <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3362.3352500207823!2d-116.94746357484243!3d32.53261462797978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d9471dc77f80dd%3A0x77e78ae8607ee6d!2sInstituto%20Visual%20California!5e0!3m2!1ses-419!2smx!4v1695756017882!5m2!1ses-419!2smx" 
+    width="100%" 
+    height="450" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
 </section>

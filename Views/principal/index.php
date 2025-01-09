@@ -25,7 +25,7 @@ include_once 'Views/template/header.php';
                                 <p>
                                 En Instituto Visual California, encontrarás las gafas perfectas para ti. ¡Visítanos y descubre nuestra amplia variedad de modelos!
        <br>
-                                     <a rel="sponsored" class="text-success" href="#" target="_blank">Agenda tu Cita</a>,
+                                     <a class="nav-link" href="<?php echo BASE_URL . 'principal/agendar'?>"  >Agenda tu Cita</a>,
                                  
                                 </p>
                             </div>

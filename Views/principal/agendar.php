@@ -37,10 +37,7 @@
                     <label for="inputemail">Correo</label>
                     <input type="email" class="form-control mt-1" name="iCorreo"id="iCorreo" placeholder="Introduzca su Coreo">
                 </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="">Telefono</label>
-                    <input type="text" class="form-control mt-1" name="iTelefono"id="iTelefono" placeholder="Introduzca su Num. Telefono">
-                </div>
+                
                 <div class="form-group col-md-6 mb-3">
                     <label for="">Selecciona la fecha de tu cita</label>
                     <input type="date" class="form-control mt-1" name="fechaCita" id="fechaCita"  >
@@ -49,16 +46,19 @@
                     <label for="fechaCita">Selecciona el Horario de tu Cita</label>
                    
                         
-                    <select class="form-select" aria-label="Default select example" name="selectHorarios" id="selectHorarios">
+                    <select class="form-control mt-1" aria-label="Default select example" name="selectHorarios" id="selectHorarios">
                      
                     <option  value="">Selecciona un horario</option>
                      
                     </select>
                     
                 </div>
-
+                <div class="form-group col-md-6 mb-3">
+                    <label for="">Telefono</label>
+                    <input type="text" class="form-control mt-1" name="iTelefono"id="iTelefono" placeholder="Introduzca su Num. Telefono">
+                </div>
                 <div class="row">
-                    <div class="col text-end mt-2">
+                    <div class="col text-end mt-1">
                         <button type="submit" id="btnAgendar" name="btnAgendar" class="btn btn-success btn-lg px-3">Agendar Cita</button>
                     </div>
                 </div>

@@ -155,8 +155,7 @@
 <!-- Start Script -->
 <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.6.0.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/jquery-migrate-1.2.1.min.js"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/templatemo.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script> 
 <script src="<?php echo BASE_URL; ?>assets/js/all.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
 <!-- End Script -->
