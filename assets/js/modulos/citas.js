@@ -175,17 +175,26 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function enviarCorreoAgenda(correo, token) {
+		  // Obtén los valores de los campos 
+		  const iNombreEC = document.getElementById("iNombre").value;
+		 const fechaCitaEC = document.getElementById("fechaNuevaCita").value;
+		 const selectHorariosEC = document.getElementById("selectHorarios").value;
 		let formData = new FormData();
 		formData.append("token", token);
+		formData.append("iNombre", iNombreEC);
+		formData.append("fechaCita", fechaCitaEC);
+		formData.append("selectHorarios", selectHorariosEC);
 		formData.append("iCorreo", correo);
+		console.log( iNombreEC, fechaCitaEC, selectHorariosEC);
 		const url = base_url + "principal/enviarCorreoAgenda";
 		const http = new XMLHttpRequest();
 		http.open("POST", url, true);
 		http.send(formData);
 		http.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText);
 				const res = JSON.parse(this.responseText);
-				console.log(res);
+				
 				Swal.fire({
 					title: "Aviso",
 					text: res.msg,
@@ -193,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				});
 				if (res.icono == "success") {
 					setTimeout(() => {
-						window.location.reload();
+						//window.location.reload();
 					}, 2000);
 				}
 			}

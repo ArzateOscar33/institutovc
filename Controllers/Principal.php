@@ -171,7 +171,15 @@ class Principal extends Controller
 
                 $resultado = $this->model->registrarCita($apellidoP, $apellidoM, $nombre, $correo, $telefono, $fecha, $hora, $token);
                 if ($resultado > 0) {
-                    $mensaje = array('msg' => 'Cita registrada con éxito', 'icono' => 'success', 'token' => $token);
+                    $mensaje = array(
+                        'msg' => 'Cita registrada con éxito',
+                        'icono' => 'success',
+                        'token' => $token,
+                        'iCorreo' => $correo,
+                        'iNombre' => $nombre,
+                        'fechaCita' => $fecha,
+                        'selectHorarios' => $hora
+                    );
                 } else {
                     $mensaje = array('msg' => 'Error al registrar la cita', 'icono' => 'error');
                 }
@@ -190,7 +198,11 @@ class Principal extends Controller
             //Create an instance; passing `true` enables exceptions
             $mail = new PHPMailer(true);
 
-            try {
+            try { 
+        $token = $_POST['token'];
+        $nombre = $_POST['iNombre'];
+        $fecha = $_POST['fechaCita'];
+        $hora = $_POST['selectHorarios'];
                 //Server settings
                 $mail->SMTPDebug = 0;                      //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
@@ -213,10 +225,10 @@ class Principal extends Controller
                 //Content
                 $mail->isHTML(true); 
                 // Aquí construimos el mensaje dinámico
-                $mensaje_cuerpo = "Estimado/a " .  ",<br><br>";
+                $mensaje_cuerpo = "Estimado/a $nombre" . ",<br><br>";
                 $mensaje_cuerpo .= "Se ha registrado tu cita con los siguientes datos:<br>";
-                $mensaje_cuerpo .= "Fecha: " .  "<br>";
-                $mensaje_cuerpo .= "Hora: " .  "<br><br>";
+                $mensaje_cuerpo .= "Fecha: $fecha" .   "<br>";
+                $mensaje_cuerpo .= "Hora: $hora" .   "<br><br>";
                 $mensaje_cuerpo .= "Para confirmar tu cita, por favor haz clic en el siguiente enlace:<br>";
                 $mensaje_cuerpo .= "<a href='" . BASE_URL . "principal/verificarCorreoAgenda/" . $_POST['token'] . "'>CLIC AQUI</a>";
 

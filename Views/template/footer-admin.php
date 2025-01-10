@@ -12,10 +12,10 @@
                             <div class="row">
                                 <div class="col-md-12">
 
-                                    <form class="col-md-12 m-auto" method="post" role="form" id="frmAgendarCita">
+                                    <form class="col-md-12 m-auto" method="POST" role="form" id="frmAgendarCita">
                                         <div class="row">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="fechaNuevaCita" name="fechaNuevaCita" type="date" name="fechaNuevaCita">
+                                                <input class="form-control" id="fechaNuevaCita" name="fechaNuevaCita" type="date"  >
                                                 <label for="" class="form-label">Fecha De La Cita</label>
                                                 <div class="row">
                                                     <div class="form-group col-md-6 mb-3">
