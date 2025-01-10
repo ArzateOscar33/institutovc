@@ -114,17 +114,26 @@ document.addEventListener("DOMContentLoaded", function () {
     
     function enviarCorreoAgenda(correo, token) {
 
-        // Obtén los valores de los campos 
-     const iNombreEC = document.getElementById("iNombre").value;
-    const fechaCitaEC = document.getElementById("fechaCita").value;
-    const selectHorariosEC = document.getElementById("selectHorarios").value;
-        let formData = new FormData();
-        formData.append("token", token);
+    	  // Obtén los valores de los campos 
+		  const iNombreEC = document.getElementById("iNombre").value;
+		 const fechaCitaEC = document.getElementById("fechaCita").value;
+         const iapMaternoEC = document.getElementById("iapMaterno").value;
+         const iapPaternoEC=document.getElementById("iapPaterno").value
+		     // Obtén el elemento select y su opción seleccionada
+			 const selectHorariosEC = document.getElementById("selectHorarios");
+			 const horarioId = selectHorarios.value; // ID del horario seleccionado (value del option)
+			 const horarioTexto = selectHorarios.options[selectHorarios.selectedIndex].text; // Texto del horario seleccionado
+		 
+
+		let formData = new FormData();
+		formData.append("token", token);
 		formData.append("iNombre", iNombreEC);
 		formData.append("fechaCita", fechaCitaEC);
-		formData.append("selectHorarios", selectHorariosEC);
+		formData.append("selectHorarios", horarioTexto);
+		formData.append("iapMaterno", iapMaternoEC);
+		formData.append("iapPaterno", iapPaternoEC);
 		formData.append("iCorreo", correo);
-		console.log(correo, token, iNombreEC, fechaCitaEC, selectHorariosEC);
+		//console.log( iNombreEC, fechaCitaEC, horarioTexto);
         const url = base_url + "principal/enviarCorreoAgenda";
         const http = new XMLHttpRequest();
         http.open("POST", url, true);
@@ -132,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 const res = JSON.parse(this.responseText);
-                console.log(res);
+                //console.log(res);
                 Swal.fire({
                     title: "Aviso",
                     text: res.msg,
@@ -140,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 if (res.icono == "success") {
                     setTimeout(() => {
-                       // window.location.reload();
+                        window.location.reload();
                     }, 2000);
                 }
             }

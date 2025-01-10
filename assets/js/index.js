@@ -8,7 +8,7 @@ function productosMinimos() {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+          //  console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             let nombre = [];
             let cantidad = [];
@@ -81,7 +81,7 @@ function topProductos() {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           // console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             let nombre = [];
             let cantidad = [];

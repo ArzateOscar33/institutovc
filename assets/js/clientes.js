@@ -154,7 +154,7 @@ function registrarPedido(datos) {
 			try {
 				// console.log(this.responseText); // Útil para verificar qué está devolviendo el servidor
 				const res = JSON.parse(this.responseText); 
-				console.log(res);// Analiza la respuesta JSON
+				//console.log(res);// Analiza la respuesta JSON
 				Swal.fire("Aviso", res.msg, res.icono);
 				if (res.icono == "success") {
 					localStorage.removeItem("listaCarrito");
@@ -182,7 +182,7 @@ function verPedido(idPedido) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           // console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             let html = '';
             if (res.pedido.proceso == 1) {
@@ -220,7 +220,7 @@ function agregarCalificacion(id_producto, cantidad) {
     }));
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           // console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             alertaPerzanalizada(res.msg, res.icono);
             if (res.icono == 'success') {

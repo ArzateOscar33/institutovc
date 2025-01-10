@@ -174,40 +174,50 @@ document.addEventListener("DOMContentLoaded", function () {
 		Swal.fire("Aviso?", msg.toUpperCase(), icono);
 	}
 
-	function enviarCorreoAgenda(correo, token) {
-		  // Obtén los valores de los campos 
-		  const iNombreEC = document.getElementById("iNombre").value;
-		 const fechaCitaEC = document.getElementById("fechaNuevaCita").value;
-		 const selectHorariosEC = document.getElementById("selectHorarios").value;
-		let formData = new FormData();
-		formData.append("token", token);
-		formData.append("iNombre", iNombreEC);
-		formData.append("fechaCita", fechaCitaEC);
-		formData.append("selectHorarios", selectHorariosEC);
-		formData.append("iCorreo", correo);
-		console.log( iNombreEC, fechaCitaEC, selectHorariosEC);
-		const url = base_url + "principal/enviarCorreoAgenda";
-		const http = new XMLHttpRequest();
-		http.open("POST", url, true);
-		http.send(formData);
-		http.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				console.log(this.responseText);
-				const res = JSON.parse(this.responseText);
-				
-				Swal.fire({
-					title: "Aviso",
-					text: res.msg,
-					icon: res.icono,
-				});
-				if (res.icono == "success") {
-					setTimeout(() => {
-						//window.location.reload();
-					}, 2000);
-				}
-			}
-		};
-	}
+    function enviarCorreoAgenda(correo, token) {
+
+		// Obtén los valores de los campos 
+		const iNombreEC = document.getElementById("iNombre").value;
+	   const fechaCitaEC = document.getElementById("fechaNuevaCita").value;
+	   const iapMaternoEC = document.getElementById("iapMaterno").value;
+	   const iapPaternoEC=document.getElementById("iapPaterno").value
+		   // Obtén el elemento select y su opción seleccionada
+		   const selectHorariosEC = document.getElementById("selectHorarios");
+		   const horarioId = selectHorarios.value; // ID del horario seleccionado (value del option)
+		   const horarioTexto = selectHorarios.options[selectHorarios.selectedIndex].text; // Texto del horario seleccionado
+	   
+
+	  let formData = new FormData();
+	  formData.append("token", token);
+	  formData.append("iNombre", iNombreEC);
+	  formData.append("fechaNuevaCita", fechaCitaEC);
+	  formData.append("selectHorarios", horarioTexto);
+	  formData.append("iapMaterno", iapMaternoEC);
+	  formData.append("iapPaterno", iapPaternoEC);
+	  formData.append("iCorreo", correo);
+	  //console.log( iNombreEC, fechaCitaEC, horarioTexto);
+	  const url = base_url + "citas/enviarCorreoAgenda";
+	  const http = new XMLHttpRequest();
+	  http.open("POST", url, true);
+	  http.send(formData);
+	  http.onreadystatechange = function () {
+		  if (this.readyState == 4 && this.status == 200) {
+			//console.log(this.responseText);
+			  const res = JSON.parse(this.responseText);
+			  
+			  Swal.fire({
+				  title: "Aviso",
+				  text: res.msg,
+				  icon: res.icono,
+			  });
+			  if (res.icono == "success") {
+				  setTimeout(() => {
+					  window.location.reload();
+				  }, 2000);
+			  }
+		  }
+	  };
+  }
 
 	eliminarAgenda.addEventListener("click", function () {
 		modalAgenda.hide();
@@ -230,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				http.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
 						const res = JSON.parse(this.responseText);
-						console.log(res);
+						//console.log(res);
 						if (res.icono == "success") {
 							calendar.refetchEvents();
 						}

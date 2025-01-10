@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
         http.send(data);
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+               // console.log(this.responseText);
                 const res = JSON.parse(this.responseText);
                 if (res.icono == "success") {
                     myModal.hide();
@@ -72,7 +72,7 @@ function eliminarCat(idCat) {
             http.send();
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
+                   // console.log(this.responseText);
                     const res = JSON.parse(this.responseText);
                     if (res.icono == "success") {
                         tblCategorias.ajax.reload();
@@ -91,7 +91,7 @@ function editCat(idCat) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            //console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             document.querySelector('#id').value = res.id;
             document.querySelector('#categoria').value = res.categoria;

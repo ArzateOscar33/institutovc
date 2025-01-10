@@ -198,11 +198,12 @@ class Principal extends Controller
             //Create an instance; passing `true` enables exceptions
             $mail = new PHPMailer(true);
 
-            try { 
-        $token = $_POST['token'];
-        $nombre = $_POST['iNombre'];
-        $fecha = $_POST['fechaCita'];
-        $hora = $_POST['selectHorarios'];
+            try {
+                $token = $_POST['token'];
+                $nombre = $_POST['iNombre'];
+                //$fecha = $_POST['fechaNuevaCita'];
+                $fecha = $_POST['fechaCita'];
+                $hora = $_POST['selectHorarios'];
                 //Server settings
                 $mail->SMTPDebug = 0;                      //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
@@ -223,14 +224,113 @@ class Principal extends Controller
                 // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
                 //Content
-                $mail->isHTML(true); 
+                $mail->isHTML(true);
                 // Aquí construimos el mensaje dinámico
-                $mensaje_cuerpo = "Estimado/a $nombre" . ",<br><br>";
-                $mensaje_cuerpo .= "Se ha registrado tu cita con los siguientes datos:<br>";
-                $mensaje_cuerpo .= "Fecha: $fecha" .   "<br>";
-                $mensaje_cuerpo .= "Hora: $hora" .   "<br><br>";
-                $mensaje_cuerpo .= "Para confirmar tu cita, por favor haz clic en el siguiente enlace:<br>";
-                $mensaje_cuerpo .= "<a href='" . BASE_URL . "principal/verificarCorreoAgenda/" . $_POST['token'] . "'>CLIC AQUI</a>";
+                $mensaje_cuerpo = '
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #002855;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .details {
+            padding: 20px;
+        }
+        .details h2 {
+            font-size: 20px;
+            margin: 0 0 10px;
+            color: #002855;
+        }
+        .details p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color:rgb(4, 0, 0);
+            background-color:rgb(241, 244, 232);
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .footer {
+            padding: 20px;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .address {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tu cita ha sido confirmada</h1>
+        </div>
+        <div class="details">
+            <h2>Detalles de la cita</h2>
+            <p><strong>Nombre:</strong> ' . htmlspecialchars($_POST['iNombre']) . ' ' . htmlspecialchars($_POST['iapPaterno']) . ' ' . htmlspecialchars($_POST['iapMaterno']) . '</p>
+            <p><strong>Fecha:</strong> ' . htmlspecialchars($_POST['fechaCita']) . '</p>
+            <p><strong>Hora:</strong> ' . htmlspecialchars($_POST['selectHorarios']) . '</p>
+            <p><strong>Atención:</strong> La Lic. Opt. Marcela Hernandez estará atendiéndote en la fecha y hora establecida.</p>
+        </div>
+        <div class="button-container">
+            <a href="' . BASE_URL . 'principal/verificarCorreoAgenda/' . htmlspecialchars($_POST['token']) . '" class="button">Confirmar Cita</a>
+        </div>
+        <div class="address">
+            <h3>Ubicación</h3>
+            <p>Óptica Otay</p>
+            <p>Blvd. Alberto Limón Padilla 1-8-8,</p>
+            <p>La Pechuga, Fovissste, 22457 Tijuana, B.C.</p>
+        </div>
+        <div class="footer">
+            <p>Gracias por tu preferencia</p>
+            <p>Instituto Visual California</p>
+            <p><a href="https://www.google.com/maps/place/Instituto+Visual+California/@32.5326146,-116.9474636,17z/data=!3m1!4b1!4m6!3m5!1s0x80d9471dc77f80dd:0x77e78ae8607ee6d!8m2!3d32.5326146!4d-116.9448887!16s%2Fg%2F11t5dx4wvp?entry=ttu&g_ep=EgoyMDI1MDEwOC4wIKXMDSoASAFQAw%3D%3D">Cómo llegar</a> | <a href="' . BASE_URL . 'principal/shop' . '">Visita Nuestra Tienda</a></p>
+        </div>
+    </div>
+</body>
+</html>
+';
 
                 //Set email format to HTML
                 $mail->Subject = 'Mensaje desde : ' . TITLE . ' CONFIRMA TU CITA ';
@@ -261,7 +361,8 @@ class Principal extends Controller
     //obtener  horarios disponibles para una fecha
 
     // Método para obtener horarios disponibles
-    public function getHorariosDisponibles() {
+    public function getHorariosDisponibles()
+    {
         if (isset($_POST['fechaCita'])) {
             $fechaCita = $_POST['fechaCita'];
             $horarios = $this->model->obtenerHorariosDisponibles($fechaCita);

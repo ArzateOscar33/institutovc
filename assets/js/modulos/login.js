@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
             http.send(data);
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
+                   // console.log(this.responseText);
                     const res = JSON.parse(this.responseText);
                     if (res.icono == 'success') {
                         setTimeout(() => {

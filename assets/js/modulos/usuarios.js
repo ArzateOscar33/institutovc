@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
         http.send(data);
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+            //    console.log(this.responseText);
                 const res = JSON.parse(this.responseText);
                 if (res.icono == "success") {
                     myModal.hide();
@@ -70,7 +70,7 @@ function eliminarUser(idUser) {
             http.send();
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
+                  //  console.log(this.responseText);
                     const res = JSON.parse(this.responseText);
                     if (res.icono == "success") {
                         tblUsuario.ajax.reload();
@@ -89,7 +89,7 @@ function editUser(idUser) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           // console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             document.querySelector('#id').value = res.id;
             document.querySelector('#nombre').value = res.nombres;

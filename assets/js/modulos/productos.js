@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
         http.send(data);
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
+               // console.log(this.responseText);
                 const res = JSON.parse(this.responseText);
                 if (res.icono == "success") {
                     frm.reset();
@@ -123,7 +123,7 @@ function eliminarPro(idPro) {
             http.send();
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
+                   // console.log(this.responseText);
                     const res = JSON.parse(this.responseText);
                     if (res.icono == "success") {
                         tblProductos.ajax.reload();
@@ -142,7 +142,7 @@ function editPro(idPro) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           // console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             document.querySelector("#id").value = res.id;
             document.querySelector("#nombre").value = res.nombre;
@@ -164,7 +164,7 @@ function agregarImagenes(idPro) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            //console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             document.querySelector("#idProducto").value = idPro;
             let html = '';
@@ -204,7 +204,7 @@ function eliminar(idPro, nombre) {
     }));
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+           // console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             Swal.fire("Aviso?", res.msg, res.icono);
             if (res.icono == 'success') {

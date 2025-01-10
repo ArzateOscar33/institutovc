@@ -38,7 +38,7 @@ function getListaDeseo(){
 function btnEliminarDeseo(){
 
     let listaEliminar=document.querySelectorAll('.btnEliminarDeseo');
-    console.log(listaEliminar);
+   // console.log(listaEliminar);
     for (let i = 0; i < listaEliminar.length; i++) {
         listaEliminar[i].addEventListener('click',function(){
             let idProducto=listaEliminar[i].getAttribute('prod');

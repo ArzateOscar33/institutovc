@@ -159,7 +159,7 @@ function cantidadCarrito(){
 function btnEliminarCarrito(){
 
     let listaEliminar=document.querySelectorAll('.btnEliminarCarrito');
-    console.log(listaEliminar);
+    //console.log(listaEliminar);
     for (let i = 0; i < listaEliminar.length; i++) {
         listaEliminar[i].addEventListener('click',function(){
             let idProducto=listaEliminar[i].getAttribute('prod');
