@@ -304,7 +304,7 @@ class Principal extends Controller
 <body>
     <div class="container">
         <div class="header">
-            <h1>Tu cita ha sido confirmada</h1>
+            <h1>Tu cita ha sido registrada</h1>
         </div>
         <div class="details">
             <h2>Detalles de la cita</h2>
@@ -352,12 +352,17 @@ class Principal extends Controller
     {
         $verificar = $this->model->getToken($token);
         if (!empty($verificar)) {
-            $data = $this->model->actualizarVerify($verificar['id_cita']);
-            print_r($data);
+            $this->model->actualizarVerify($verificar['id_cita']);
+            // Establece un mensaje en la sesión para mostrar la alerta
+            $_SESSION['alerta_confirmacion'] = "¡Cita confirmada con éxito!";
             header('Location: ' . BASE_URL);
-        } //if
+        } else {
+            // Mensaje de error si no se encuentra el token
+            $_SESSION['alerta_error'] = "No se pudo confirmar la cita. Token inválido.";
+            header('Location: ' . BASE_URL);
+        }
     }
-
+    
     //obtener  horarios disponibles para una fecha
 
     // Método para obtener horarios disponibles

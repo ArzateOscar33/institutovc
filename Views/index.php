@@ -3,6 +3,32 @@ include_once 'Views/template/header.php';
 
 ?>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<?php if (isset($_SESSION['alerta_confirmacion'])): ?>
+    <script>
+        Swal.fire({
+            title: '¡Cita Confirmada!',
+            text: "<?php echo $_SESSION['alerta_confirmacion']; ?>",
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+    </script>
+    <?php unset($_SESSION['alerta_confirmacion']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['alerta_error'])): ?>
+    <script>
+        Swal.fire({
+            title: 'Error',
+            text: "<?php echo $_SESSION['alerta_error']; ?>",
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    </script>
+    <?php unset($_SESSION['alerta_error']); ?>
+<?php endif; ?>
 
 <!-- Start Banner Hero -->
 <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
