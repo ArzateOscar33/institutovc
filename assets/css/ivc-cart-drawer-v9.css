@@ -1,0 +1,199 @@
+/* IVC · Carrito lateral V9. CSS estrictamente aislado del diseño global. */
+.ivc-public .ivc-cart-drawer {
+  --ivc-c-navy: #153B5B;
+  --ivc-c-blue: #287CB3;
+  --ivc-c-light: #EAF6FC;
+  --ivc-c-muted: #587185;
+  --bs-offcanvas-width: 500px;
+  width: min(100vw, 500px) !important;
+  border: 0;
+  box-shadow: -20px 0 70px rgba(14, 42, 67, .16);
+  background: #fff;
+  color: var(--ivc-c-navy);
+  font-family: 'DM Sans', 'Manrope', sans-serif;
+}
+.ivc-public .ivc-cart-drawer *, .ivc-public .ivc-cart-drawer *::before,
+.ivc-public .ivc-cart-drawer *::after {box-sizing:border-box}
+.ivc-public .ivc-cart-drawer .ivc-cart-drawer__header {
+  display:flex; gap:16px; align-items:flex-start; padding:32px 30px 22px;
+  border-bottom:1px solid #e3edf4; flex-shrink:0;
+}
+.ivc-public .ivc-cart-drawer__heading {min-width:0; flex:1}
+.ivc-public .ivc-cart-drawer__eyebrow {
+  display:block; color:var(--ivc-c-blue); font-size:10px !important; font-weight:800 !important;
+  letter-spacing:2.4px; margin-bottom:8px;
+}
+.ivc-public .ivc-cart-drawer__title-line {display:flex; align-items:center; gap:12px}
+.ivc-public .ivc-cart-drawer #ivcCartLabel {
+  margin:0; color:var(--ivc-c-navy); font-family:'Manrope',sans-serif;
+  font-size:29px !important; font-weight:800 !important; letter-spacing:-1.5px;
+}
+.ivc-public .ivc-cart-drawer__count {
+  border-radius:30px; display:inline-flex; align-items:center; justify-content:center;
+  background:#e8f4fb; padding:4px 10px; min-width:30px;
+  font-size:12px !important; font-weight:800 !important; color:var(--ivc-c-blue);
+}
+.ivc-public .ivc-cart-drawer__heading p {
+  color:var(--ivc-c-muted); font-size:13px !important; font-weight:400 !important;
+  margin:8px 0 0; line-height:1.65;
+}
+.ivc-public .ivc-cart-drawer__close {
+  width:40px; height:40px; flex-shrink:0; padding:11px; border:1px solid #dde9f1;
+  border-radius:50%; background:#fff; color:var(--ivc-c-navy);
+  transition:background .2s,border-color .2s,transform .2s; cursor:pointer;
+}
+.ivc-public .ivc-cart-drawer__close svg {width:18px; height:18px}
+.ivc-public .ivc-cart-drawer__close:hover {background:var(--ivc-c-light); border-color:#bbd8e9; transform:rotate(90deg)}
+.ivc-public .ivc-cart-drawer .ivc-cart-drawer__body {
+  padding:22px 30px 28px; overflow-y:auto; min-height:0; display:block;
+  scrollbar-color:#c1dceb transparent; scrollbar-width:thin;
+}
+.ivc-public .ivc-cart-drawer__support {
+  background:#f0f8fc; border:1px solid #dfedf6; border-radius:12px; padding:13px 15px;
+  color:#456e88; font-size:12px !important; font-weight:600 !important;
+  margin-bottom:20px; display:flex; align-items:center; gap:8px;
+}
+.ivc-public .ivc-cart-drawer__support-icon {color:var(--ivc-c-blue); font-size:16px !important}
+.ivc-public .ivc-cart-drawer__table {display:block; width:100%; border:0 !important; margin:0; border-collapse:separate}
+.ivc-public .ivc-cart-drawer__table tbody {display:flex; flex-direction:column; gap:12px; width:100%}
+.ivc-public .ivc-cart-drawer__table tbody tr {
+  display:grid; grid-template-areas:'photo name remove' 'photo price remove' 'photo amount subtotal';
+  grid-template-columns:97px minmax(0,1fr) auto; grid-template-rows:auto auto 1fr;
+  column-gap:14px; row-gap:4px; align-items:start;
+  background:#fff; border:1px solid #e6eef4; border-radius:15px;
+  padding:12px; min-height:122px;
+  transition:box-shadow .25s,border-color .25s,transform .25s;
+}
+.ivc-public .ivc-cart-drawer__table tbody tr:hover {
+  border-color:#bfdeef; box-shadow:0 14px 32px rgba(24,64,94,.08);
+  transform:translateY(-2px);
+}
+.ivc-public .ivc-cart-drawer__table td {
+  display:block; width:auto !important; min-width:0; padding:0 !important;
+  border:0 !important; background:transparent !important; box-shadow:none !important;
+  font-weight:500 !important; color:var(--ivc-c-navy); font-size:13px !important;
+}
+.ivc-public .ivc-cart-drawer__table td:nth-child(1) {grid-area:photo; align-self:stretch}
+.ivc-public .ivc-cart-drawer__table td:nth-child(1) img {
+  display:block; width:100% !important; height:105px; max-width:none; aspect-ratio:1;
+  object-fit:contain; border:0 !important; border-radius:10px !important;
+  padding:8px; background:#f2f7fa; transition:transform .3s;
+}
+.ivc-public .ivc-cart-drawer__table tbody tr:hover td:nth-child(1) img {transform:scale(1.04)}
+.ivc-public .ivc-cart-drawer__table td:nth-child(2) {
+  grid-area:name; font-family:'Manrope',sans-serif; font-size:13px !important;
+  line-height:1.45; font-weight:800 !important; padding:3px 0 0 !important; overflow-wrap:anywhere;
+}
+.ivc-public .ivc-cart-drawer__table td:nth-child(3) {grid-area:price; color:#678097; font-size:12px !important}
+.ivc-public .ivc-cart-drawer__table td:nth-child(3)::before {content:'Precio · '; color:#8ba2b2}
+.ivc-public .ivc-cart-drawer__table td:nth-child(3) .badge {
+  background:none !important; color:#678097 !important; padding:0 !important;
+  font:inherit !important; border:0; white-space:normal; text-align:left;
+}
+.ivc-public .ivc-cart-drawer__table td:nth-child(4) {grid-area:amount; align-self:end}
+.ivc-public .ivc-cart-drawer__table td:nth-child(4) input {
+  border:1px solid #d6e4ed; border-radius:9px; width:67px !important; min-height:35px;
+  padding:5px 8px; background:#fff; color:var(--ivc-c-navy);
+  font-size:13px !important; font-weight:700 !important; box-shadow:none;
+}
+.ivc-public .ivc-cart-drawer__table td:nth-child(4) input:focus {border-color:#287CB3; box-shadow:0 0 0 3px rgba(40,124,179,.12)}
+.ivc-public .ivc-cart-drawer__table td:nth-child(5) {
+  grid-area:subtotal; align-self:end; text-align:right;
+  color:var(--ivc-c-navy); font-size:13px !important; font-weight:800 !important;
+}
+.ivc-public .ivc-cart-drawer__table td:nth-child(5)::before {content:'Subtotal'; display:block; color:#8ba2b2; font-size:10px !important; font-weight:500 !important}
+.ivc-public .ivc-cart-drawer__table td:nth-child(6) {grid-area:remove}
+.ivc-public .ivc-cart-drawer__table td:nth-child(6) .btnEliminarCarrito {
+  display:flex; align-items:center; justify-content:center; width:28px; height:28px; padding:0;
+  border:0; background:#f3f7fa; color:#648099; border-radius:8px;
+  transition:color .2s,background .2s;
+}
+.ivc-public .ivc-cart-drawer__table td:nth-child(6) .btnEliminarCarrito:hover {background:#fff0f0; color:#c84444}
+.ivc-public .ivc-cart-drawer__table td:nth-child(6) .btnEliminarCarrito i {font-size:13px !important}
+.ivc-public .ivc-cart-drawer .ivc-cart-drawer__footer {
+  flex-shrink:0; margin-top:auto; padding:25px 30px 30px;
+  border-top:1px solid #e2ebf2; background:#fff;
+  box-shadow:0 -12px 32px rgba(24,64,94,.035);
+}
+.ivc-public .ivc-cart-drawer__totals {display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px}
+.ivc-public .ivc-cart-drawer__total-caption {display:block; color:var(--ivc-c-navy); font-weight:800 !important; font-size:16px !important}
+.ivc-public .ivc-cart-drawer__totals small {display:block; color:#8199aa; font-size:12px !important; margin-top:4px}
+.ivc-public .ivc-cart-drawer__money {text-align:right; white-space:nowrap}
+.ivc-public .ivc-cart-drawer__money strong {font-size:24px !important; font-weight:800 !important; color:var(--ivc-c-navy); letter-spacing:-.6px}
+.ivc-public .ivc-cart-drawer__money small {font-weight:700 !important; color:#8199aa}
+.ivc-public .ivc-cart-drawer__checkout {
+  display:flex; width:100%; justify-content:space-between; align-items:center; gap:12px;
+  min-height:52px; text-align:left; background:#287CB3; color:white !important;
+  font-size:13px !important; font-weight:800 !important;
+  border:1px solid #287CB3; border-radius:9px; padding:15px 18px;
+  text-decoration:none; cursor:pointer; transition:background .2s,transform .2s,box-shadow .2s;
+}
+.ivc-public .ivc-cart-drawer__checkout:hover {background:#153B5B; box-shadow:0 10px 22px rgba(40,124,179,.18); transform:translateY(-1px)}
+.ivc-public .ivc-cart-drawer__checkout span {font-size:19px !important}
+.ivc-public .ivc-cart-drawer__continue {display:block; margin:14px auto 0; border:0; color:#53738c; background:transparent; font-size:12px !important; font-weight:700 !important; cursor:pointer}
+.ivc-public .ivc-cart-drawer__continue:hover {color:#287CB3; text-decoration:underline}
+.ivc-public .ivc-cart-drawer.is-empty .ivc-cart-drawer__footer {display:none}
+.ivc-public .ivc-cart-drawer__empty {text-align:center; padding:20px 4px 36px}
+.ivc-public .ivc-cart-drawer__empty[hidden], .ivc-public .ivc-cart-drawer__list[hidden] {display:none !important}
+.ivc-public .ivc-cart-drawer__empty-illustration {max-width:205px; margin:8px auto 16px}
+.ivc-public .ivc-cart-drawer__empty-illustration svg {display:block; width:100%; height:auto}
+.ivc-public .ivc-cart-drawer__empty h3 {font-size:22px !important; font-weight:800 !important; font-family:'Manrope',sans-serif; color:#153B5B; margin:0 0 11px}
+.ivc-public .ivc-cart-drawer__empty p {font-size:13px !important; line-height:1.8; color:#678195; max-width:285px; margin:0 auto 22px}
+.ivc-public .ivc-cart-drawer__explore {
+  display:inline-flex; align-items:center; gap:13px; padding:13px 18px; border:1px solid #c0dceb;
+  border-radius:8px; text-decoration:none; color:#287CB3; font-weight:800 !important; font-size:13px !important;
+  transition:border-color .2s,background .2s;
+}
+.ivc-public .ivc-cart-drawer__explore:hover {border-color:#287CB3; background:#EAF6FC; color:#153B5B}
+.ivc-public .ivc-cart-drawer a:focus-visible,.ivc-public .ivc-cart-drawer button:focus-visible {outline:3px solid #8FC9EA;outline-offset:3px}
+@media (max-width:575px) {
+  .ivc-public .ivc-cart-drawer {--bs-offcanvas-width:100vw;width:100vw !important}
+  .ivc-public .ivc-cart-drawer .ivc-cart-drawer__header {padding:24px 20px 18px}
+  .ivc-public .ivc-cart-drawer .ivc-cart-drawer__body {padding:18px 18px 24px}
+  .ivc-public .ivc-cart-drawer .ivc-cart-drawer__footer {padding:20px 18px 25px}
+  .ivc-public .ivc-cart-drawer__table tbody tr {grid-template-columns:83px minmax(0,1fr) auto;column-gap:10px;padding:10px}
+  .ivc-public .ivc-cart-drawer__table td:nth-child(1) img {height:94px}
+}
+@media (prefers-reduced-motion:reduce) {
+  .ivc-public .ivc-cart-drawer * {transition-duration:.01ms !important;animation-duration:.01ms !important}
+  .ivc-public .ivc-cart-drawer__table tbody tr:hover {transform:none}
+}
+/* =========================================
+   FIX CARRITO LATERAL - BOOTSTRAP 5.2
+   ========================================= */
+
+/* Corregir visibilidad del carrito */
+body.ivc-public #myModal.ivc-cart-drawer.showing,
+body.ivc-public #myModal.ivc-cart-drawer.show,
+body.ivc-public #myModal.ivc-cart-drawer.hiding {
+    visibility: visible !important;
+}
+
+/* Animación de apertura */
+body.ivc-public #myModal.ivc-cart-drawer.showing,
+body.ivc-public #myModal.ivc-cart-drawer.show {
+    transform: translateX(0) !important;
+}
+
+/* Animación de cierre */
+body.ivc-public #myModal.ivc-cart-drawer.hiding {
+    transform: translateX(100%) !important;
+}
+
+/* Fondo oscuro al abrir el carrito */
+.offcanvas-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #153B5B;
+}
+
+.offcanvas-backdrop.fade {
+    opacity: 0;
+}
+
+.offcanvas-backdrop.show {
+    opacity: 0.46;
+}

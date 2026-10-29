@@ -5,7 +5,7 @@ const btnCarrito=document.querySelector('#btnCantidadCarrito');
 const verCarrito=document.querySelector('#verCarrito');
 const tableListaCarrito=document.querySelector('#tableListaCarrito tbody');
 //ver carrito
-const myModal = new bootstrap.Modal(document.getElementById('myModal'));
+const myModal = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('myModal'));
 
 let listaDeseo,listaCarrito;
 

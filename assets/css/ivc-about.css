@@ -1,0 +1,177 @@
+/* Instituto Visual California — Sobre nosotros V5.
+   Scoped to .ivc-about; no modifica encabezado, footer, carrito ni catálogo. */
+.ivc-public .ivc-about {
+  --ab-navy:#153B5B;--ab-deep:#0E304A;--ab-blue:#287CB3;--ab-sky:#8FC9EA;
+  --ab-ice:#EAF6FC;--ab-muted:#587185;--ab-line:#D8E7F0;
+  background:#fff;color:var(--ab-navy);overflow:hidden;font-family:'DM Sans',Arial,sans-serif!important;
+}
+.ivc-public .ivc-about *, .ivc-public .ivc-about *::before,.ivc-public .ivc-about *::after{box-sizing:border-box}
+.ivc-public .ivc-about h1,.ivc-public .ivc-about h2,.ivc-public .ivc-about h3{font-family:'Manrope',Arial,sans-serif!important;letter-spacing:-.055em;color:var(--ab-navy);font-weight:800!important}
+.ivc-public .ivc-about p{font-family:'DM Sans',Arial,sans-serif!important;font-weight:400!important;font-size:15px!important;line-height:1.88;color:var(--ab-muted)}
+.ivc-public .ivc-about em{font-style:normal;color:var(--ab-blue)}
+.ivc-public .ivc-about a{text-decoration:none;transition:color .25s,background .25s,border-color .25s,transform .25s,box-shadow .25s}
+.ivc-public .ivc-about a:focus-visible{outline:3px solid var(--ab-sky);outline-offset:4px}
+.ivc-public .ivc-about .container{max-width:1300px}
+.ivc-public .ivc-about .ivc-about-kicker,.ivc-public .ivc-about .ivc-about-eyebrow{font-size:10px!important;letter-spacing:.22em;font-weight:800!important;color:var(--ab-blue);line-height:1.5;text-transform:uppercase}
+.ivc-public .ivc-about .ivc-about-eyebrow{display:inline-block}
+.ivc-public .ivc-about .ivc-about-button{font-size:12px!important;font-weight:800!important;letter-spacing:.035em;padding:16px 22px;min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:36px;border-radius:3px;border:1px solid transparent;white-space:nowrap}
+.ivc-public .ivc-about .ivc-about-button:hover{transform:translateY(-3px)}
+.ivc-public .ivc-about .ivc-about-button-dark{background:var(--ab-blue);color:#fff}
+.ivc-public .ivc-about .ivc-about-button-dark:hover{background:var(--ab-deep);box-shadow:0 10px 24px #153b5b25;color:#fff}
+.ivc-public .ivc-about .ivc-about-button-light{background:#fff;color:var(--ab-deep)}
+.ivc-public .ivc-about .ivc-about-button-light:hover{background:#eaf6fc;color:var(--ab-deep)}
+/* Hero */
+.ivc-public .ivc-about-hero{background:linear-gradient(120deg,#f7fcff,#eaf6fc 62%,#e4f3fc);position:relative}
+.ivc-public .ivc-about-hero-grid{min-height:615px;display:grid;grid-template-columns:1fr 1.02fr;gap:50px;align-items:center;padding-top:75px;padding-bottom:88px}
+.ivc-public .ivc-about-hero-copy{padding:18px 0 35px;position:relative;z-index:1}
+.ivc-public .ivc-about-kicker{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ivc-public .ivc-about-kicker span{background:#8fc9ea;width:5px;height:5px;border-radius:50%}
+.ivc-public .ivc-about-hero h1{font-size:clamp(43px,4.45vw,65px)!important;line-height:1.12!important;margin:23px 0 24px;max-width:650px}
+.ivc-public .ivc-about-hero h1 em{display:inline;color:var(--ab-blue)}
+.ivc-public .ivc-about-hero-lead{max-width:510px;font-size:16px!important;line-height:1.95!important}
+.ivc-public .ivc-about-hero-actions{margin-top:31px;display:flex;align-items:center;gap:29px;flex-wrap:wrap}
+.ivc-public .ivc-about-text-button{font-size:12px!important;color:var(--ab-navy);font-weight:800!important;border-bottom:1px solid var(--ab-sky);padding:11px 0;display:inline-flex;align-items:center;gap:13px}
+.ivc-public .ivc-about-text-button:hover{color:var(--ab-blue)}
+.ivc-public .ivc-about-hero-footnote{display:flex;align-items:center;gap:10px;margin-top:59px;font-weight:700!important;font-size:11px!important;letter-spacing:.07em;color:var(--ab-muted)}
+.ivc-public .ivc-about-mini-symbol{display:inline-flex;align-items:center;color:var(--ab-blue)}
+.ivc-public .ivc-about-hero-visual{height:540px;position:relative;margin-right:22px;align-self:center}
+.ivc-public .ivc-about-hero-photo-wrap{height:100%;overflow:hidden;border-radius:200px 200px 12px 12px;background:linear-gradient(140deg,#7fb9d6,#d0e6f0);box-shadow:23px 26px 0 rgba(143,201,234,.28)}
+.ivc-public .ivc-about-hero-photo{width:100%;height:100%;object-fit:cover;object-position:center 43%;display:block;transition:transform .9s cubic-bezier(.2,.65,.2,1)}
+.ivc-public .ivc-about-hero-visual:hover .ivc-about-hero-photo{transform:scale(1.045)}
+.ivc-public .ivc-about-picture-label{position:absolute;bottom:33px;left:-42px;display:flex;align-items:center;gap:15px;padding:18px 23px;background:#fff;box-shadow:0 14px 42px rgba(14,48,74,.13);border-left:3px solid var(--ab-blue);min-width:275px}
+.ivc-public .ivc-about-picture-icon{width:42px;height:42px;border-radius:50%;background:var(--ab-ice);display:flex;align-items:center;justify-content:center;color:var(--ab-blue);flex-shrink:0}
+.ivc-public .ivc-about-picture-label strong{display:block;font-size:13px!important;color:var(--ab-navy);font-weight:800!important}
+.ivc-public .ivc-about-picture-label small{display:block;font-size:10px!important;color:var(--ab-muted);margin-top:4px;font-weight:500!important}
+.ivc-public .ivc-about-photo-index{position:absolute;top:28px;right:26px;display:inline-block;color:white;background:rgba(10,46,73,.55);padding:8px 11px;border-radius:3px;letter-spacing:.16em;font-size:10px!important;font-weight:800!important}
+.ivc-public .ivc-about-hero-bottom{border-top:1px solid #d6e9f3;background:#fff}
+.ivc-public .ivc-about-hero-bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:67px}
+.ivc-public .ivc-about-hero-bottom-inner span:not(.ivc-about-tiny-star){font-size:10px!important;font-weight:800!important;letter-spacing:.17em;color:var(--ab-navy)}
+.ivc-public .ivc-about-hero-bottom-inner .ivc-about-tiny-star{font-size:16px!important;color:var(--ab-sky)}
+/* Common sections */
+.ivc-public .ivc-about-section{padding:111px 0}
+.ivc-public .ivc-about-section-heading{display:flex;align-items:end;justify-content:space-between;gap:65px;margin-bottom:36px}
+.ivc-public .ivc-about-section-heading h2{font-size:clamp(30px,3.1vw,46px)!important;line-height:1.22!important;max-width:650px;margin:12px 0 0}
+.ivc-public .ivc-about-section-heading>p{max-width:270px;margin:0}
+/* Story */
+.ivc-public .ivc-about-story-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(50px,7vw,128px);align-items:center}
+.ivc-public .ivc-about-story-image{height:515px;position:relative;background:var(--ab-ice);padding:0 20px 22px 0}
+.ivc-public .ivc-about-story-image::before{content:"";position:absolute;inset:23px 0 0 25px;background:var(--ab-ice);border:1px solid var(--ab-line)}
+.ivc-public .ivc-about-story-image img{position:relative;width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:saturate(.88);transition:transform .7s}
+.ivc-public .ivc-about-story-image:hover img{transform:translate(5px,-5px)}
+.ivc-public .ivc-about-photo-stamp{position:absolute;bottom:0;right:0;background:var(--ab-navy);color:#fff;display:flex;align-items:center;gap:12px;padding:16px 19px}
+.ivc-public .ivc-about-photo-stamp span{font-family:'Manrope',sans-serif!important;font-weight:800!important;font-size:20px!important}
+.ivc-public .ivc-about-photo-stamp small{font-size:9px!important;letter-spacing:.18em;font-weight:700!important;color:#deedf6}
+.ivc-public .ivc-about-story-copy h2{font-size:clamp(32px,3.6vw,53px)!important;line-height:1.19!important;margin:14px 0 20px}
+.ivc-public .ivc-about-short-rule{width:48px;height:3px;background:var(--ab-sky);margin:27px 0}
+.ivc-public .ivc-about-story-copy p{max-width:530px;margin:0 0 18px}
+.ivc-public .ivc-about-inline-link{display:inline-flex;align-items:center;gap:15px;margin-top:14px;padding-bottom:9px;border-bottom:1px solid var(--ab-sky);font-weight:800!important;font-size:12px!important;color:var(--ab-navy)}
+.ivc-public .ivc-about-inline-link:hover{gap:21px;color:var(--ab-blue)}
+/* Value cards */
+.ivc-public .ivc-about-identity{background:#f6fafc}
+.ivc-public .ivc-about-values-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.ivc-public .ivc-about-value-card{border:1px solid #dfebf2;background:#fff;padding:34px 33px 36px;min-height:350px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .34s ease,box-shadow .34s ease,border-color .34s ease}
+.ivc-public .ivc-about-value-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:var(--ab-sky);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.ivc-public .ivc-about-value-card:hover{transform:translateY(-8px);box-shadow:0 22px 42px rgba(15,52,76,.11);border-color:#bcd9ea}
+.ivc-public .ivc-about-value-card:hover::before{transform:scaleX(1)}
+.ivc-public .ivc-about-card-top{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:37px}
+.ivc-public .ivc-about-card-top>span:first-child{font-size:10px!important;letter-spacing:.16em;font-weight:800!important;color:var(--ab-blue)}
+.ivc-public .ivc-about-card-icon{display:flex;align-items:center;justify-content:center;background:#eaf6fc;color:var(--ab-blue);width:54px;height:54px;border-radius:50%;transition:background .3s,transform .3s}
+.ivc-public .ivc-about-value-card:hover .ivc-about-card-icon{background:#d5eefb;transform:rotate(-8deg)}
+.ivc-public .ivc-about-value-card h3{font-size:23px!important;margin-bottom:12px}
+.ivc-public .ivc-about-value-card p{font-size:14px!important;line-height:1.78!important}
+.ivc-public .ivc-about-card-underline{width:31px;height:2px;background:var(--ab-sky);margin-top:auto}
+.ivc-public .ivc-about-principles{padding:0;margin:0 0 24px;list-style:none;display:grid;gap:8px}
+.ivc-public .ivc-about-principles li{display:block;font-family:'DM Sans',sans-serif!important;font-size:12px!important;line-height:1.5!important}
+.ivc-public .ivc-about-principles li strong{color:var(--ab-navy);font-weight:800!important}
+.ivc-public .ivc-about-principles li span{display:block;color:var(--ab-muted);font-size:12px!important;margin-top:2px}
+/* Path cards */
+.ivc-public .ivc-about-path-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}
+.ivc-public .ivc-about-step{border-top:1px solid #bad9e9;padding:25px 0 12px;transition:transform .3s}
+.ivc-public .ivc-about-step:hover{transform:translateY(-5px)}
+.ivc-public .ivc-about-step-top{display:flex;align-items:center;justify-content:space-between;color:var(--ab-blue);margin-bottom:36px}
+.ivc-public .ivc-about-step-top strong{font-family:'Manrope',sans-serif!important;font-weight:800!important;font-size:46px!important;color:#d0e7f5;letter-spacing:-.06em}
+.ivc-public .ivc-about-step h3{font-size:23px!important;margin:0 0 11px}
+.ivc-public .ivc-about-step p{min-height:78px;max-width:345px;margin:0 0 18px}
+.ivc-public .ivc-about-step a{display:inline-flex;align-items:center;gap:11px;font-size:12px!important;font-weight:800!important;color:var(--ab-blue)}
+.ivc-public .ivc-about-step a:hover{gap:19px;color:var(--ab-navy)}
+/* Location */
+.ivc-public .ivc-about-location{display:grid;grid-template-columns:1fr 1fr;background:var(--ab-deep);min-height:500px}
+.ivc-public .ivc-about-location-copy{display:flex;justify-content:flex-end;align-items:center;padding:66px 75px 66px max(30px,calc((100vw - 1300px)/2))}
+.ivc-public .ivc-about-location-inner{width:min(100%,550px)}
+.ivc-public .ivc-about-location .ivc-about-eyebrow{color:#a9d7f1}
+.ivc-public .ivc-about-location h2{color:#fff;font-size:clamp(34px,3.4vw,51px)!important;line-height:1.18!important;margin:14px 0 22px}
+.ivc-public .ivc-about-location h2 em{color:#b8e2f7}
+.ivc-public .ivc-about-location p{color:#c5d9e7!important;max-width:410px;margin-bottom:26px}
+.ivc-public .ivc-about-address{display:flex;gap:13px;align-items:flex-start;color:#a9d7f1;padding-top:20px;border-top:1px solid #34607b}
+.ivc-public .ivc-about-address address{color:#e7f4fc;font-style:normal;font-weight:500!important;line-height:1.75;font-size:14px!important;margin-bottom:10px}
+.ivc-public .ivc-about-location-phone{color:#fff;font-size:16px!important;font-weight:800!important;display:block;margin-left:37px}
+.ivc-public .ivc-about-location-phone:hover{color:#b8e2f7}
+.ivc-public .ivc-about-location-actions{display:flex;gap:22px;align-items:center;margin-top:32px;flex-wrap:wrap}
+.ivc-public .ivc-about-map-link{color:#e6f2f9;display:inline-flex;align-items:center;gap:9px;font-weight:700!important;font-size:12px!important}
+.ivc-public .ivc-about-map-link:hover{color:#fff}
+.ivc-public .ivc-about-map-shell{min-height:500px;background:#d3e4eb}
+.ivc-public .ivc-about-map-shell iframe{border:0;display:block;width:100%;height:100%;min-height:500px;filter:grayscale(.32) saturate(.9)}
+/* Closing CTA */
+.ivc-public .ivc-about-final{background:linear-gradient(130deg,#e3f3fc,#f6fbff);padding:76px 0}
+.ivc-public .ivc-about-final-inner{display:flex;align-items:center;justify-content:space-between;gap:35px}
+.ivc-public .ivc-about-final h2{font-size:clamp(30px,3.2vw,47px)!important;line-height:1.2!important;margin:11px 0 10px;max-width:800px}
+.ivc-public .ivc-about-final p{margin-bottom:0}
+/* Animación secundaria sin GSAP, cuando el CDN no está disponible */
+.ivc-public .ivc-about-visible{animation:ivcAboutFadeIn .7s both}
+@keyframes ivcAboutFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media (max-width:1199px){
+  .ivc-public .ivc-about-hero-grid{gap:43px}
+  .ivc-public .ivc-about-hero-visual{height:480px}
+  .ivc-public .ivc-about-story-grid{gap:54px}
+  .ivc-public .ivc-about-story-image{height:440px}
+  .ivc-public .ivc-about-location-copy{padding:55px 35px}
+}
+@media (max-width:991px){
+  .ivc-public .ivc-about-hero-grid{min-height:unset;grid-template-columns:1fr 1fr;gap:32px;padding-top:55px;padding-bottom:65px}
+  .ivc-public .ivc-about-hero h1{font-size:clamp(35px,4.5vw,52px)!important}
+  .ivc-public .ivc-about-hero-visual{height:380px;margin-right:12px}
+  .ivc-public .ivc-about-picture-label{left:-17px;bottom:19px;min-width:215px;padding:12px 14px}
+  .ivc-public .ivc-about-section{padding:78px 0}
+  .ivc-public .ivc-about-story-grid{gap:30px}
+  .ivc-public .ivc-about-story-image{height:380px}
+  .ivc-public .ivc-about-value-card{padding:26px 22px;min-height:385px}
+  .ivc-public .ivc-about-location{grid-template-columns:1fr 1fr}
+  .ivc-public .ivc-about-location-copy{padding:46px 27px}
+}
+@media (max-width:767px){
+  .ivc-public .ivc-about-hero-grid{grid-template-columns:1fr;gap:20px;padding-top:48px;padding-bottom:65px}
+  .ivc-public .ivc-about-hero h1{font-size:clamp(38px,9vw,56px)!important;margin-top:19px}
+  .ivc-public .ivc-about-hero-copy{padding-bottom:0}
+  .ivc-public .ivc-about-hero-visual{height:430px;margin:9px 18px 0 17px}
+  .ivc-public .ivc-about-hero-footnote{margin-top:29px}
+  .ivc-public .ivc-about-picture-label{left:-15px}
+  .ivc-public .ivc-about-hero-bottom-inner{justify-content:center;gap:15px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px;min-height:unset;text-align:center}
+  .ivc-public .ivc-about-hero-bottom-inner span:not(.ivc-about-tiny-star){font-size:9px!important}
+  .ivc-public .ivc-about-section{padding:75px 0}
+  .ivc-public .ivc-about-story-grid{grid-template-columns:1fr;gap:48px}
+  .ivc-public .ivc-about-story-image{height:390px;max-width:550px;width:100%}
+  .ivc-public .ivc-about-section-heading{display:block;margin-bottom:30px}
+  .ivc-public .ivc-about-section-heading>p{max-width:540px;margin-top:14px}
+  .ivc-public .ivc-about-values-grid,.ivc-public .ivc-about-path-grid{grid-template-columns:1fr;gap:16px}
+  .ivc-public .ivc-about-value-card{min-height:270px;padding:28px}
+  .ivc-public .ivc-about-card-top{margin-bottom:20px}
+  .ivc-public .ivc-about-step{padding-bottom:28px}
+  .ivc-public .ivc-about-step-top{margin-bottom:13px}
+  .ivc-public .ivc-about-step p{min-height:unset;max-width:none;margin-bottom:14px}
+  .ivc-public .ivc-about-location{grid-template-columns:1fr}
+  .ivc-public .ivc-about-location-copy{justify-content:flex-start;padding:65px 25px}
+  .ivc-public .ivc-about-map-shell,.ivc-public .ivc-about-map-shell iframe{min-height:350px;height:350px}
+  .ivc-public .ivc-about-final-inner{display:block}
+  .ivc-public .ivc-about-final .ivc-about-button{margin-top:27px}
+}
+@media(max-width:420px){
+  .ivc-public .ivc-about-hero h1{font-size:36px!important}
+  .ivc-public .ivc-about-hero-actions{gap:14px}
+  .ivc-public .ivc-about-hero-visual{height:360px;margin-right:10px;margin-left:9px}
+  .ivc-public .ivc-about-picture-label{bottom:20px;left:-10px;min-width:unset;max-width:94%}
+  .ivc-public .ivc-about-story-image{height:330px}
+  .ivc-public .ivc-about-section-heading h2{font-size:30px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .ivc-public .ivc-about *, .ivc-public .ivc-about *::before,.ivc-public .ivc-about *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}

@@ -1,0 +1,99 @@
+/* Instituto Visual California · Lista de deseos V8
+   Completamente encapsulada en #ivc-wishlist. No altera el encabezado, carrito ni panel admin. */
+#ivc-wishlist{--ivcw-navy:#153b5b;--ivcw-blue:#287cb3;--ivcw-sky:#8fc9ea;--ivcw-ice:#eaf6fc;--ivcw-muted:#587185;--ivcw-line:#dce8ef;color:var(--ivcw-navy);background:#fff;overflow:hidden;font-family:'DM Sans',Arial,sans-serif}
+#ivc-wishlist *,#ivc-wishlist *::before,#ivc-wishlist *::after{box-sizing:border-box}
+#ivc-wishlist [hidden]{display:none!important}
+#ivc-wishlist a:focus-visible,#ivc-wishlist button:focus-visible{outline:3px solid var(--ivcw-sky);outline-offset:3px}
+#ivc-wishlist h1,#ivc-wishlist h2,#ivc-wishlist h3{font-family:'Manrope',Arial,sans-serif!important;color:var(--ivcw-navy)!important;letter-spacing:-.045em!important;font-weight:800!important}
+#ivc-wishlist em{font-style:normal;color:var(--ivcw-blue)}
+#ivc-wishlist p{line-height:1.7}
+#ivc-wishlist svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#ivc-wishlist .ivcw-hero{background:linear-gradient(110deg,#f6fbfe 2%,#e8f4fa 100%);border-bottom:1px solid var(--ivcw-line);position:relative;isolation:isolate;overflow:hidden}
+#ivc-wishlist .ivcw-hero::before{content:"";position:absolute;right:-220px;bottom:-420px;width:650px;height:650px;background:radial-gradient(circle,rgba(143,201,234,.19),transparent 67%);pointer-events:none;z-index:-1}
+#ivc-wishlist .ivcw-hero-inner{padding-top:24px;padding-bottom:73px}
+#ivc-wishlist .ivcw-breadcrumb{display:flex;gap:10px;align-items:center;font-size:11px!important;font-weight:700!important;color:#758f9f;margin-bottom:33px}
+#ivc-wishlist .ivcw-breadcrumb a{font-size:11px!important;color:#6a8495;text-decoration:none;font-weight:700!important}
+#ivc-wishlist .ivcw-breadcrumb span:nth-child(2){color:#b8ced9}
+#ivc-wishlist .ivcw-breadcrumb a:hover{color:var(--ivcw-blue)}
+#ivc-wishlist .ivcw-hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);align-items:center;gap:40px}
+#ivc-wishlist .ivcw-hero-copy{padding:5px 0}
+#ivc-wishlist .ivcw-eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:10px!important;letter-spacing:.2em!important;font-weight:800!important;color:var(--ivcw-blue);text-transform:uppercase}
+#ivc-wishlist .ivcw-eyebrow-line{display:inline-block;width:26px;height:1px;background:var(--ivcw-blue)}
+#ivc-wishlist .ivcw-hero h1{margin:16px 0 20px;font-size:clamp(40px,4.1vw,60px)!important;line-height:1.15!important}
+#ivc-wishlist .ivcw-hero p{max-width:505px;margin:0 0 22px;font-size:14px!important;line-height:1.85!important;color:var(--ivcw-muted);font-weight:500!important}
+#ivc-wishlist .ivcw-hero-link{display:inline-flex;align-items:center;gap:13px;padding:6px 0 11px;border-bottom:1px solid #93bfda;color:var(--ivcw-blue);font-weight:800!important;font-size:12px!important;text-decoration:none;transition:gap .25s,color .25s}
+#ivc-wishlist .ivcw-hero-link:hover{gap:19px;color:var(--ivcw-navy)}
+#ivc-wishlist .ivcw-hero-link svg{width:17px;height:17px}
+#ivc-wishlist .ivcw-hero-art{height:244px;display:grid;place-items:center;position:relative}
+#ivc-wishlist .ivcw-art-orbit{position:absolute;width:245px;height:245px;border:1px solid #b9d9ec;border-radius:50%}
+#ivc-wishlist .ivcw-art-orbit-two{width:184px;height:184px;border-color:#d0e6f3}
+#ivc-wishlist .ivcw-heart-icon{width:117px;height:117px;background:#fff;border-radius:50%;border:1px solid #e1eff7;box-shadow:0 23px 52px rgba(40,124,179,.09);display:grid;place-items:center;color:var(--ivcw-blue);position:relative;z-index:2}
+#ivc-wishlist .ivcw-heart-icon svg{width:68px;height:68px;stroke-width:1.9}
+#ivc-wishlist .ivcw-art-caption{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:12px;font-size:9px!important;font-weight:800!important;letter-spacing:.16em!important;color:#92b4c9}
+#ivc-wishlist .ivcw-art-caption span{color:var(--ivcw-blue)}
+#ivc-wishlist .ivcw-content{padding-top:68px;padding-bottom:92px}
+#ivc-wishlist .ivcw-toolbar{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:31px}
+#ivc-wishlist .ivcw-toolbar h2{font-size:clamp(29px,3vw,40px)!important;line-height:1.2!important;margin:11px 0 9px}
+#ivc-wishlist .ivcw-heading-dot{color:var(--ivcw-blue)}
+#ivc-wishlist .ivcw-toolbar p{font-size:12px!important;font-weight:500!important;color:#8199a9;margin:0}
+#ivc-wishlist .ivcw-text-link{display:inline-flex;align-items:center;gap:10px;color:var(--ivcw-blue);font-weight:800!important;font-size:12px!important;text-decoration:none;white-space:nowrap;border-bottom:1px solid #bcd9e9;padding-bottom:8px;margin-bottom:3px;transition:gap .25s}
+#ivc-wishlist .ivcw-text-link svg{width:16px;height:16px}
+#ivc-wishlist .ivcw-text-link:hover{gap:17px;color:var(--ivcw-navy)}
+#ivc-wishlist .ivcw-loading{display:flex;align-items:center;justify-content:center;gap:13px;min-height:230px;color:var(--ivcw-muted);font-size:13px!important;font-weight:600!important}
+#ivc-wishlist .ivcw-spinner{display:inline-block;width:22px;height:22px;border:2px solid #d1e6f3;border-top-color:var(--ivcw-blue);border-radius:50%;animation:ivcw-spin .8s linear infinite}
+@keyframes ivcw-spin{to{transform:rotate(360deg)}}
+/* Tarjetas construidas VISUALMENTE a partir de las filas de listaDeseo.js */
+#ivc-wishlist #tableListaDeseo{display:block;width:100%;border:0!important;margin:0;background:transparent!important;box-shadow:none!important}
+#ivc-wishlist #tableListaDeseo thead{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important}
+#ivc-wishlist #tableListaDeseo tbody{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;width:100%}
+#ivc-wishlist #tableListaDeseo tbody tr{display:flex;position:relative;flex-direction:column;min-width:0;overflow:hidden;border:1px solid #e0eaf0!important;background:#fff!important;border-radius:12px;box-shadow:0 4px 14px rgba(21,59,91,.027);animation:ivcw-rise .5s both;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+#ivc-wishlist #tableListaDeseo tbody tr:nth-child(2){animation-delay:.045s}
+#ivc-wishlist #tableListaDeseo tbody tr:nth-child(3){animation-delay:.09s}
+#ivc-wishlist #tableListaDeseo tbody tr:nth-child(n+4){animation-delay:.12s}
+@keyframes ivcw-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+#ivc-wishlist #tableListaDeseo tbody tr:hover{transform:translateY(-6px);border-color:#bfdbe9!important;box-shadow:0 18px 36px rgba(21,59,91,.11)}
+#ivc-wishlist #tableListaDeseo tbody td{display:block!important;width:100%!important;min-width:0!important;max-width:none!important;padding:0!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;text-align:left!important;vertical-align:initial!important}
+#ivc-wishlist #tableListaDeseo tbody td:first-child{height:260px;background:linear-gradient(135deg,#f0f7fb,#f7fbfd)!important;position:relative;overflow:hidden!important}
+#ivc-wishlist #tableListaDeseo tbody td:first-child::before{content:"TU FAVORITO";position:absolute;top:15px;left:15px;border:1px solid #d6e8f1;border-radius:3px;background:#ffffffd9;color:var(--ivcw-blue);padding:7px 10px;font:800 9px/1.2 'DM Sans',Arial,sans-serif;letter-spacing:.12em;z-index:1}
+#ivc-wishlist #tableListaDeseo tbody td:first-child img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;object-fit:contain!important;background:none!important;border:0!important;border-radius:0!important;padding:30px!important;box-shadow:none!important;transition:transform .5s ease;mix-blend-mode:multiply;cursor:pointer}
+#ivc-wishlist #tableListaDeseo tbody tr:hover td:first-child img{transform:scale(1.07)}
+#ivc-wishlist #tableListaDeseo tbody td:first-child a{display:block!important;height:100%;width:100%;cursor:zoom-in}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(2){padding:20px 19px 4px!important;min-height:68px;color:var(--ivcw-navy);font:800 16px/1.5 'Manrope',Arial,sans-serif!important;letter-spacing:-.035em;overflow-wrap:anywhere}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(2) a{color:var(--ivcw-navy);font:inherit!important;text-decoration:none}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(2) a:hover{color:var(--ivcw-blue)}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(3){padding:0 19px!important}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(3) .badge{font:800 16px/1.35 'DM Sans',Arial,sans-serif!important;color:var(--ivcw-navy)!important;display:inline-block;padding:0!important;margin:0;background:none!important;border-radius:0;box-shadow:none}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(4){padding:10px 19px 17px!important;font-size:11px!important;font-weight:600!important;color:#8096a6}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(4)::before{content:"Cantidad guardada · ";color:#869eae}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(4) .badge{background:none!important;font-size:11px!important;font-weight:800!important;color:var(--ivcw-blue)!important;padding:0!important;border:0!important}
+#ivc-wishlist #tableListaDeseo tbody td:nth-child(5){padding:0 19px 19px!important;display:flex!important;gap:9px;align-items:center;margin-top:auto!important}
+#ivc-wishlist #tableListaDeseo .btnAddCart{display:flex!important;align-items:center;justify-content:center;gap:9px;flex:1;min-height:45px;margin:0!important;border:1px solid var(--ivcw-blue)!important;border-radius:5px!important;background:var(--ivcw-blue)!important;color:#fff!important;padding:10px 13px!important;box-shadow:none!important;cursor:pointer;transition:background .22s,transform .22s,box-shadow .22s}
+#ivc-wishlist #tableListaDeseo .btnAddCart::after{content:"Agregar al carrito";font:800 11px/1.25 'DM Sans',Arial,sans-serif!important;letter-spacing:.01em}
+#ivc-wishlist #tableListaDeseo .btnAddCart:hover{background:var(--ivcw-navy)!important;border-color:var(--ivcw-navy)!important;transform:translateY(-2px);box-shadow:0 9px 20px rgba(40,124,179,.18)!important}
+#ivc-wishlist #tableListaDeseo .btnAddCart i{font-size:14px!important}
+#ivc-wishlist #tableListaDeseo .btnAddCart svg{width:17px;height:17px}
+#ivc-wishlist #tableListaDeseo .btnEliminarDeseo{position:absolute;z-index:2;right:14px;top:14px;width:36px;height:36px;border:1px solid #d7e6ef!important;border-radius:50%!important;background:#fff!important;color:#567a93!important;box-shadow:0 4px 12px rgba(21,59,91,.04)!important;display:grid!important;place-items:center;padding:0!important;margin:0!important;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+#ivc-wishlist #tableListaDeseo .btnEliminarDeseo:hover{background:#ffe9ed!important;color:#b3314c!important;border-color:#ffd7de!important;transform:scale(1.07)}
+#ivc-wishlist #tableListaDeseo .btnEliminarDeseo i{font-size:13px!important}
+#ivc-wishlist #tableListaDeseo .btnEliminarDeseo svg{width:17px;height:17px}
+#ivc-wishlist .ivcw-empty{text-align:center;padding:64px 20px 72px;background:radial-gradient(circle at 50% 30%,#f2f9fd 0,#fff 52%);border:1px solid var(--ivcw-line);border-radius:12px}
+#ivc-wishlist .ivcw-empty-mark{display:grid;place-items:center;width:115px;height:115px;margin:0 auto 21px;border:1px solid #d8eaf3;border-radius:50%;background:#f3fafe;color:var(--ivcw-blue)}
+#ivc-wishlist .ivcw-empty-mark svg{width:74px;height:74px}
+#ivc-wishlist .ivcw-empty h3{font-size:clamp(27px,3.4vw,41px)!important;line-height:1.19!important;margin:15px 0}
+#ivc-wishlist .ivcw-empty p{font-size:13px!important;font-weight:500!important;color:var(--ivcw-muted);max-width:420px;margin:0 auto 27px}
+#ivc-wishlist .ivcw-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:48px;padding:13px 18px;background:var(--ivcw-blue);border:1px solid var(--ivcw-blue);border-radius:5px;color:#fff!important;font-size:12px!important;font-weight:800!important;text-decoration:none;transition:background .25s,transform .25s,box-shadow .25s}
+#ivc-wishlist .ivcw-btn-primary:hover{background:var(--ivcw-navy);transform:translateY(-2px);box-shadow:0 12px 25px rgba(40,124,179,.16)}
+#ivc-wishlist .ivcw-btn-primary svg{width:16px;height:16px}
+#ivc-wishlist .ivcw-error{padding:22px;border:1px solid #f0c8c8;background:#fff7f7;color:#793939;border-radius:6px;font-size:12px!important}
+#ivc-wishlist .ivcw-note{display:flex;align-items:center;gap:19px;flex-wrap:wrap;margin-top:45px;padding:27px 31px;background:#eaf6fc;border-radius:9px;border:1px solid #dcecf4}
+#ivc-wishlist .ivcw-note-mark{display:grid;place-items:center;width:52px;height:52px;flex:none;border-radius:50%;background:white;color:var(--ivcw-blue)}
+#ivc-wishlist .ivcw-note-mark svg{width:24px;height:24px}
+#ivc-wishlist .ivcw-note>div:nth-child(2){flex:1 1 240px}
+#ivc-wishlist .ivcw-note strong{font-size:14px!important;font-weight:800!important;color:var(--ivcw-navy)}
+#ivc-wishlist .ivcw-note p{font-size:11px!important;font-weight:500!important;color:#6c879b;margin:4px 0 0;line-height:1.7}
+#ivc-wishlist .ivcw-note>a{font-size:12px!important;font-weight:800!important;color:var(--ivcw-blue);text-decoration:none;white-space:nowrap}
+#ivc-wishlist .ivcw-note>a:hover{color:var(--ivcw-navy)}
+@media(max-width:1000px){#ivc-wishlist #tableListaDeseo tbody{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:767px){#ivc-wishlist .ivcw-hero-inner{padding-bottom:44px}#ivc-wishlist .ivcw-hero-grid{grid-template-columns:1fr;gap:0}#ivc-wishlist .ivcw-hero-art{display:none}#ivc-wishlist .ivcw-hero h1{font-size:clamp(35px,8vw,48px)!important}#ivc-wishlist .ivcw-content{padding-top:47px;padding-bottom:60px}#ivc-wishlist .ivcw-toolbar{align-items:start;flex-direction:column;gap:16px}}
+@media(max-width:590px){#ivc-wishlist #tableListaDeseo tbody{grid-template-columns:1fr;gap:18px}#ivc-wishlist #tableListaDeseo tbody td:first-child{height:282px}#ivc-wishlist .ivcw-note{padding:21px}#ivc-wishlist .ivcw-note>a{width:100%;text-align:left}}
+@media(prefers-reduced-motion:reduce){#ivc-wishlist *,#ivc-wishlist *::before,#ivc-wishlist *::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

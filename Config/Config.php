@@ -14,7 +14,7 @@ const CLIENT_ID = "Abqqe-znWCZaUj5Az23YcOtK3IzRYrjdtuh8ZHJ6iU_rYlMorAxT45abRaVEM
 
 //ENVIO DE CORREOS
 const USER_SMTP="arzateoscar33@gmail.com";
-const PASS_SMTP="mrpf vzvo ckyh txhp";
+const PASS_SMTP="yrhy hmkf eshn nhek";
 const PUERTO_SMTP="465";
 const HOST_SMTP="smtp.gmail.com"; 
 ?>

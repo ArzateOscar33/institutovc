@@ -23,20 +23,55 @@ class Principal extends Controller
         $this->views->getView('principal', "about", $data);
     }
 
-    //vista SHOP
-    public function shop($page)
+    // IVC CATALOGO V4: filtros de consulta GET y paginación consistente.
+    public function shop($page = 1)
     {
         $data['perfil'] = 'no';
-        $pagina = (empty($page)) ? 1 : $page;
-        $porPagina = 21;
-        $desde = ($pagina - 1) * $porPagina;
-        $data['title'] = 'Nuestros Productos';
-        $data['productos'] = $this->model->getProductos($desde, $porPagina);
+        $data['title'] = 'Colección de armazones';
+
+        // Rechaza valores tipo array y establece límites para la búsqueda.
+        $texto = $_GET['q'] ?? '';
+        $texto = is_string($texto) ? trim(substr($texto, 0, 70)) : '';
+        $categoria = filter_var($_GET['categoria'] ?? 0, FILTER_VALIDATE_INT);
+        $categoria = $categoria !== false && $categoria > 0 ? $categoria : 0;
+        $precioMin = filter_var($_GET['min'] ?? null, FILTER_VALIDATE_FLOAT);
+        $precioMax = filter_var($_GET['max'] ?? null, FILTER_VALIDATE_FLOAT);
+        $precioMin = $precioMin !== false && $precioMin !== null ? max(0, min(1000000, $precioMin)) : null;
+        $precioMax = $precioMax !== false && $precioMax !== null ? max(0, min(1000000, $precioMax)) : null;
+        if ($precioMin !== null && $precioMax !== null && $precioMin > $precioMax) {
+            // No aplicar silenciosamente un rango invertido.
+            $aux = $precioMin;
+            $precioMin = $precioMax;
+            $precioMax = $aux;
+        }
+        $orden = $_GET['ordenar'] ?? 'recientes';
+        $orden = is_string($orden) && in_array($orden, ['recientes', 'precio_asc', 'precio_desc', 'nombre_asc'], true)
+            ? $orden : 'recientes';
+        $data['filtrosCatalogo'] = [
+            'texto' => $texto,
+            'categoria' => $categoria,
+            'minimo' => $precioMin,
+            'maximo' => $precioMax,
+            'disponible' => ($_GET['disponible'] ?? '') === '1',
+            'ordenar' => $orden,
+        ];
+
+        $porPagina = 12;
+        $pagina = filter_var($page, FILTER_VALIDATE_INT);
+        $pagina = $pagina && $pagina > 0 ? $pagina : 1;
+        $totalRegistros = $this->model->getTotalCatalogo($data['filtrosCatalogo']);
+        $paginas = max(1, (int) ceil($totalRegistros / $porPagina));
+        $pagina = min($pagina, $paginas);
+
+        $data['categoriasCatalogo'] = $this->model->getCategoriasCatalogo();
+        $data['productos'] = $this->model->getCatalogoFiltrado($data['filtrosCatalogo'], ($pagina - 1) * $porPagina, $porPagina);
         $data['pagina'] = $pagina;
-        $total = $this->model->getTotalProductos();
-        $data['total'] = ceil($total['total'] / $porPagina);
-        $this->views->getView('principal', "shop", $data);
+        $data['total'] = $paginas;
+        $data['totalRegistros'] = $totalRegistros;
+        $data['porPagina'] = $porPagina;
+        $this->views->getView('principal', 'shop', $data);
     }
+
     //vista detalle
     public function detail($id_producto)
     {
