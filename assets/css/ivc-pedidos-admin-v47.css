@@ -1,0 +1,14 @@
+/* Fase 4.7: se integra al panel existente sin modificar el tema global. */
+#ivc-pedidos-v47{--ivc-azul:#176bb6;--ivc-marino:#102c57;--ivc-borde:#e3eaf3;color:#1f3550}
+.ivc-pedidos-hero{background:linear-gradient(115deg,#112f60,#1976bc);border-radius:17px;padding:26px 29px;color:#fff;box-shadow:0 8px 24px rgba(16,47,96,.14)}
+.ivc-pedidos-hero h2{font-weight:700;color:#fff}.ivc-pedidos-hero p{color:#dbeeff}.ivc-pedidos-eyebrow{font-size:.72rem;letter-spacing:.16em;color:#b1e3ff;font-weight:700;margin-bottom:.45rem}
+.ivc-pedidos-kpi{padding:18px 21px;background:#fff;border:1px solid var(--ivc-borde);border-radius:14px;min-height:98px;box-shadow:0 3px 12px rgba(12,40,75,.04)}
+.ivc-pedidos-kpi span{display:block;color:#66809c;font-size:.85rem;font-weight:600;margin-bottom:8px}.ivc-pedidos-kpi strong{font-size:1.65rem;color:var(--ivc-marino)}
+.ivc-pedidos-panel{border:1px solid var(--ivc-borde);border-radius:15px;box-shadow:0 5px 18px rgba(15,58,100,.05)}
+.ivc-pedidos-panel .card-body{padding:20px}.ivc-pedidos-tabla{font-size:.86rem;white-space:nowrap}.ivc-pedidos-tabla th{background:#f1f7fc;color:#315778;border-bottom:1px solid var(--ivc-borde);font-size:.79rem;text-transform:uppercase;letter-spacing:.03em}
+.ivc-pedidos-tabla td{vertical-align:middle}.ivc-pedidos-pildora{display:inline-block;border-radius:30px;padding:5px 10px;font-weight:700;font-size:.74rem;white-space:nowrap}
+.ivc-pedidos-pildora.ok{background:#dcfce7;color:#166534}.ivc-pedidos-pildora.warn{background:#fff3cb;color:#92400e}.ivc-pedidos-pildora.info{background:#dbeafe;color:#1d4ed8}.ivc-pedidos-pildora.stop{background:#fee2e2;color:#991b1b}
+.ivc-pedidos-modal-head{background:#12396e;color:white}.ivc-pedidos-seccion{border:1px solid #e4ebf4;border-radius:13px;padding:17px;margin-bottom:15px;background:#fff}.ivc-pedidos-seccion h6{font-weight:700;color:#143a65;margin-bottom:13px}
+.ivc-pedidos-item{padding:14px 0;border-top:1px solid #ebf0f6}.ivc-pedidos-item:first-of-type{border-top:0}.ivc-pedidos-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.ivc-pedidos-meta small{display:block;color:#6b8297;font-size:.8rem}.ivc-pedidos-meta strong{overflow-wrap:anywhere}
+#ivcPedDetalle .alert{margin-top:8px}
+@media(max-width:720px){.ivc-pedidos-hero{padding:20px}.ivc-pedidos-panel .card-body{padding:12px}.ivc-pedidos-modal-head{padding:17px}}

@@ -11,7 +11,7 @@ class HomeModel extends Query{
     }//function getCategorias
 
     public function getNuevoProducto(){
-        $sql= "Select * From productos ORDER BY id DESC LIMIT 3";
+        $sql= "SELECT * FROM productos WHERE estado=1 AND cantidad>0 ORDER BY id DESC LIMIT 3";
         return $this ->selectAll($sql);
     }//function getCategorias
     public function getCalificacion($accion, $id)

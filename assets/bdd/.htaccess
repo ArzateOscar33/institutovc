@@ -1,0 +1,3 @@
+# Instituto Visual California — acceso HTTP denegado a esta carpeta.
+# No restringe inclusiones del servidor en PHP.
+Require all denied

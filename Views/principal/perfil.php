@@ -9,6 +9,9 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-v10.css?v=10.0.0">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-steps-v11.css?v=11.1.0">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-v12.css?v=12.0.0">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-cotizacion-v44.css?v=4.4.0">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-paypal-sandbox-v45.css?v=4.6.0">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-recetas-fase3.css?v=3.0.0">
 <main class="ivc-checkout-v10" id="ivcCheckoutV10">
   <section class="ivc-checkout-hero">
     <div class="container ivc-checkout-hero-inner">
@@ -34,7 +37,8 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
       </nav>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-<div class="ivc-flow-shell" id="ivcCheckoutFlow" data-step="1">
+<?php include_once 'Views/principal/ivc-checkout-cotizacion-v44.php'; ?>
+<div class="ivc-flow-shell" id="ivcCheckoutFlow" data-step="1" hidden aria-hidden="true" style="display:none">
   <ol class="ivc-flow-progress" aria-label="Progreso de compra">
     <li class="ivc-flow-progress-item is-current" data-flow-indicator="1" aria-current="step"><span class="ivc-flow-progress-number">1</span><span><strong>Tu pedido</strong><small>Verifica tus armazones</small></span></li>
     <li class="ivc-flow-progress-line" aria-hidden="true"></li>
@@ -75,16 +79,16 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
         <label>Tipo de lente<select id="ivcLensFamily" class="form-select"><option value="">Selecciona un tipo</option><option value="mono">Monofocal</option><option value="bi">Bifocal</option><option value="prog">Progresivo</option></select></label>
         <label>Material y tratamiento<select id="ivcLensOption" class="form-select" disabled><option value="">Primero elige el tipo de lente</option></select></label>
       </div>
-      <div class="ivc-lens-price" id="ivcLensPrice" aria-live="polite"><span>Precio de lista seleccionado</span><strong>—</strong><small>Confirma con la óptica si el precio corresponde a un par de micas o a una pieza. Por ahora no se cobra este concepto.</small></div>
+      <div class="ivc-lens-price" id="ivcLensPrice" aria-live="polite"><span>Precio de lista seleccionado</span><strong>—</strong><small>Los precios indicados corresponden a un par de micas. Verifica el total en el resumen de compra.</small></div>
       <p class="ivc-lens-validation" id="ivcLensValidation" hidden role="alert"></p>
     </section>
-    <div class="ivc-flow-unknown-note" id="ivcFlowUnknownNote" hidden><strong>¿Aún no sabes qué graduación necesitas?</strong><p>No necesitas adivinarla. Puedes pagar el armazón ahora; las micas y su colocación se definirán y cobrarán por separado después de una revisión visual. Esta preferencia todavía no queda registrada automáticamente con tu pedido.</p><a href="<?php echo BASE_URL; ?>principal/agendar" target="_blank" rel="noopener">Agendar valoración visual ↗</a><label class="ivc-unknown-check"><input type="checkbox" id="ivcUnknownConfirm"><span>Entiendo que hoy pago únicamente el armazón; el costo de las micas no está incluido y deberé coordinar la valoración por separado.</span></label></div>
+    <div class="ivc-flow-unknown-note" id="ivcFlowUnknownNote" hidden><strong>¿Aún no sabes qué graduación necesitas?</strong><p>No necesitas adivinarla. Puedes comprar tus lentes con una valoración pendiente y agendar una cita para confirmar tu graduación.</p><a href="<?php echo BASE_URL; ?>principal/agendar" target="_blank" rel="noopener">Agendar valoración visual ↗</a><label class="ivc-unknown-check"><input type="checkbox" id="ivcUnknownConfirm"><span>Entiendo que la graduación debe confirmarse antes de preparar mis lentes.</span></label></div>
     <div class="ivc-flow-rx-reveal" id="ivcFlowRxReveal" hidden><section class="ivc-checkout-panel ivc-checkout-rx" aria-labelledby="ivcRxTitle">
                 <div class="ivc-checkout-panel-header">
                   <div><div class="ivc-checkout-kicker">PASO 02 · PREPARA TUS LENTES</div><h2 id="ivcRxTitle">Tu graduación</h2><p>Diseñamos este espacio para que puedas proporcionar tu receta antes del pago.</p></div>
                   <span class="ivc-checkout-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v13H3zM8 3h8M6 11h12M8 15h8"/></svg></span>
                 </div>
-                <div class="ivc-checkout-demo-note" role="note"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><div><strong>Vista de demostración.</strong> La receta y los valores que ingreses no se guardan ni se envían al pedido. Para compras reales con graduación, espera a que integremos esta función.</div></div>
+                <div class="ivc-checkout-demo-note" role="note"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><div>Puedes guardar tu receta para que el personal de la óptica la revise antes de preparar tus lentes.</div></div>
                 <div class="ivc-checkout-rx-layout">
                   <div class="ivc-checkout-rx-intro"><span class="ivc-checkout-rx-illustration" aria-hidden="true"><svg viewBox="0 0 92 76" width="83" height="68" fill="none"><rect x="21" y="5" width="48" height="61" rx="5" fill="#EAF6FC" stroke="#8FC9EA"/><path d="M30 20h29M30 29h21M30 38h25" stroke="#287CB3" stroke-width="2" stroke-linecap="round"/><path d="M36 48h19l-4 8H40z" fill="#8FC9EA"/></svg></span><div><h3>¿Ya tienes una receta?</h3><p>Podrás ingresar los valores de forma manual o seleccionar tu receta en una fotografía o PDF.</p></div></div>
                   <div class="ivc-checkout-rx-controls">
@@ -116,13 +120,27 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
                 <div id="ivcRxUpload" class="ivc-checkout-rx-method" hidden>
                   <label class="ivc-checkout-file-zone" for="ivcRxFile" id="ivcRxDropzone">
                     <span class="ivc-checkout-file-glyph" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3m-5 5 5-5 5 5"/><path d="M4 16v4h16v-4"/></svg></span>
-                    <strong>Selecciona una fotografía o PDF</strong><span>O arrastra tu archivo aquí</span><small>JPG, PNG o PDF · Hasta 10 MB · Solo vista previa local</small>
+                    <strong>Selecciona una fotografía o PDF</strong><span>O arrastra tu archivo aquí</span><small>JPG, PNG o PDF · Hasta 10 MB · Carga y revisión segura</small>
                   </label>
                   <input type="file" id="ivcRxFile" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" class="ivc-checkout-visually-hidden">
                   <div id="ivcRxFileResult" class="ivc-checkout-file-result" hidden aria-live="polite"></div>
                   <p id="ivcRxFileError" class="ivc-checkout-file-error" role="alert" hidden></p>
                 </div>
-                <div class="ivc-checkout-rx-bottom"><span class="ivc-checkout-pill">Próximamente: envío de graduación por producto</span><span>La receta debe ser revisada por personal de la óptica.</span></div>
+                <div class="ivc-checkout-rx-bottom"><span class="ivc-checkout-pill">Guardado seguro en tu cuenta · Receta sujeta a revisión</span><span>La receta debe ser revisada por personal de la óptica.</span></div>
+
+                <!-- IVC RECETAS FASE 3: registro seguro, NO vincula a pedido -->
+                <div class="ivc-rx-save-card" id="ivcRxSaveCard" data-base="<?php echo htmlspecialchars(BASE_URL,ENT_QUOTES,'UTF-8'); ?>">
+                    <h3>Guardar tu receta para revisión</h3>
+                    <p>Tu información quedará en tu cuenta y será revisada por personal autorizado de la óptica. El personal deberá aprobarla antes de comenzar la preparación de tus lentes.</p>
+                    <label for="ivcRxDate">Fecha de emisión de tu receta (opcional)</label>
+                    <input type="date" id="ivcRxDate" max="<?php echo date('Y-m-d'); ?>">
+                    <label for="ivcRxNotes">Observaciones (opcional)</label>
+                    <textarea rows="2" id="ivcRxNotes" maxlength="1000" placeholder="Ej. Receta emitida por un especialista externo"></textarea>
+                    <label class="ivc-rx-consent"><input type="checkbox" id="ivcRxConsent"><span>Autorizo enviar esta información de graduación y/o archivo para que Instituto Visual California la revise. Entiendo que requiere validación antes de fabricar mis lentes.</span></label>
+                    <button type="button" id="ivcRxSaveButton">Guardar receta para revisión</button>
+                    <p class="ivc-rx-save-status" id="ivcRxSaveStatus" aria-live="polite" role="status"></p>
+                    <div id="ivcRxSavedList" class="ivc-rx-saved-list" hidden></div>
+                </div>
               </section></div>
     <div class="ivc-flow-plain-note" id="ivcFlowPlainNote" hidden><strong>Compra sin graduación.</strong> Podrás continuar al pago con el subtotal de los armazones. No se agregarán micas graduadas.</div>
     <div class="ivc-flow-navigation"><button class="ivc-flow-back" id="ivcFlowBack1" type="button">← Volver a productos</button><button class="ivc-flow-skip" id="ivcFlowSkipRx" type="button">Omitir graduación →</button><button class="ivc-flow-primary" id="ivcFlowToPay" type="button" disabled>Continuar al resumen <span aria-hidden="true">→</span></button></div>
@@ -135,7 +153,7 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
         <div><span>Importe de armazones</span><strong id="ivcFlowBaseTotal">—</strong></div>
         <div><span>Graduación / micas</span><strong id="ivcFlowRxCost">Debes elegir una opción</strong></div>
         <div class="ivc-flow-final-total"><span id="ivcFlowTotalLabel">Total a pagar</span><strong id="ivcFlowGrandTotal">—</strong></div>
-      </div><div class="ivc-flow-final-decision" id="ivcFlowFinalDecision" aria-live="polite"></div><div class="ivc-flow-extra-info">Los precios de la mica mostrados en esta página son orientativos. No se suman al cobro real hasta implementar y validar el cálculo en el servidor y el pedido.</div></section>
+      </div><div class="ivc-flow-final-decision" id="ivcFlowFinalDecision" aria-live="polite"></div><div class="ivc-flow-extra-info">El total definitivo de tu compra se mostrará antes de realizar el pago.</div></section>
       <aside class="ivc-checkout-right" aria-label="Resumen y pago">
               <div class="ivc-checkout-payment ivc-checkout-panel">
                 <div class="ivc-checkout-kicker">PASO 03 · REALIZA TU PAGO</div>
@@ -143,14 +161,33 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
                 <div class="ivc-checkout-customer"><div class="ivc-checkout-avatar" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg></div><div><span>Estás comprando como</span><strong><?php echo $ivcE($ivcName); ?></strong><small><?php echo $ivcE($ivcMail); ?></small></div></div>
                 <div class="ivc-flow-quote-lock" id="ivcQuoteLock" hidden>
                     <div class="ivc-flow-quote-icon" aria-hidden="true">⌕</div>
-                    <h3>Importe estimado, todavía no cobrable</h3>
-                    <p>Seleccionaste lentes graduados. Puedes consultar el costo de lista de las micas, pero el sistema <strong>todavía no incluye ese concepto en el pedido ni en PayPal</strong>. Primero debemos integrar precio, receta y validación en PHP.</p>
+                    <h3>Revisa el total antes de pagar</h3>
+                    <p>Consulta el resumen actualizado para verificar el costo de tu armazón y tus micas.</p>
                     <a class="ivc-flow-link-cta" href="<?php echo BASE_URL; ?>principal/agendar">Solicitar asesoría de graduación →</a>
                   </div>
+                  <!-- Confirmación para clientes que proporcionaron su graduación -->
+<div class="ivc-flow-payment-scope" id="ivcKnownFrameOption" hidden>
+
+    <label for="ivcKnownFrameConfirm"
+           class="d-flex align-items-start gap-2 mb-0">
+
+        <input
+            type="checkbox"
+            id="ivcKnownFrameConfirm"
+            class="form-check-input mt-1"
+        >
+
+        <span>
+            Confirmo que revisé los artículos y sus precios antes de continuar con el pago.
+        </span>
+
+    </label>
+
+</div>
                 <div class="ivc-flow-payment-scope" id="ivcPayScope" hidden role="note"></div>
                 <div class="ivc-checkout-payment-intro" id="ivcPayIntro"><span class="ivc-checkout-payment-icon" aria-hidden="true">✓</span><div><strong>Pago protegido con PayPal</strong><p>Elige PayPal o tarjeta de débito o crédito para continuar.</p></div></div>
                 <div class="ivc-checkout-paypal-box" id="ivcPayReal" hidden><div class="ivc-checkout-paypal-heading"><span>Pago en línea</span><strong>PayPal</strong></div><div id="paypal-button-container" aria-label="Opciones de pago con PayPal"></div><p class="ivc-flow-paypal-status" id="ivcPaypalStatus" role="status"></p></div>
-                <p class="ivc-checkout-payment-warning" id="ivcPayWarning"><strong>Importante:</strong> en esta demostración PayPal funciona como antes, pero la graduación y el archivo que selecciones <strong>no se incluyen</strong> en el pedido ni llegan a la óptica. No completes compras reales de lentes graduados con esta interfaz de prueba.</p>
+                <p class="ivc-checkout-payment-warning" id="ivcPayWarning"><strong>Importante:</strong> revisa la graduación y el material de tus micas antes de confirmar el pago. Las recetas requieren validación de la óptica.</p>
                 <div class="ivc-checkout-help"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5h14v14H5zM8 9h8M8 13h6"/></svg><div><span>¿Tienes dudas sobre tu graduación?</span><a href="<?php echo BASE_URL; ?>principal/agendar">Agenda una revisión visual →</a></div></div>
                 <a class="ivc-checkout-logout" href="<?php echo BASE_URL; ?>clientes/salir">Cerrar sesión</a>
               </div>
@@ -172,11 +209,14 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
 <!-- Conserva el modal original y sus identificadores para assets/js/clientes.js. -->
 <div id="modalPedido" class="modal fade" tabindex="-1" aria-labelledby="ivcPedidoModalTitle" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h2 class="modal-title h5" id="ivcPedidoModalTitle">Estado del pedido</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button></div><div class="modal-body"><div class="row g-3 mb-3"><div class="col-md-4"><div id="estadoEnviado" class="services-icon-wap ivc-checkout-status"><i class="fa fa-truck" aria-hidden="true"></i><span>Pendiente</span></div></div><div class="col-md-4"><div id="estadoProceso" class="services-icon-wap ivc-checkout-status"><i class="fa fa-exchange-alt" aria-hidden="true"></i><span>En proceso</span></div></div><div class="col-md-4"><div id="estadoCompletado" class="services-icon-wap ivc-checkout-status"><i class="fa fa-check-circle" aria-hidden="true"></i><span>Completado</span></div></div></div><div class="table-responsive"><table id="tablePedidos" class="table table-hover align-middle" style="width:100%"><thead><tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th></tr></thead><tbody></tbody></table></div></div></div></div></div>
 <?php include_once 'Views/template/footer.php'; ?>
-<!-- Se conservan los scripts y el SDK del flujo de pago original. -->
-<script src="<?php echo BASE_URL; ?>assets/js/clientes.js"></script>
+<!-- Se conservan scripts compartidos con el historial; el flujo de pago antiguo permanece desactivado. -->
+<script src="<?php echo BASE_URL; ?>assets/js/clientes.js?v=13.3.0"></script>
 <script src="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/es-MX.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=<?php echo rawurlencode(CLIENT_ID); ?>&currency=<?php echo rawurlencode(MONEDA); ?>"></script>
+<!-- El SDK de PayPal se carga exclusivamente desde ivc-paypal-sandbox-v45.js; no cargar el SDK heredado. -->
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.css">
 <script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-v10.js?v=10.0.0"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-steps-v12.js?v=12.0.0"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-steps-v12.js?v=12.3.0"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-cotizacion-v44.js?v=4.9.1b"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-paypal-sandbox-v45.js?v=4.9.1b"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-recetas-checkout.js?v=3.0.0"></script>

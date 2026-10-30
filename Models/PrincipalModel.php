@@ -22,7 +22,7 @@ class PrincipalModel extends Query{
 
     private function ivcCatalogoCondiciones(array $filtros): array
     {
-        $condiciones = ['p.estado = 1', 'c.estado = 1'];
+        $condiciones = ['p.estado = 1', 'c.estado = 1', 'p.cantidad > 0'];
         $params = [];
         if (!empty($filtros['categoria'])) {
             $condiciones[] = 'p.id_categoria = :categoria';
@@ -54,7 +54,7 @@ class PrincipalModel extends Query{
         return $this->ivcCatalogoConsulta(
             'SELECT c.id, c.categoria, COUNT(p.id) AS total_productos
              FROM categorias c
-             INNER JOIN productos p ON p.id_categoria = c.id AND p.estado = 1
+             INNER JOIN productos p ON p.id_categoria = c.id AND p.estado = 1 AND p.cantidad > 0
              WHERE c.estado = 1
              GROUP BY c.id, c.categoria
              ORDER BY c.categoria ASC'
@@ -109,18 +109,18 @@ class PrincipalModel extends Query{
 
     //produtcos relacionas con la categoria
     public function getProductosCat($id_categoria,$desde,$porPagina){
-     $sql="SELECT * FROM productos WHERE id_categoria =$id_categoria LIMIT $desde,$porPagina";
+     $sql="SELECT * FROM productos WHERE estado=1 AND cantidad>0 AND id_categoria =$id_categoria LIMIT $desde,$porPagina";
      return $this->selectAll($sql);   
     }
     //obetener total productos relacionados con la cateogira
     public function getTotalProductosCat($id_categoria){
-        $sql = "SELECT COUNT(*) AS total FROM productos WHERE id_categoria =$id_categoria" ;
+        $sql = "SELECT COUNT(*) AS total FROM productos WHERE estado=1 AND cantidad>0 AND id_categoria =$id_categoria" ;
         return $this->select($sql);   
        }
 
           //produtcos relacionas aleatorios
     public function getAleatorios($id_categoria,$id_producto){
-        $sql="SELECT * FROM productos WHERE id_categoria =$id_categoria AND id != $id_producto ORDER BY RAND() LIMIT 20";
+        $sql="SELECT * FROM productos WHERE estado=1 AND cantidad>0 AND id_categoria =$id_categoria AND id != $id_producto ORDER BY RAND() LIMIT 20";
         return $this->selectAll($sql);   
        }
  
@@ -130,7 +130,7 @@ class PrincipalModel extends Query{
        }
 //busqueda de productos
        public function getBusqueda($valor){
-        $sql="SELECT * FROM productos WHERE nombre LIKE '%".$valor."%' OR descripcion LIKE '%".$valor."%' LIMIT 6";
+        $sql="SELECT * FROM productos WHERE estado=1 AND cantidad>0 AND (nombre LIKE '%".$valor."%' OR descripcion LIKE '%".$valor."%') LIMIT 6";
         return $this->selectAll($sql);   
        }
 //citas

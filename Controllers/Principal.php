@@ -105,6 +105,23 @@ class Principal extends Controller
     //vista Agendar
     public function agendar()
     {
+        $data['pedidoValoracion'] = null;
+        $data['pedidoValoracionError'] = false;
+        $id = filter_var($_GET['pedido'] ?? null, FILTER_VALIDATE_INT, ['options'=>['min_range'=>1]]);
+        $cliente = filter_var($_SESSION['idCliente'] ?? null, FILTER_VALIDATE_INT, ['options'=>['min_range'=>1]]);
+        if ($id && $cliente) {
+            try {
+                require_once 'Config/App/ValoracionesPedidos.php';
+                $service = new ValoracionesPedidos();
+                $data['pedidoValoracion'] = $service->pedidoCliente((int)$id,(int)$cliente);
+                if (!$data['pedidoValoracion']) $data['pedidoValoracionError'] = true;
+                if ($data['pedidoValoracion']) {
+                    if (empty($_SESSION['ivc_cita_pedido_csrf'])) $_SESSION['ivc_cita_pedido_csrf']=bin2hex(random_bytes(32));
+                    $data['pedidoValoracion']['csrf']=$_SESSION['ivc_cita_pedido_csrf'];
+                }
+            } catch (Throwable $e) {error_log('IVC 4.8 agendar: '.$e->getMessage());}
+        }
+        if (isset($_GET['pedido']) && empty($data['pedidoValoracion'])) $data['pedidoValoracionError']=true;
         $data['perfil'] = 'no';
         $data['title'] = 'Agenda tu Cita';
         $this->views->getView('principal', "agendar", $data);
@@ -191,6 +208,32 @@ class Principal extends Controller
     // Método para registrar una cita
     public function registrarCita()
     {
+        // Las citas con pedido usan una transacción y verifican propiedad del pedido en PHP.
+        if (isset($_POST['id_pedido']) && (string)$_POST['id_pedido'] !== '') {
+            header('Content-Type: application/json; charset=utf-8');
+            header('Cache-Control: no-store, private');
+            try {
+                $id=filter_var($_POST['id_pedido'],FILTER_VALIDATE_INT,['options'=>['min_range'=>1]]);
+                $cliente=filter_var($_SESSION['idCliente'] ?? null,FILTER_VALIDATE_INT,['options'=>['min_range'=>1]]);
+                $token=$_POST['csrf_pedido']??null;
+                $stored=$_SESSION['ivc_cita_pedido_csrf']??null;
+                if (($_SERVER['REQUEST_METHOD']??'')!=='POST'||!$id||!$cliente||!is_string($token)
+                  ||!is_string($stored)||!hash_equals($stored,$token))
+                    throw new DomainException('Sesión o solicitud inválida para agendar esta valoración.');
+                require_once 'Config/App/ValoracionesPedidos.php';
+                $res=(new ValoracionesPedidos())->registrar((int)$id,(int)$cliente,$_POST);
+                echo json_encode(['msg'=>'Cita registrada y asociada al pedido #'.$id,'icono'=>'success',
+                     'token'=>$res['token'],'id_cita'=>$res['id_cita'],'id_pedido'=>$id],JSON_UNESCAPED_UNICODE);
+            } catch (DomainException $e) {
+                http_response_code(200);
+                echo json_encode(['msg'=>$e->getMessage(),'icono'=>'warning'],JSON_UNESCAPED_UNICODE);
+            } catch (Throwable $e) {
+                error_log('IVC 4.8 vincular cita cliente: '.$e->getMessage());
+                http_response_code(500);
+                echo json_encode(['msg'=>'No se pudo registrar la valoración. Contacta a la óptica antes de reintentar.','icono'=>'error'],JSON_UNESCAPED_UNICODE);
+            }
+            exit;
+        }
         if (isset($_POST['fechaCita'], $_POST['selectHorarios'])) {
             if (empty($_POST['fechaCita']) || empty($_POST['selectHorarios']) || empty($_POST['iapPaterno']) || empty($_POST['iapMaterno']) || empty($_POST['iCorreo']) || empty($_POST['iTelefono']) || empty($_POST['iNombre'])) {
                 $mensaje = array('msg' => 'TODOS LOS CAMPOS SON REQUERIDOS DESDE REGISTRAR', 'icono' => 'warning');
@@ -385,6 +428,12 @@ class Principal extends Controller
     }
     public function verificarCorreoAgenda($token)
     {
+        // Compatibilidad con tokens legados (MD5) y nuevos (aleatorios de 48 hex).
+        // Evita interpolar un parámetro de ruta arbitrario en el modelo heredado.
+        if (!is_string($token) || !preg_match('/\A(?:[a-f0-9]{32}|[a-f0-9]{48})\z/D', $token)) {
+            $_SESSION['alerta_error'] = 'No se pudo confirmar la cita. Token inválido.';
+            header('Location: '.BASE_URL);exit;
+        }
         $verificar = $this->model->getToken($token);
         if (!empty($verificar)) {
             $this->model->actualizarVerify($verificar['id_cita']);

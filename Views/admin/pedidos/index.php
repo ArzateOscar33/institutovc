@@ -1,127 +1,51 @@
 <?php include_once 'Views/template/header-admin.php'; ?>
-
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#listaPedidos" type="button" role="tab" aria-controls="listaPedidos" aria-selected="true">Pedidos</button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="proceso-tab" data-bs-toggle="tab" data-bs-target="#listaProceso" type="button" role="tab" aria-controls="listaProceso" aria-selected="false">Proceso</button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#pedidosFinalizados" type="button" role="tab" aria-controls="pedidosFinalizados" aria-selected="false">Finalizados</button>
-    </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="listaPedidos" role="tabpanel" aria-labelledby="home-tab">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblPendientes">
-                        <thead>
-                            <tr>
-                                <th>Id Transacción</th>
-                                <th>Monto</th>
-                                <th>Estado</th>
-                                <th>Fecha</th>
-                                <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Dirección</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-pedidos-admin-v47.css?v=471">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-recetas-preview-v471.css?v=471">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-citas-valoracion-v48.css?v=48">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-validacion-unificada-v481.css?v=481">
+<div id="ivc-pedidos-v47" data-csrf="<?php echo htmlspecialchars($data['csrf'], ENT_QUOTES, 'UTF-8'); ?>">
+  <div class="ivc-pedidos-hero d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <div class="ivc-pedidos-eyebrow">INSTITUTO VISUAL CALIFORNIA · OPERACIONES</div>
+      <h2 class="mb-1">Administración de pedidos</h2>
+      <p class="mb-0">Control de pagos, micas, recetas y preparación de pedidos.</p>
     </div>
-    <div class="tab-pane fade" id="listaProceso" role="tabpanel" aria-labelledby="proceso-tab">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblProceso">
-                        <thead>
-                            <tr>
-                                <th>Id Transacción</th>
-                                <th>Monto</th>
-                                <th>Estado</th>
-                                <th>Fecha</th>
-                                <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Dirección</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <button id="ivcPedRefresh" type="button" class="btn btn-light"><i class="bx bx-refresh"></i> Actualizar</button>
+  </div>
+  <div class="row g-3 mb-4" id="ivcPedResumen">
+    <div class="col-6 col-lg-3"><div class="ivc-pedidos-kpi"><span>Pedidos cargados</span><strong id="ivcPedTotal">—</strong></div></div>
+    <div class="col-6 col-lg-3"><div class="ivc-pedidos-kpi"><span>Por preparar</span><strong id="ivcPedPendientes">—</strong></div></div>
+    <div class="col-6 col-lg-3"><div class="ivc-pedidos-kpi"><span>Bloqueo óptico</span><strong id="ivcPedBloqueados">—</strong></div></div>
+    <div class="col-6 col-lg-3"><div class="ivc-pedidos-kpi"><span>Finalizados</span><strong id="ivcPedFinalizados">—</strong></div></div>
+  </div>
+  <div class="card ivc-pedidos-panel mb-4"><div class="card-body">
+    <div class="d-flex flex-wrap align-items-end gap-3 mb-3">
+      <div class="flex-grow-1"><label class="form-label" for="ivcPedBusqueda">Buscar pedido, cliente, correo o transacción</label>
+        <input id="ivcPedBusqueda" type="search" maxlength="100" class="form-control" placeholder="Ej. 11, nombre, correo o captura PayPal"></div>
+      <div><label class="form-label" for="ivcPedFiltro">Etapa comercial</label>
+        <select id="ivcPedFiltro" class="form-select"><option value="">Todas</option><option value="1">Pendientes</option><option value="2">En preparación</option><option value="3">Finalizados</option></select></div>
+      <button type="button" id="ivcPedBuscar" class="btn btn-primary">Buscar</button>
     </div>
-    <div class="tab-pane fade" id="pedidosFinalizados" role="tabpanel" aria-labelledby="profile-tab">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblFinalizados">
-                        <thead>
-                            <tr>
-                                <th>Id Transacción</th>
-                                <th>Monto</th>
-                                <th>Estado</th>
-                                <th>Fecha</th>
-                                <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Dirección</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="ivcPedAviso" class="alert alert-info d-none" role="status"></div>
+    <div class="table-responsive"><table class="table table-hover align-middle ivc-pedidos-tabla">
+      <thead><tr><th>Pedido</th><th>Cliente</th><th>Fecha</th><th>Importe</th><th>Pago</th><th>Etapa</th><th>Óptica / valoración</th><th></th></tr></thead>
+      <tbody id="ivcPedFilas"><tr><td colspan="8" class="text-center p-4">Cargando pedidos…</td></tr></tbody>
+    </table></div>
+    <div class="small text-muted">Se muestran hasta 300 pedidos recientes por consulta. Los pedidos históricos siguen disponibles.</div>
+  </div></div>
 </div>
-
-<div id="modalPedidos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Productos</h5>
-                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-borderer table-striped table-hover align-middle" id="tablePedidos" style="width: 100%;">
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>SubTotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<div class="modal fade" id="ivcPedModal" tabindex="-1" aria-labelledby="ivcPedTitulo" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content">
+    <div class="modal-header ivc-pedidos-modal-head"><div><div class="small opacity-75">EXPEDIENTE DEL PEDIDO</div><h5 class="modal-title" id="ivcPedTitulo">Detalle del pedido</h5></div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button></div>
+    <div class="modal-body"><div id="ivcPedDetalle" aria-live="polite">Consultando…</div></div>
+    <div class="modal-footer justify-content-between"><div class="small text-muted">Revisa la receta y autoriza sus micas sin salir de Pedidos.</div>
+      <div><button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
+      <button id="ivcPedAvanzar" class="btn btn-primary" type="button" hidden>Avanzar pedido</button></div>
     </div>
+  </div></div>
 </div>
-
 <?php include_once 'Views/template/footer-admin.php'; ?>
-
-<script src="<?php echo BASE_URL . 'assets/js/modulos/pedidos.js'; ?>"></script>
-
-</body>
-
-</html>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-receta-preview-v471.js?v=471"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/modulos/pedidos.js?v=481"></script>
+</body></html>

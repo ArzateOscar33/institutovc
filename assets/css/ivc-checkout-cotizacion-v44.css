@@ -1,0 +1,55 @@
+/* IVC Fase 4.4 — Cotización global segura: nunca mostrar un pago antiguo con micas. */
+body.ivc44-with-rx #ivcCheckoutFlow,
+body.ivc44-with-rx #ivcPayReal,
+body.ivc44-with-rx #paypal-button-container { display:none !important; }
+.ivc44-root[hidden], .ivc44-root [hidden] { display:none !important; }
+.ivc44-root { --ivc44-blue:#267eb3; --ivc44-ink:#123956; --ivc44-line:#d4e6f1; color:var(--ivc44-ink); margin:18px auto 46px; }
+.ivc44-progress {display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #d9ebf4;background:#f2f9fc;border-radius:14px;padding:17px 22px;margin-bottom:24px;}
+.ivc44-progress span {font-size:13px;color:#6590a9;font-weight:700;display:flex;align-items:center;gap:9px;}
+.ivc44-progress span b {display:grid;place-items:center;height:32px;width:32px;border-radius:50%;background:#e3f1f9;font-size:12px;color:#4a8fb5;}
+.ivc44-progress .ivc44-current {color:var(--ivc44-ink);}
+.ivc44-progress .ivc44-current b {color:white;background:var(--ivc44-blue);}
+.ivc44-heading {background:linear-gradient(110deg,#e8f5fb,#f7fbfd);border:1px solid var(--ivc44-line);padding:30px;border-radius:16px;margin-bottom:24px;}
+.ivc44-eyebrow {font-size:11px;letter-spacing:1.6px;font-weight:800;color:#227bae;}
+.ivc44-heading h2 {font-size:29px;font-weight:800;line-height:1.25;margin:11px 0 8px;color:#123956;}
+.ivc44-heading p {color:#547a96;margin:0;max-width:850px;font-size:14px;}
+.ivc44-grid {display:grid;grid-template-columns:minmax(0,1.55fr) minmax(315px,1fr);gap:22px;align-items:start;}
+.ivc44-panel {background:#fff;border:1px solid var(--ivc44-line);border-radius:15px;box-shadow:0 12px 32px rgba(17,59,92,.045);padding:24px;min-width:0;}
+.ivc44-panel-head {display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.ivc44-panel h3 {font-size:21px;color:#123956;font-weight:750;margin:0 0 10px;}
+.ivc44-panel-head span {padding:6px 11px;border-radius:20px;background:#eaf6fc;color:#277dac;font-size:12px;font-weight:700;}
+.ivc44-hint {font-size:13px;color:#68849b;max-width:520px;margin-bottom:19px;}
+.ivc44-table-wrap {overflow-x:auto;}
+.ivc44-table {width:100%;border-collapse:collapse;font-size:13px;}
+.ivc44-table th {padding:13px 12px;text-align:left;background:#f2f8fb;color:#607e97;font-size:11px;text-transform:uppercase;letter-spacing:.6px;}
+.ivc44-table td {padding:17px 12px;border-bottom:1px solid #e5eff5;vertical-align:top;}
+.ivc44-table th:last-child,.ivc44-table td:last-child{text-align:right;white-space:nowrap;}
+.ivc44-back {color:#257caf;display:inline-block;font-weight:700;margin-top:26px;text-decoration:none;font-size:13px;}
+.ivc44-summary>h3 {margin-top:7px;margin-bottom:19px;}
+.ivc44-before {padding:17px;border-radius:10px;background:#f4f9fc;color:#547a94;font-size:13px;margin-bottom:16px;}
+.ivc44-quote-id {display:flex;gap:8px;align-items:center;padding:10px 0 17px;border-bottom:1px solid #e0ecf3;color:#6b8293;font-size:13px;}
+.ivc44-quote-id strong {color:#194d73;font-size:16px;}
+.ivc44-quote-id span {margin-left:auto;padding:4px 8px;border-radius:7px;background:#e7f8ee;color:#197647;font-weight:750;font-size:10px;}
+.ivc44-item {display:flex;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid #e8eff4;font-size:13px;}
+.ivc44-item>div {min-width:0;display:grid;gap:5px;}
+.ivc44-item strong {color:#123956;overflow-wrap:anywhere;}
+.ivc44-item small {color:#6987a0;}
+.ivc44-item>span {white-space:nowrap;font-weight:700;color:#174b72;}
+.ivc44-totals {margin:18px 0;display:grid;gap:12px;}
+.ivc44-totals>div {display:flex;justify-content:space-between;gap:10px;font-size:14px;}
+.ivc44-totals dt {font-weight:500;color:#607d94;}
+.ivc44-totals dd {margin:0;font-weight:700;color:#123956;}
+.ivc44-totals .ivc44-grand {padding-top:17px;border-top:1px solid #dbeaf2;font-size:18px;}
+.ivc44-totals .ivc44-grand dt,.ivc44-totals .ivc44-grand dd{font-weight:800;color:#123956;}
+.ivc44-validity,.ivc44-review {font-size:12px;line-height:1.6;color:#708ba0;}
+.ivc44-status {min-height:22px;font-size:13px;color:#16774f;font-weight:650;margin:16px 0 12px;}
+.ivc44-status.is-error {color:#ba3f45;}
+.ivc44-primary {background:#287db0;border:0;border-radius:10px;color:#fff;font-size:14px;font-weight:700;padding:16px 18px;width:100%;cursor:pointer;}
+.ivc44-primary:hover {background:#176394;}
+.ivc44-primary:disabled {opacity:.55;cursor:wait;}
+.ivc44-payment-locked {background:#fff7e8;border:1px solid #f1dfb1;border-radius:10px;padding:15px;margin-top:17px;color:#81591e;font-size:12px;}
+.ivc44-payment-locked strong {display:block;font-size:13px;margin-bottom:6px;}
+.ivc44-payment-locked p {margin:0;line-height:1.55;}
+.ivc44-review {margin:14px 0 0;}
+@media(max-width:900px) {.ivc44-grid {grid-template-columns:1fr;}.ivc44-progress {flex-wrap:wrap;}}
+@media(max-width:575px) {.ivc44-panel{padding:17px;}.ivc44-heading{padding:20px;}.ivc44-heading h2{font-size:23px;}.ivc44-progress{padding:12px;gap:10px;}.ivc44-progress span{font-size:11px;}.ivc44-progress span b{width:27px;height:27px;}.ivc44-table th,.ivc44-table td{padding:12px 6px;font-size:12px;}}

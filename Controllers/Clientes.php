@@ -156,43 +156,17 @@ class Clientes extends Controller
     }
 
 //registrar pedidos 
+/**
+ * Registro heredado deshabilitado: los datos de PayPal enviados por JS no demuestran pago.
+ * Todas las ventas (armazones con/sin micas) deben usar cotizaciones + pagos/capturar.
+ */
 public function registrarPedido(){
-    $id_cliente = $_SESSION['idCliente'];
-    $datos=file_get_contents('php://input');
-    $json=json_decode($datos,true);
-    $pedidos=$json['pedidos'];
-    $productos=$json['productos'];
-   if(is_array($pedidos) && is_array($productos)){
-        $id_transaccion=$pedidos['id'];
-        $monto=$pedidos['purchase_units'][0]['amount']['value'];
-        $estado=$pedidos['status'];
-        $fecha=date('Y-m-d H:i:s');
-        $email=$pedidos['payer']['email_address'];
-        $nombre=$pedidos['payer']['name']['given_name'];
-        $apellido=$pedidos['payer']['name']['surname'];
-        //$productoId=;
-        //NOTA BUSCAR EN EL ARREGLO LA DIRECCION DEL USUARIO REGISTRADO 
-       // $direccion=['purchase_units'][0]['shiping']['address']['address_line_1'];
-        //$ciudad=['purchase_units'][0]['shiping']['address']['address_area_2'];
-       
-        $data= $this->model->registrarPedido($id_transaccion, $monto,$estado, $fecha,$email,$nombre,$apellido,$id_cliente);
-        if ($data>0) {
-            foreach ($productos as $producto ) {
-               $temp= $this->model->getProducto($producto['idProducto']);
-               $this->model->registrarDetalle($temp['nombre'],$temp['precio'],$producto['cantidad'],$data,$producto['idProducto']);
-               
-            }  
-            $mensaje=array('msg'=>'pedido registrado','icono'=>'success');
-        } else {
-            $mensaje=array('msg'=>'error al registrar el pedido','icono'=>'error');
-        } 
-    }else{
-        $mensaje=array('msg'=>'error fatal con los datos','icono'=>'error');
-    }
-    //RECUERDA MODIFICAR EL CODIGO PARA SELECCIONAR LA DIRECCION DEL USUARIO DE PAYPAL
-   //print_r($json);
-   echo json_encode($mensaje);
-   die();
+    http_response_code(410);
+    header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store');
+    echo json_encode(['msg'=>'Checkout anterior deshabilitado. Usa la cotización PHP y PayPal Sandbox.',
+                      'icono'=>'error','ok'=>false],JSON_UNESCAPED_UNICODE);
+    exit;
 }
 //lsitar productos pendientes
 public function listarPendientes(){
@@ -205,11 +179,15 @@ public function listarPendientes(){
     die();
 }
 public function verPedido($idPedido){
-    $data['pedido'] = $this->model->getPedido($idPedido);
-    $data['productos'] = $this->model->verPedidos($idPedido);
-    $data['moneda'] = MONEDA;
-    echo json_encode($data);
-    die();
+    header('Content-Type: application/json; charset=utf-8');
+    $idCliente=filter_var($_SESSION['idCliente']??null,FILTER_VALIDATE_INT,['options'=>['min_range'=>1]]);
+    $id=filter_var($idPedido,FILTER_VALIDATE_INT,['options'=>['min_range'=>1]]);
+    if (!$idCliente || !$id){http_response_code(401);echo json_encode(['error'=>'No autorizado']);exit;}
+    $pedido=$this->model->getPedido((int)$id,(int)$idCliente);
+    if (!$pedido){http_response_code(404);echo json_encode(['error'=>'Pedido no encontrado']);exit;}
+    echo json_encode(['pedido'=>$pedido,'productos'=>$this->model->verPedidos((int)$id,(int)$idCliente),
+                      'moneda'=>MONEDA],JSON_UNESCAPED_UNICODE);
+    exit;
 }
 public function salir(){
     session_destroy();

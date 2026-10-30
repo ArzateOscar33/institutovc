@@ -48,6 +48,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //ver carrito
 function getListaProductos() {
+    // IVC_F43_GUARD_CHECKOUT: nunca cobrar solo armazones si hay micas configuradas.
+    let ivc43ConMicas = false;
+    try {
+        const almacenadas = JSON.parse(localStorage.getItem('ivcCarritoConfiguradoV43') || '[]');
+        ivc43ConMicas = Array.isArray(almacenadas) && almacenadas.length > 0;
+    } catch (_) { ivc43ConMicas = true; }
+    if (ivc43ConMicas) {
+        if (window.IVCCart43 && typeof window.IVCCart43.blockCheckout === 'function') {
+            window.IVCCart43.blockCheckout();
+        } else {
+            const siguiente = document.getElementById('ivcFlowToRx');
+            if (siguiente) siguiente.disabled = true;
+            const estado = document.getElementById('ivcOrderStatus');
+            if (estado) estado.textContent = 'Tu carrito contiene micas. No se permite pagar solo los armazones.';
+            const paypal = document.getElementById('ivcPayReal');
+            if (paypal) paypal.style.display = 'none';
+        }
+        return;
+    }
+
 	let html = "";
 	const url = base_url + "principal/listaProductos";
 	const http = new XMLHttpRequest();
@@ -87,7 +107,22 @@ function getListaProductos() {
 				tableLista.innerHTML = html;
 				document.querySelector("#totalProducto").textContent =
 					"TOTAL A PAGAR " + res.moneda + " " + res.total;
-				botonPaypal(res.totalPayPal, res.moneda);
+				// Informar al checkout cuando los productos estén cargados
+if (document.getElementById('ivcCheckoutFlow')) {
+
+    document.dispatchEvent(new CustomEvent('ivc:productos-listos', {
+        detail: {
+            total: res.totalPayPal,
+            moneda: res.moneda
+        }
+    }));
+
+} else {
+
+    // Mantener compatibilidad con otras vistas
+    botonPaypal(res.totalPayPal, res.moneda);
+
+}
 			}
 		} else {
 			tableLista.innerHTML = `

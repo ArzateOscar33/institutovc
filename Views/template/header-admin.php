@@ -65,6 +65,14 @@
                         <div class="menu-title"><i class='fas fa-list'></i> Productos</div>
                     </a>
                 </li>
+                <!-- IVC MICAS ADMIN V2 -->
+                <li>
+                    <a href="<?php echo BASE_URL . 'micas'; ?>">
+                        <div class="menu-title"><i class="fas fa-glasses"></i> Catálogo de micas</div>
+                    </a>
+                </li>
+                <!-- IVC RECETAS FASE 3 -->
+                <li><a href="<?php echo BASE_URL . 'recetasAdmin'; ?>"><div class="menu-title"><i class="fas fa-file-medical"></i> Revisar recetas</div></a></li>
                 <li>
                     <a href="<?php echo BASE_URL . 'pedidos'; ?>">
                         <div class="menu-title"><i class='fas fa-bell'></i> Pedidos</div>

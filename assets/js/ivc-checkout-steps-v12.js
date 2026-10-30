@@ -1,4 +1,4 @@
-/* Instituto Visual California V12
+/* Instituto Visual California V12.1
  * Catálogo visual de micas (precios de lista aportados por la óptica).
  * NO modifica pedidos, NO almacena recetas y NO cobra micas por PayPal.
  */
@@ -12,6 +12,8 @@
   const indicators = [...root.querySelectorAll('[data-flow-indicator]')];
   const payBox = el('ivcPayReal');
   const quoteBox = el('ivcQuoteLock');
+  const knownFrameConsent = el('ivcKnownFrameConfirm');
+  const knownFrameOption = el('ivcKnownFrameOption');
   const payScope = el('ivcPayScope');
   const originalPay = typeof window.botonPaypal === 'function' ? window.botonPaypal : null;
   let step = 1;
@@ -66,7 +68,7 @@
     const note = box.querySelector('small');
     strong.textContent = selectedLens ? money(selectedLens[1]) : '—';
     note.textContent = selectedLens
-      ? `${selectedLens[0]}. ${selectedLens[2] ? selectedLens[2] + '. ' : ''}Confirma si el importe es por par o pieza; sujeto a compatibilidad con la receta. No se cobra todavía.`
+      ? `${selectedLens[0]}. ${selectedLens[2] ? selectedLens[2] + '. ' : ''}Precio final por par de micas; sujeto a compatibilidad con la receta. No se cobra todavía.`
       : 'Selecciona un material para ver su precio de lista. No se cobra todavía.';
     updateSummary();
   }
@@ -86,8 +88,15 @@
     return [...document.querySelectorAll('#tableListaProductos tbody tr')].filter(tr => tr.cells.length === 5 && !tr.cells[0]?.hasAttribute('colspan')).length;
   }
   function canPayFrameOnly() {
-    return choice === 'plain' || (choice === 'unknown' && el('ivcUnknownConfirm').checked);
+    return choice === 'plain' ||
+      (choice === 'unknown' && el('ivcUnknownConfirm').checked) ||
+      (choice === 'known' && knownFrameConsent.checked);
   }
+  knownFrameConsent.addEventListener('change', () => {
+    if (choice !== 'known') return;
+    updateSummary();
+    maybeRenderPaypal();
+  });
   function updateSummary() {
     const count = productCount();
     el('ivcFlowItemCount').textContent = `${count} ${count === 1 ? 'producto' : 'productos'}`;
@@ -99,9 +108,13 @@
     const quote = selectedLens ? money(selectedLens[1]) : null;
     if (choice === 'known') {
       cost.textContent = quote ? `${quote} (de lista)` : 'Por seleccionar';
-      total.textContent = baseTotal && quote ? `${money(baseTotal + selectedLens[1])} *` : 'Por definir';
-      label.textContent = 'Total ilustrativo';
-      decision.textContent = 'El precio mostrado es una estimación: supone un solo material para un armazón y que el precio de lista corresponde a la unidad de venta requerida. La receta y la selección no se guardan ni llegan a la óptica. *No es un cobro ni una cotización definitiva.';
+      total.textContent = knownFrameConsent.checked
+        ? (baseTotal === null ? 'Cargando…' : money(baseTotal))
+        : (baseTotal && quote ? `${money(baseTotal + selectedLens[1])} *` : 'Por definir');
+      label.textContent = knownFrameConsent.checked ? 'A pagar hoy: solo armazones' : 'Total ilustrativo';
+      decision.textContent = knownFrameConsent.checked
+        ? 'El pago de hoy cubre SOLO los armazones. El material seleccionado es orientativo, las micas se cobrarán después y la receta no se adjuntará al pedido. Para completar los lentes graduados deberás contactar a la óptica.'
+        : 'El precio mostrado es una estimación: supone un solo material para un armazón y que el precio de lista corresponde a la unidad de venta requerida. La receta solo se registra si pulsas “Guardar receta para revisión”; ese registro todavía no se vincula al pedido. *No es un cobro ni una cotización definitiva.';
       decision.classList.add('is-rx');
     } else if (choice === 'unknown') {
       cost.textContent = quote ? `${quote} (referencia, no incluido)` : 'Por determinar después';
@@ -122,17 +135,20 @@
       decision.textContent = 'Debes seleccionar cómo deseas continuar.';
     }
     payBox.hidden = step !== 3 || !canPayFrameOnly();
-    quoteBox.hidden = step !== 3 || choice !== 'known';
+    quoteBox.hidden = step !== 3 || choice !== 'known' || canPayFrameOnly();
+    knownFrameOption.hidden = step !== 3 || choice !== 'known';
     payScope.hidden = step !== 3 || !canPayFrameOnly();
     payScope.textContent = choice === 'unknown'
       ? 'PAGO DE ARMAZONES ÚNICAMENTE. No incluye examen visual, micas ni tratamiento, y el pedido no conservará tu solicitud de graduación.'
-      : 'PAGO DE ARMAZONES ÚNICAMENTE. No incluye micas graduadas.';
+      : choice === 'known'
+        ? 'SOLO SE COBRARÁN LOS ARMAZONES. Tu receta se guarda únicamente si pulsas “Guardar receta para revisión”; no está vinculada a este pedido. Las micas se cotizan y pagan por separado.'
+        : 'PAGO DE ARMAZONES ÚNICAMENTE. No incluye micas graduadas.';
     const payIntro = el('ivcPayIntro');
-    if (payIntro) payIntro.hidden = choice === 'known';
+    if (payIntro) payIntro.hidden = choice === 'known' && !canPayFrameOnly();
     const warning = el('ivcPayWarning');
     if (warning) {
       warning.hidden = false;
-      warning.innerHTML = '<strong>Importante:</strong> la receta, la graduación y el material escogido son solo una demostración visual. <strong>No se guardan ni se cobran.</strong> PayPal solo cobrará los armazones con la integración actual.';
+      warning.innerHTML = '<strong>Importante:</strong> las recetas pueden registrarse en tu cuenta para revisión, pero <strong>no se asocian todavía al pedido ni se cobran las micas.</strong> PayPal solo cobrará los armazones con la integración actual.';
     }
   }
 
@@ -149,6 +165,16 @@
     updateSummary();
     maybeRenderPaypal();
   };
+  // Recibir los productos y el importe desde clientes.js
+document.addEventListener('ivc:productos-listos', (event) => {
+
+    const data = event.detail || {};
+
+    // Esta función ya actualiza el subtotal
+    // y habilita el botón para continuar.
+    window.botonPaypal(data.total, data.moneda);
+
+});
   function maybeRenderPaypal() {
     if (paypalRendered || step !== 3 || !canPayFrameOnly() || !(baseTotal > 0)) return;
     if (!originalPay || !window.paypal?.Buttons) {

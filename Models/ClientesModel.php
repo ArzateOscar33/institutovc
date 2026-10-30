@@ -22,8 +22,9 @@ class ClientesModel extends Query
 
     public function getToken($token)
     {
-        $sql = "Select * From clientes WHERE token='$token' ";
-        return $this->select($sql);
+        $q=(new Conexion())->conect()->prepare('SELECT * FROM clientes WHERE token=? LIMIT 1');
+        $q->execute([$token]);
+        return $q->fetch(PDO::FETCH_ASSOC) ?: null;
     } //function getToken
 
     public function actualizarVerify($id)
@@ -41,8 +42,9 @@ class ClientesModel extends Query
 
     public function getVerificar($correo)
     {
-        $sql = "Select * From clientes WHERE correo='$correo' ";
-        return $this->select($sql);
+        $q=(new Conexion())->conect()->prepare('SELECT * FROM clientes WHERE correo=? LIMIT 1');
+        $q->execute([$correo]);
+        return $q->fetch(PDO::FETCH_ASSOC) ?: null;
     } //function getToken
 
     public function registrarPedido(
@@ -94,8 +96,9 @@ class ClientesModel extends Query
     }
 
     public function getPedidos($id_cliente){
-        $sql = "SELECT * FROM pedidos WHERE id_cliente=$id_cliente ";
-        return $this->selectAll($sql);
+        $q=(new Conexion())->conect()->prepare('SELECT * FROM pedidos WHERE id_cliente=? ORDER BY id DESC');
+        $q->execute([(int)$id_cliente]);
+        return $q->fetchAll(PDO::FETCH_ASSOC);
 
     }
     public function verPedido($idPedido){
@@ -103,16 +106,20 @@ class ClientesModel extends Query
         return $this->selectAll($sql);
 
     }
-    public function getPedido($idPedido){
-        $sql = "SELECT * FROM pedidos  WHERE id=$idPedido";
-        return $this->select($sql);
-
+    public function getPedido(int $idPedido, int $idCliente)
+    {
+        $q=(new Conexion())->conect()->prepare('SELECT * FROM pedidos WHERE id=? AND id_cliente=?');
+        $q->execute([$idPedido,$idCliente]);
+        return $q->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    public function verPedidos($idPedido){
-        $sql = "SELECT d.* FROM pedidos p INNER JOIN detalle_pedidos d ON p.id= d.id_pedido WHERE p.id = $idPedido";
-        return $this->selectAll($sql);
-
+    public function verPedidos(int $idPedido, int $idCliente): array
+    {
+        $q=(new Conexion())->conect()->prepare('SELECT d.* FROM pedidos p
+            INNER JOIN detalle_pedidos d ON p.id=d.id_pedido
+            WHERE p.id=? AND p.id_cliente=? ORDER BY d.id');
+        $q->execute([$idPedido,$idCliente]);
+        return $q->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getProductos($id_cliente)
     {

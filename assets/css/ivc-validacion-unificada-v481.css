@@ -1,0 +1,8 @@
+/* IVC 4.8.1 — Acciones de validación clínica unificada. */
+.ivc-optica481-acciones{display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+    border:1px solid #d2e7ee;background:#f4fafd;padding:12px;border-radius:12px;width:100%;margin-top:8px}
+.ivc-optica481-ayuda{font-size:.8rem;color:#31546d;flex-basis:100%;line-height:1.5}
+.ivc-optica481-acciones .btn{font-weight:600}
+.ivc-optica481-acciones .btn:disabled{opacity:.54;cursor:not-allowed}
+.ivc-optica481-aviso{width:100%;margin:8px 0 0!important;font-size:.83rem}
+@media(max-width:560px){.ivc-optica481-acciones .btn{flex:1 1 100%}}

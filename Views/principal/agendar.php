@@ -73,7 +73,17 @@ $agendaIcon = static function (string $name, int $size = 22): string {
                         <div class="ivc-appt-progress-item" id="ivc-appt-progress-two"><span class="ivc-appt-progress-number">02</span><span><strong>Tus datos</strong><small>Confirma la reserva</small></span></div>
                     </div>
 
+                    <?php if (!empty($data['pedidoValoracionError'])): ?>
+                        <div class="alert alert-warning">No se pudo verificar el pedido para vincular la cita. Inicia sesión con la cuenta que compró los lentes o solicita ayuda a la óptica. Si continúas, esta cita no se asociará automáticamente.</div>
+                        <?php endif; ?>
+                    <?php if (!empty($data['pedidoValoracion'])): ?>
+                        <div class="alert alert-info" role="status"><strong>Valoración del pedido #<?php echo (int)$data['pedidoValoracion']['id']; ?></strong><br>Reserva tu cita con el correo de tu cuenta. Se asociará automáticamente al pedido.</div>
+                        <?php endif; ?>
                     <form id="frmAgendar" novalidate method="post" autocomplete="on" data-agendar-url="<?php echo BASE_URL; ?>principal/registrarCita" data-horarios-url="<?php echo BASE_URL; ?>principal/getHorariosDisponibles" data-correo-url="<?php echo BASE_URL; ?>principal/enviarCorreoAgenda">
+                        <?php if (!empty($data['pedidoValoracion'])): ?>
+                        <input type="hidden" name="id_pedido" value="<?php echo (int)$data['pedidoValoracion']['id']; ?>">
+                        <input type="hidden" name="csrf_pedido" value="<?php echo htmlspecialchars((string)$data['pedidoValoracion']['csrf'],ENT_QUOTES,'UTF-8'); ?>">
+                        <?php endif; ?>
                         <section class="ivc-appt-form-step" id="ivc-appt-step-one" aria-labelledby="ivc-appt-step-one-title">
                             <div class="ivc-appt-form-header"><span class="ivc-appt-form-icon"><?php echo $agendaIcon('calendar', 24); ?></span><div><span class="ivc-appt-step-caption">PASO 01</span><h3 id="ivc-appt-step-one-title">¿Cuándo te gustaría venir?</h3><p>Primero selecciona un día. Te mostraremos los horarios disponibles.</p></div></div>
                             <div class="ivc-appt-field"><label for="fechaCita">Selecciona una fecha <span aria-hidden="true">*</span></label>

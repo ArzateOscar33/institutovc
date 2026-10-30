@@ -51,6 +51,7 @@ foreach (($data['imagenes'] ?? []) as $file) {
 $related = is_array($data['relacionados'] ?? null) ? $data['relacionados'] : [];
 ?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-detalle-v7.css?v=7.0.0">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-configurador-micas-v42.css?v=4.2.0">
 <main id="ivc-product-detail" class="ivcd-product-page">
   <div class="container ivcd-container">
     <nav class="ivcd-breadcrumb" aria-label="Ruta de navegación">
@@ -114,15 +115,16 @@ $related = is_array($data['relacionados'] ?? null) ? $data['relacionados'] : [];
           <div class="ivcd-purchase-actions">
             <button type="button" id="btnAddCart" class="ivcd-buy-button" <?php echo $isAvailable ? '' : 'disabled'; ?>>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
-              Agregar al carrito <span aria-hidden="true">→</span>
+              Agregar solo armazón <span aria-hidden="true">→</span>
             </button>
             <button type="button" class="ivcd-wish-button btnAddDeseo" id="btnAddDeseoSingle" prod="<?php echo $productId; ?>" aria-label="Agregar a favoritos" title="Agregar a favoritos">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.6c0 4.2-8.8 10-8.8 10s-8.8-5.8-8.8-10a4.7 4.7 0 0 1 8.8-2.1 4.7 4.7 0 0 1 8.8 2.1Z"/></svg>
             </button>
           </div>
-          <p class="ivcd-purchase-hint">Tu selección se guardará en el carrito para continuar con el pedido.</p>
+          <p class="ivcd-purchase-hint">Este botón agrega únicamente el armazón, sin micas graduadas.</p>
         </form>
-        <div class="ivcd-help-card">
+        <?php include 'Views/principal/ivc-configurador-micas-v42.php'; ?>
+<div class="ivcd-help-card">
           <span class="ivcd-help-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 1c0 2-3 2.2-3 4.2M12 17.5v.2"/></svg></span>
           <div><strong>¿Necesitas orientación para elegir?</strong><p>Podemos ayudarte a encontrar una opción para tu estilo y necesidades visuales.</p></div>
           <a href="<?php echo BASE_URL; ?>principal/agendar" aria-label="Agendar cita para recibir orientación">Agendar cita <span aria-hidden="true">↗</span></a>
@@ -193,4 +195,5 @@ $related = is_array($data['relacionados'] ?? null) ? $data['relacionados'] : [];
 <!-- El controlador de compra original permanece intacto. -->
 <script src="<?php echo BASE_URL; ?>assets/js/modulos/detail.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/modulos/ivc-detalle-v7.js?v=7.0.0"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-configurador-micas-v42.js?v=4.3.0"></script>
 <?php include_once 'Views/template/footer.php'; ?>

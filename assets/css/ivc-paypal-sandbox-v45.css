@@ -1,0 +1,18 @@
+/* Fase 4.5: pagos de prueba; diferenciación inequívoca de producción. */
+.ivc45-sandbox{margin-top:20px;border:2px solid #2278b5;border-radius:15px;background:#eff8fe;padding:22px}
+.ivc45-sandbox[hidden]{display:none!important}
+.ivc45-eyebrow{font-size:11px;letter-spacing:.14em;font-weight:800;color:#13699f}
+.ivc45-sandbox h4{font-size:20px;margin:8px 0;color:#113b5a}
+.ivc45-sandbox p{font-size:13px;line-height:1.6;color:#365971;margin:6px 0 12px}
+#ivc45Status{margin:14px 0 0;font-weight:600;font-size:13px}
+#ivc45Status.is-error{color:#9a2525}
+.ivc45-sandbox.ivc45-complete{border-color:#2a9563;background:#effbf5}
+#ivc45Buttons{min-height:46px;max-width:420px}
+/* IVC 4.6: recuperación de pagos sin volver a capturar. */
+.ivc46-recovery:empty{display:none}
+.ivc46-recovery{margin:16px 0;padding:14px 18px;border:1px solid #b8d8ee;border-radius:12px;background:#f4faff;color:#173e59;font-size:13px}
+.ivc46-recovery>strong{font-size:14px}
+.ivc46-recover-btn{display:inline-block;margin:4px 8px 4px 0;padding:8px 13px;border:1px solid #2278b5;border-radius:8px;background:white;color:#13699f;font-weight:700}
+.ivc46-recover-btn:disabled{opacity:.6;cursor:wait}
+.ivc46-recover-ok{color:#146c43;font-weight:600}
+.ivc46-recover-alert{color:#9a2525;font-weight:600}

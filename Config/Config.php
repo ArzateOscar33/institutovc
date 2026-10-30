@@ -1,20 +1,35 @@
 <?php
-const BASE_URL = "http://localhost/institutovc/";
-const HOST = "localhost";
-const USER = "root";
-const PASS = "";
-const DB = "institutovc";
-const CHARSET = "charset=utf8";
-const TITLE = "Instituto Visual California";
-const MONEDA = "MXN";
-//PAYPAL
-const CLIENT_ID = "Abqqe-znWCZaUj5Az23YcOtK3IzRYrjdtuh8ZHJ6iU_rYlMorAxT45abRaVEM3L22cs99-EZ9EgLi02u";
-
-
-
-//ENVIO DE CORREOS
-const USER_SMTP="arzateoscar33@gmail.com";
-const PASS_SMTP="yrhy hmkf eshn nhek";
-const PUERTO_SMTP="465";
-const HOST_SMTP="smtp.gmail.com"; 
-?>
+/**
+ * Instituto Visual California — configuración privada (Fase 4.9.1-A).
+ * Este archivo no contiene credenciales. Los valores se leen fuera de htdocs.
+ * No modificar la ruta sin mover también private.json de manera segura.
+ */
+$ivcPrivatePath = getenv('IVC_PRIVATE_CONFIG') ?: '/opt/lampp/var/ivc-config/private.json';
+if (!is_readable($ivcPrivatePath)) {
+    error_log('[IVC] Archivo privado de configuración no disponible.');
+    http_response_code(503);
+    exit('El servicio no está disponible temporalmente.');
+}
+$ivcPrivateRaw = file_get_contents($ivcPrivatePath);
+$ivcSettings = ($ivcPrivateRaw !== false) ? json_decode($ivcPrivateRaw, true) : null;
+if (!is_array($ivcSettings)) {
+    error_log('[IVC] Formato inválido de la configuración privada.');
+    http_response_code(503);
+    exit('El servicio no está disponible temporalmente.');
+}
+$ivcKeys = [
+    'BASE_URL', 'HOST', 'USER', 'PASS', 'DB', 'CHARSET', 'TITLE', 'MONEDA',
+    'CLIENT_ID', 'USER_SMTP', 'PASS_SMTP', 'PUERTO_SMTP', 'HOST_SMTP'
+];
+foreach ($ivcKeys as $ivcKey) {
+    if (!array_key_exists($ivcKey, $ivcSettings) || !is_string($ivcSettings[$ivcKey])) {
+        error_log('[IVC] Falta clave de configuración: ' . $ivcKey);
+        http_response_code(503);
+        exit('El servicio no está disponible temporalmente.');
+    }
+    // Se conservan los nombres originales de constantes para no modificar controladores ni modelos.
+    if (!defined($ivcKey)) {
+        define($ivcKey, $ivcSettings[$ivcKey]);
+    }
+}
+unset($ivcPrivatePath, $ivcPrivateRaw, $ivcSettings, $ivcKeys, $ivcKey);

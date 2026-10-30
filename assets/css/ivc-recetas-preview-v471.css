@@ -1,0 +1,14 @@
+/* Vista previa protegida de recetas en Pedidos y Recetas — IVC 4.7.1 */
+.ivc-rxp {margin:14px 0 8px;border:1px solid #cbdfea;background:#f6fbff;border-radius:12px;padding:14px;color:#173b5b;max-width:100%;}
+.ivc-rxp-titulo{font-size:15px;font-weight:800;margin-bottom:10px;color:#153b5b}
+.ivc-rxp-archivos{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.ivc-rxp-tab{border:1px solid #9bc8df;border-radius:8px;background:#fff;padding:7px 12px;color:#1b597d;font-weight:600;cursor:pointer}
+.ivc-rxp-tab.activo,.ivc-rxp-tab:focus-visible{color:#fff;background:#216f9f;border-color:#216f9f}
+.ivc-rxp-panel{border:1px solid #d7e5ef;border-radius:9px;min-height:250px;overflow:hidden;background:white;display:flex;justify-content:center;align-items:center}
+.ivc-rxp-pdf{display:block;border:0;width:100%;height:min(72vh,670px);min-height:340px;background:white}
+.ivc-rxp-imagen{display:block;max-width:100%;max-height:70vh;object-fit:contain;margin:0 auto;padding:10px}
+.ivc-rxp-acciones{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.ivc-rxp-nombre{color:#486b82;overflow-wrap:anywhere;font-size:13px;max-width:100%}
+.ivc-rxp-ayuda,.ivc-rxp-vacio{font-size:13px;color:#536c80;margin:12px 0 0}
+.ivc-rxp-vacio{background:#f5f9fc;border-radius:8px;padding:10px}
+@media(max-width:650px){.ivc-rxp{padding:9px}.ivc-rxp-pdf{height:56vh;min-height:300px}.ivc-rxp-acciones{align-items:flex-start}}

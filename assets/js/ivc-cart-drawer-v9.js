@@ -29,7 +29,7 @@
     }
 
     function sync() {
-        const total = items().length;
+        const total = items().length + (window.IVCCart43 ? window.IVCCart43.countConfigured() : 0);
         if (count) count.textContent = String(total);
         if (empty) empty.hidden = total > 0;
         if (list) list.hidden = total === 0;
