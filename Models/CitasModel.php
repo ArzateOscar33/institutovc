@@ -27,7 +27,7 @@ class CitasModel extends Query{
     
     public function getToken($token)
     {
-        $sql = "Select * From citas WHERE token='$token' ";
+        $sql = "SELECT * FROM citas WHERE token='" . preg_replace('/[^a-f0-9]/i','',(string)$token) . "' AND estado=1 LIMIT 1";
         return $this->select($sql);
     } //function getToken
     
@@ -71,14 +71,16 @@ class CitasModel extends Query{
         $sql = "SELECT 
                 CONCAT(apellidoP, ' ', apellidoM, ' ', nombre) AS title,
                 CONCAT(fecha, 'T', DATE_FORMAT(horario, '%H:%i:%s')) AS start,
-                color,
+                CASE WHEN citas.verify=1 THEN '#35a77e' ELSE '#e3a44a' END AS color,
+                citas.verify AS verify,
                 id_cita AS id
             FROM citas
-            INNER JOIN horarios ON citas.id_hora = horarios.id_horario";
+            INNER JOIN horarios ON citas.id_hora = horarios.id_horario
+            WHERE citas.estado = 1";
     return $this->selectAll($sql);
     }
 public function eliminarCita($id_cita){
-    $sql = "DELETE FROM citas WHERE id_cita=?";
+    $sql = "UPDATE citas SET estado=0,token=NULL,color='#9ca3af' WHERE id_cita=? AND estado=1";
     $datos = array($id_cita);
     $data = $this->save($sql, $datos);
     if ($data == 1) {

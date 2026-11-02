@@ -9,8 +9,9 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-v10.css?v=10.0.0">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-steps-v11.css?v=11.1.0">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-v12.css?v=12.0.0">
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-cotizacion-v44.css?v=4.4.0">
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-paypal-sandbox-v45.css?v=4.6.0">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-checkout-cotizacion-v44.css?v=4.9.1ux3">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-paypal-sandbox-v45.css?v=4.9.1ux3">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-confirmacion-pedido.css?v=1.0">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-recetas-fase3.css?v=3.0.0">
 <main class="ivc-checkout-v10" id="ivcCheckoutV10">
   <section class="ivc-checkout-hero">
@@ -217,6 +218,6 @@ $ivcE = static fn($value) => htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.css">
 <script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-v10.js?v=10.0.0"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-steps-v12.js?v=12.3.0"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-cotizacion-v44.js?v=4.9.1b"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/ivc-paypal-sandbox-v45.js?v=4.9.1b"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/ivc-recetas-checkout.js?v=3.0.0"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-checkout-cotizacion-v44.js?v=4.9.1ux3"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-paypal-sandbox-v45.js?v=4.9.2confirmacion"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-recetas-checkout.js?v=4.9.1c"></script>

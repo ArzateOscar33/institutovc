@@ -11,6 +11,34 @@
   let busy = false;
   let signature = '';
   let quotedId = null;
+  let refreshTimer = null;
+  let needsRequote = false;
+  let currentStep = 1;
+  const btnPay = $('ivc44ToPayment');
+  const btnBack = $('ivc44BackSummary');
+  function setStep(step) {
+    if(step===2 && (!quotedId || busy)) return;
+    currentStep=step;
+    $('ivc44PanelSummary').hidden=step!==1;
+    $('ivc44PanelPayment').hidden=step!==2;
+    for (const [n,id] of [[1,'ivc44ProgressSummary'],[2,'ivc44ProgressPayment']]) {
+      const el=$(id);el.classList.toggle('ivc44-current',n===step);
+      el.classList.toggle('ivc44-done',n<step);
+      if(n===step)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');
+    }
+    const title=$(step===1?'ivc44Title':'ivc44PaymentTitle');
+    title.focus({preventScroll:true});
+    root.scrollIntoView({block:'start',behavior:'auto'});
+  }
+  btnPay.addEventListener('click',()=>{
+    if(!quotedId || busy) return;
+    setStep(2);
+    document.dispatchEvent(new CustomEvent('ivc:mostrar-pago',{detail:{id:Number(quotedId)}}));
+  });
+  btnBack.addEventListener('click',()=>{
+    document.dispatchEvent(new Event('ivc:volver-resumen'));
+    setStep(1);
+  });
   const read = key => {
     let raw;
     try { raw = JSON.parse(localStorage.getItem(key) || '[]'); }
@@ -62,9 +90,16 @@
   }
   function clearQuote(reason) {
     quotedId=null;signature='';
+    btnPay.disabled=true;
+    if(currentStep===2) {
+      document.dispatchEvent(new Event('ivc:volver-resumen'));
+      setStep(1);
+    }
     document.dispatchEvent(new Event('ivc:cotizacion-invalidada'));
     $('ivc44Quote').hidden=true;
     $('ivc44BeforeQuote').hidden=false;
+    $('ivc44BeforeQuote').textContent='Calculando automáticamente el total de tu compra…';
+    $('ivc44BeforeQuote').classList.add('is-loading');
     if(reason) setStatus(reason);
   }
   function showPreview(data) {
@@ -102,17 +137,20 @@
     $('ivc44Lenses').textContent=formatter.format(Number(quote.subtotal_micas));
     $('ivc44Total').textContent=formatter.format(Number(quote.total));
     $('ivc44Quote').hidden=false;$('ivc44BeforeQuote').hidden=true;
+    $('ivc44BeforeQuote').classList.remove('is-loading');
     quotedId=quote.id_cotizacion;
+    $('ivc44PaymentTotal').textContent=formatter.format(Number(quote.total));
+    btnPay.disabled=false;
     // IVC_F45_EVENT_QUOTES: avisar a PayPal Sandbox cuando el total ya fue verificado.
     document.dispatchEvent(new CustomEvent('ivc:cotizacion-lista', {detail:{id:quote.id_cotizacion}}));
     setStatus('Este es el total de tu compra. Todavía no se ha realizado ningún cargo.');
   }
   async function generate() {
-    if (busy) return;
+    if (busy) {needsRequote = true; return;}
     let current;
-    try {current=payload();if(!current.active) throw new Error('Agrega productos al carrito antes de cotizar.');}
-    catch(e){setStatus(e.message,true);return;}
-    const button=$('ivc44Generate');busy=true;button.disabled=true;button.textContent='Calculando total…';
+    try {current=payload();if(!current.active) throw new Error('Agrega productos al carrito antes de continuar.');}
+    catch(e){clearQuote('');setStatus(e.message,true);$('ivc44BeforeQuote').textContent='No hay un total disponible. Revisa tu carrito y vuelve a intentarlo.';$('ivc44BeforeQuote').classList.remove('is-loading');return;}
+    busy=true;needsRequote=false;
     clearQuote('Estamos verificando los precios y la disponibilidad de tus productos…');
     try {
       const auth=await request('token');
@@ -139,8 +177,19 @@
       }
       signature=current.signature;
       display(verified);
-    } catch(e) {clearQuote('');setStatus(e.message,true);}
-    finally {busy=false;button.disabled=false;button.textContent='Actualizar total ↻';}
+    } catch(e) {
+      clearQuote('');
+      $('ivc44BeforeQuote').textContent='No pudimos preparar el total de tu compra. Verifica el carrito y vuelve a entrar a esta pantalla.';
+      $('ivc44BeforeQuote').classList.remove('is-loading');
+      setStatus(e.message,true);
+    } finally {
+      busy=false;
+      if (needsRequote) {needsRequote=false;scheduleQuote();}
+    }
+  }
+  function scheduleQuote() {
+    if (refreshTimer!==null) clearTimeout(refreshTimer);
+    refreshTimer=window.setTimeout(() => {refreshTimer=null;generate();}, 200);
   }
   function init() {
     let data;
@@ -153,26 +202,36 @@
     const oldPay=$('ivcPayReal');if(oldPay) {oldPay.hidden=true;oldPay.style.display='none';}
     const oldButtons=$('paypal-button-container');if(oldButtons) oldButtons.style.display='none';
     if(data.lines.length) showPreview(data);
-    else { $('ivc44Preview').replaceChildren(make('tr','Tu carrito está vacío.')); setStatus('Agrega un armazón para comenzar.'); }
-    $('ivc44Generate').addEventListener('click',generate);
+    else {
+      $('ivc44Preview').replaceChildren(make('tr','Tu carrito está vacío.'));
+      $('ivc44BeforeQuote').textContent='Agrega un armazón para comenzar tu compra.';
+      $('ivc44BeforeQuote').classList.remove('is-loading');
+      setStatus('Tu carrito está vacío.');
+    }
     document.addEventListener('ivc:carrito-actualizado',invalidate);
     window.addEventListener('storage',event=>{if([KEY_RX,KEY_PLAIN].includes(event.key)) invalidate();});
-    $('ivc44Generate').disabled=!data.active;
-    // Verificar otra vez el carrito antes de generar, por si cambió en la misma pestaña.
+    // Calcular siempre en PHP sin añadir un paso manual de revisión de total.
+    if(data.active && data.lines.length) scheduleQuote();
   }
   function invalidate() {
     let data;
     try {data=payload();}catch(e){clearQuote('');setStatus(e.message,true);return;}
     if(!data.active) {
-      clearQuote('El carrito está vacío. Agrega un armazón para cotizar.');
-      $('ivc44Generate').disabled=true;
+      if (refreshTimer!==null) {clearTimeout(refreshTimer);refreshTimer=null;}
+      needsRequote=false;
+      clearQuote('El carrito está vacío. Agrega un armazón para continuar.');
+      $('ivc44BeforeQuote').textContent='Agrega un armazón para comenzar tu compra.';
+      $('ivc44BeforeQuote').classList.remove('is-loading');
       $('ivc44Preview').replaceChildren(make('tr','Tu carrito está vacío.'));
       return;
     }
-    $('ivc44Generate').disabled=false;
     showPreview(data);
-    if(quotedId && data.signature !== signature) clearQuote('El carrito cambió. Es necesario recalcular su importe.');
+    // Revalidar en PHP si cambió el contenido, incluso mientras hay una solicitud en curso.
+    if (data.signature !== signature) {
+      clearQuote('Tu carrito cambió. Estamos preparando el nuevo total…');
+      scheduleQuote();
+    }
   }
-  window.IVCCheckout44={generate, getQuoteId:()=>quotedId,hasQuote:()=>Boolean(quotedId)};
+  window.IVCCheckout44={generate,getQuoteId:()=>quotedId,hasQuote:()=>Boolean(quotedId),isPaymentStep:()=>currentStep===2};
   init();
 })();

@@ -1,6 +1,5 @@
-/** IVC Fase 4.3 — Carrito combinado, sin habilitar aún pagos de micas.
- * Los IDs de mica/receta son referencias, nunca importes ni documentos de salud.
- * Los importes mostrados son ESTIMADOS de APIs PHP; el cobro se implementará en 4.4/4.5.
+/** Carrito combinado de armazones con y sin micas.
+ * Los precios de pantalla son orientativos; el servidor confirma el importe al pagar.
  */
 (() => {
   'use strict';
@@ -55,13 +54,13 @@
       note = document.createElement('div'); note.id = 'ivc43PendingPay';
       note.className = 'ivc43-pay-notice';
       note.setAttribute('role', 'status');
-      note.textContent = 'Tus lentes graduados están en el carrito. Entra al checkout para validar precios desde PHP y realizar una compra de prueba con PayPal Sandbox.';
+      note.textContent = 'Tus armazones y micas se incluyen en el total. Continúa para revisar tu compra antes de pagar.';
       link?.before(note);
     }
     const blocked = hasConfigured();
     note.hidden = !blocked;
     if(link) {
-      // IVC_F44_ACCESS_CHECKOUT: volver a mostrar enlace al checkout, no habilita PayPal.
+      // Mantener disponible el acceso al resumen de compra.
       link.style.display = '';
       link.setAttribute('aria-disabled', 'false');
     }
@@ -73,14 +72,14 @@
     if(!alert) {
       alert = document.createElement('section');
       alert.id='ivc43CheckoutAlert'; alert.className='ivc43-checkout-alert'; alert.setAttribute('role','alert');
-      const title=document.createElement('strong');title.textContent='Compra con micas: utiliza el checkout de cotización PHP';
-      const info=document.createElement('p');info.textContent='Tu carrito conserva los armazones, las micas y la receta seleccionada. Utiliza el checkout de cotización PHP para pagar el total en PayPal Sandbox.';
+      const title=document.createElement('strong');title.textContent='Continúa con el resumen de compra';
+      const info=document.createElement('p');info.textContent='Tu carrito conserva los armazones, las micas y la receta seleccionada. Revisa el total antes de pagar.';
       const back=document.createElement('button');back.type='button';back.className='ivc43-outline';back.textContent='Ver mi carrito';
       back.addEventListener('click', open);
       alert.append(title,info,back);shell.prepend(alert);
     }
     const next=document.getElementById('ivcFlowToRx');if(next) next.disabled = true;
-    const status=document.getElementById('ivcOrderStatus');if(status) status.textContent='Utiliza el checkout con cotización PHP para esta compra.';
+    const status=document.getElementById('ivcOrderStatus');if(status) status.textContent='Continúa con el resumen de compra para revisar tus lentes.';
     const pay=document.getElementById('ivcPayReal');if(pay) pay.style.display='none';
     const paypal=document.getElementById('paypal-button-container');if(paypal) paypal.style.display='none';
     return true;
@@ -92,9 +91,9 @@
   }
   async function api(path, options) {
     const res = await fetch(base + path, {credentials:'same-origin',cache:'no-store',...options});
-    if(!res.ok) throw new Error('Error del servidor ('+res.status+').');
+    if(!res.ok) throw new Error('No se pudo consultar el carrito. Intenta nuevamente.');
     let data;
-    try {data=await res.json();} catch(e) {throw new Error('El servidor no devolvió un JSON válido.');}
+    try {data=await res.json();} catch(e) {throw new Error('No pudimos actualizar el carrito. Intenta nuevamente.');}
     return data;
   }
   const element = (tag, className, text) => {
@@ -165,7 +164,7 @@
         }
         const frameMoney=String(record.precio);
         const lensMoney=isRx?String(mica.precio_venta):'0';
-        if(!/^(?:\d+)(?:\.\d{1,2})?$/.test(frameMoney) || !/^(?:\d+)(?:\.\d{1,2})?$/.test(lensMoney)) throw new Error('Precio inválido devuelto por el servidor.');
+        if(!/^(?:\d+)(?:\.\d{1,2})?$/.test(frameMoney) || !/^(?:\d+)(?:\.\d{1,2})?$/.test(lensMoney)) throw new Error('No pudimos verificar un precio. Intenta nuevamente.');
         const priceCent=s=>{const [whole,dec='']=s.split('.');return Number(whole)*100+Number(dec.padEnd(2,'0'));};
         cents+=(priceCent(frameMoney)+priceCent(lensMoney))*Number(item.cantidad);
         fragment.append(renderRow(record,item,isRx,isRx?i-originals.length:i,mica));

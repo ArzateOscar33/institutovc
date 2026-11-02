@@ -1,13 +1,13 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--favicon-->
-    <!--<link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon-32x32.png" type="image/png" />->
+    
     <!--plugins-->
     <link href="<?php echo BASE_URL; ?>assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
     <link href="<?php echo BASE_URL; ?>assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
@@ -37,16 +37,16 @@
                             <div class="card-body">
                                 <div class="border p-4 rounded">
                                     <div class="text-center">
-                                        <h3 class="">Iniciar Sesión</h3>
+                                        <h3 class="">Iniciar sesión</h3>
                                     </div>
-                                    <div class="login-separater text-center mb-4"> <span>INICIAR SESION CON CORREO ELECTRÓNICO </span>
+                                    <div class="login-separater text-center mb-4"> <span>Acceso para personal autorizado </span>
                                         <hr/>
                                     </div>
                                     <div class="form-body">
                                         <form class="row g-3" id="formulario">
                                             <div class="col-12">
-                                                <label for="email" class="form-label">Correo Electrónico</label>
-                                                <input type="email" class="form-control" id="email" name="email" value="" placeholder="Correo Electronico">
+                                                <label for="email" class="form-label">Correo electrónico</label>
+                                                <input type="email" class="form-control" id="email" name="email" value="" placeholder="Correo electrónico">
                                             </div>
                                             <div class="col-12">
                                                 <label for="clave" class="form-label">Contraseña</label>
@@ -54,11 +54,10 @@
                                                     <input type="password" class="form-control border-end-0" id="clave" name="clave" value="" placeholder="Contraseña"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 text-end"> <a href="authentication-forgot-password.html"> </a>
-                                            </div>
+                                            
                                             <div class="col-12">
                                                 <div class="d-grid">
-                                                    <button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Acceso</button>
+                                                    <button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Ingresar</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -102,7 +101,7 @@
         const base_url = '<?php echo BASE_URL; ?>';
     </script>
     <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/modulos/login.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/modulos/login.js?v=494"></script>
 </body>
 
 </html>

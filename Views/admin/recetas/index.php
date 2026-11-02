@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-recetas-preview-v471.css?v=471">
 <main class="rx-admin" id="rxAdmin" data-base="<?php echo htmlspecialchars(BASE_URL, ENT_QUOTES, 'UTF-8'); ?>">
   <input type="hidden" id="rxCsrfAdmin" value="<?php echo htmlspecialchars($data['csrf'],ENT_QUOTES,'UTF-8'); ?>">
-  <div class="rx-admin-top"><div><span class="rx-kicker">INSTITUTO VISUAL CALIFORNIA · ADMINISTRACIÓN</span><h1>Revisión de recetas</h1><p>Consulta graduaciones externas y autoriza su uso antes de fabricar las micas.</p></div><button class="btn rx-btn" id="rxReload" type="button">Actualizar listado</button></div>
-  <div class="rx-note" role="note">Todas las recetas del cliente se reciben como <b>PENDIENTES</b>. Aprobar una receta <b>no inicia producción ni modifica un pedido o PayPal</b>.</div>
+  <div class="rx-admin-top"><div><span class="rx-kicker">INSTITUTO VISUAL CALIFORNIA · ADMINISTRACIÓN</span><h1>Revisión de recetas</h1><p>Consulta las graduaciones registradas, revisa sus documentos y autoriza su uso antes de preparar los lentes.</p></div><button class="btn rx-btn" id="rxReload" type="button">Actualizar listado</button></div>
+  <div class="rx-note" role="note">Las recetas pendientes deben revisarse antes de utilizarse. <b>Aprobar la receta no inicia la preparación del pedido</b>; verifica también la validación de micas en Pedidos.</div>
   <div class="rx-stats"><div><span>Total</span><strong id="rxTotal">—</strong></div><div><span>Pendientes</span><strong id="rxPending">—</strong></div><div><span>Aprobadas</span><strong id="rxApproved">—</strong></div></div>
   <section class="rx-panel"><div class="rx-filter"><input class="form-control" id="rxSearch" type="search" placeholder="Buscar por cliente, correo o número…" aria-label="Buscar receta"><select class="form-select" id="rxState" aria-label="Filtrar estado"><option value="">Todos los estados</option><option value="PENDIENTE">Pendientes</option><option value="APROBADA">Aprobadas</option><option value="REQUIERE_CORRECCION">Requieren corrección</option><option value="RECHAZADA">Rechazadas</option></select></div>
     <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Receta</th><th>Cliente</th><th>Modalidad</th><th>Registro</th><th>Revisión</th><th></th></tr></thead><tbody id="rxAdminRows"><tr><td colspan="6">Cargando recetas…</td></tr></tbody></table></div><p id="rxAdminCount" class="text-muted small"></p>
@@ -15,5 +15,5 @@
 </main>
 <?php include_once 'Views/template/footer-admin.php'; ?>
 <script src="<?php echo BASE_URL; ?>assets/js/ivc-receta-preview-v471.js?v=471"></script>
-<script defer src="<?php echo BASE_URL; ?>assets/js/modulos/recetas-admin.js?v=471"></script>
+<script defer src="<?php echo BASE_URL; ?>assets/js/modulos/recetas-admin.js?v=491d"></script>
 </body></html>

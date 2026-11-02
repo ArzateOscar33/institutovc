@@ -1,0 +1,57 @@
+.ivc-roles-page{max-width:1500px;margin:0 auto;animation:ivcRoleEnter .35s ease-out}
+@keyframes ivcRoleEnter{from{opacity:.4;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ivc-roles-hero{display:flex;justify-content:space-between;gap:25px;align-items:center;padding:30px 34px;border-radius:22px;background:linear-gradient(110deg,#103c69,#1876ba);color:white;margin-bottom:18px;box-shadow:0 12px 30px rgba(19,91,148,.12)}
+.ivc-roles-hero h1{font-weight:750;margin:5px 0 10px;color:white;font-size:clamp(1.5rem,2vw,2.2rem)}
+.ivc-roles-hero p{margin:0;color:#e0eef9;max-width:690px}.ivc-roles-eyebrow{font-size:.72rem;letter-spacing:.12em;font-weight:800;color:#8fd4ff}
+.ivc-roles-nuevo{white-space:nowrap;font-weight:700;border-radius:12px;padding:12px 18px;color:#10538c}.ivc-roles-note{border:1px solid #bee2fc;border-radius:13px;padding:13px 18px;background:#eff9ff;color:#1b5b87;margin-bottom:20px}
+.ivc-roles-note-compact{margin:14px 0 0}.ivc-roles-card{border:1px solid #e1ebf4;border-radius:17px;overflow:hidden;box-shadow:0 6px 20px rgba(31,88,132,.05)}.ivc-roles-card .card-header{padding:21px 24px;border-bottom:1px solid #e8f0f8}
+.ivc-roles-table th{color:#597590;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;font-weight:750;border-bottom:1px solid #deebf4;white-space:nowrap}
+.ivc-roles-table td{vertical-align:middle;padding:15px 10px}.ivc-roles-table tbody tr{transition:background .18s ease}.ivc-roles-table tbody tr:hover{background:#f3f9ff}.ivc-roles-table .badge{font-size:.73rem;padding:7px 11px}
+.ivc-roles-modal{border:0;border-radius:19px;overflow:hidden}.ivc-roles-modal .modal-header{background:linear-gradient(110deg,#124973,#1a74b4);color:#fff;padding:20px 26px}.ivc-roles-modal .modal-title{color:white}.ivc-roles-modal .modal-body{padding:24px 30px}.ivc-roles-modal .modal-footer{padding:17px 26px;background:#f6faff;border-top:1px solid #dcebf8}.ivc-roles-grupo{border:1px solid #e0eaf3;border-radius:15px;padding:16px 19px 19px;margin:0 0 13px}.ivc-roles-grupo legend{float:none;width:auto;font-weight:750;font-size:.98rem;padding:0 8px;color:#245e90;margin:0}.ivc-roles-permiso{height:100%;display:flex;gap:10px;align-items:center;background:#f7fbff;border:1px solid #e5eef6;border-radius:11px;padding:12px;cursor:pointer;transition:background .15s,border-color .15s}.ivc-roles-permiso:hover{background:#e8f5ff;border-color:#acd4f4}.ivc-roles-permiso input{width:18px;height:18px;accent-color:#146cae;flex:none}.ivc-roles-permiso span{font-weight:550;line-height:1.35}
+@media(max-width:700px){.ivc-roles-hero{padding:22px;flex-direction:column;align-items:flex-start}.ivc-roles-modal .modal-body{padding:18px}.ivc-roles-nuevo{width:100%}}
+@media(prefers-reduced-motion:reduce){.ivc-roles-page{animation:none} .ivc-roles-table tbody tr,.ivc-roles-permiso{transition:none}}
+
+/* Fase 4.9.4.1-A: el formulario intermedio debe participar en el layout
+   flex del modal. Así solo los permisos se desplazan; título y acciones no. */
+#ivcModalRol .modal-dialog-scrollable .ivc-roles-modal{
+    display:flex;
+    flex-direction:column;
+    max-height:calc(100vh - 1rem);
+    max-height:calc(100dvh - 1rem);
+    overflow:hidden;
+}
+#ivcModalRol .ivc-roles-modal > #ivcRolFormulario{
+    display:flex;
+    flex-direction:column;
+    flex:1 1 auto;
+    min-height:0;
+    overflow:hidden;
+}
+#ivcModalRol .ivc-roles-modal .modal-header,
+#ivcModalRol .ivc-roles-modal .modal-footer{
+    flex:0 0 auto;
+}
+#ivcModalRol .ivc-roles-modal .modal-body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    overscroll-behavior-y:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-color:#9ccbe7 #f2f8fc;
+    scrollbar-width:thin;
+}
+#ivcModalRol .ivc-roles-modal .modal-body::-webkit-scrollbar{width:10px}
+#ivcModalRol .ivc-roles-modal .modal-body::-webkit-scrollbar-track{background:#f2f8fc}
+#ivcModalRol .ivc-roles-modal .modal-body::-webkit-scrollbar-thumb{
+    background:#9ccbe7;
+    border-radius:12px;
+    border:2px solid #f2f8fc;
+}
+@media (max-width:575.98px){
+    #ivcModalRol .modal-dialog-scrollable .ivc-roles-modal{
+        max-height:calc(100vh - 1rem);
+        max-height:calc(100dvh - 1rem);
+    }
+    #ivcModalRol .ivc-roles-modal .modal-footer{gap:8px}
+}

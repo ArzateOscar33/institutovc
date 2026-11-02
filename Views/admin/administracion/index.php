@@ -1,191 +1,100 @@
-<?php  include_once 'Views/template/header-admin.php'; ?>
-
-<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-    <div class="col">
-        <div class="card radius-10 border-start border-0 border-3 border-warning">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <p class="mb-0 text-secondary">Pedidos Pendientes</p>
-                        <h4 class="my-1 text-warning"><?php  echo $data['pendientes']['total']; ?></h4>
-                    </div>
-                    <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class='fas fa-exclamation-circle'></i>
-                    </div>
-                </div>
-            </div>
+<?php include_once 'Views/template/header-admin.php';
+$ivcD = $data['dashboard'] ?? [];
+$ivcH = static function ($v) { return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8'); };
+$ivcN = static function ($v) { return number_format((float) $v, 0, '.', ','); };
+$ivcMoneda = static function ($v) { return '$' . number_format((float) $v, 2, '.', ','); };
+$ivcEstados = ['1' => 'Pendiente', '2' => 'En preparación', '3' => 'Finalizado'];
+$ivcChart = [
+    'meses' => $ivcD['meses'] ?? [],
+    'ventas' => $ivcD['ventas_mensuales'] ?? [],
+    'etapas' => $ivcD['pedidos_por_estado'] ?? [0,0,0],
+    'productos' => array_map(static function ($p) { return (string)$p['producto']; }, $ivcD['top_productos'] ?? []),
+    'unidades' => array_map(static function ($p) { return (int)$p['total']; }, $ivcD['top_productos'] ?? []),
+    'categorias' => array_map(static function ($p) { return (string)$p['categoria']; }, $ivcD['productos_categoria'] ?? []),
+    'conteoCategorias' => array_map(static function ($p) { return (int)$p['total']; }, $ivcD['productos_categoria'] ?? [])
+]; ?>
+<section class="ivc-admin-e1 ivc-dashboard-e1" aria-label="Resumen del negocio">
+    <div class="ivc-page-hero">
+        <div>
+            <span class="ivc-eyebrow"><span class="ivc-pulse"></span> VISTA GENERAL</span>
+            <h1>Panel de control</h1>
+            <p>Información actualizada sobre pedidos, ventas, inventario y atención visual.</p>
+        </div>
+        <div class="ivc-hero-actions">
+            <span class="ivc-date-badge"><i class="bx bx-calendar"></i> <?php echo $ivcH(date('d/m/Y')); ?></span>
+            <a class="btn btn-light ivc-hero-button" href="<?php echo BASE_URL; ?>pedidos"><i class="bx bx-receipt"></i> Ver pedidos</a>
         </div>
     </div>
-    <div class="col">
-        <div class="card radius-10 border-start border-0 border-3 border-info">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <p class="mb-0 text-secondary">Pedidos en Proceso</p>
-                        <h4 class="my-1 text-info"><?php  echo $data['procesos']['total']; ?></h4>
-                    </div>
-                    <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i class='fas fa-spinner'></i>
-                    </div>
-                </div>
-            </div>
+    <div class="ivc-stats-grid">
+        <article class="ivc-stat-card ivc-stat-blue">
+            <div class="ivc-stat-icon"><i class="bx bx-wallet"></i></div>
+            <span class="ivc-stat-label">Ventas registradas · 12 meses</span>
+            <strong><?php echo $ivcMoneda($ivcD['ventas_periodo'] ?? 0); ?></strong>
+            <span class="ivc-stat-note">MXN · Pedidos completados</span>
+        </article>
+        <article class="ivc-stat-card ivc-stat-indigo">
+            <div class="ivc-stat-icon"><i class="bx bx-shopping-bag"></i></div>
+            <span class="ivc-stat-label">Pedidos totales</span>
+            <strong><?php echo $ivcN($ivcD['total_pedidos'] ?? 0); ?></strong>
+            <span class="ivc-stat-note">Todas las etapas</span>
+        </article>
+        <article class="ivc-stat-card ivc-stat-cyan">
+            <div class="ivc-stat-icon"><i class="bx bx-glasses"></i></div>
+            <span class="ivc-stat-label">Productos activos</span>
+            <strong><?php echo $ivcN($ivcD['productos_activos'] ?? 0); ?></strong>
+            <span class="ivc-stat-note"><?php echo $ivcN($ivcD['categorias_activas'] ?? 0); ?> categorías activas</span>
+        </article>
+        <article class="ivc-stat-card ivc-stat-amber">
+            <div class="ivc-stat-icon"><i class="bx bx-error-circle"></i></div>
+            <span class="ivc-stat-label">Productos con existencias bajas</span>
+            <strong><?php echo $ivcN($ivcD['existencias_bajas'] ?? 0); ?></strong>
+            <span class="ivc-stat-note">5 unidades o menos, incluye agotados</span>
+        </article>
+    </div>
+    <div class="ivc-mini-grid">
+        <a class="ivc-mini-card" href="<?php echo BASE_URL; ?>recetasAdmin"><i class="bx bx-file"></i><div><strong><?php echo $ivcN($ivcD['recetas_pendientes'] ?? 0); ?></strong><span>Recetas pendientes</span></div><i class="bx bx-chevron-right"></i></a>
+        <a class="ivc-mini-card" href="<?php echo BASE_URL; ?>citas"><i class="bx bx-calendar-check"></i><div><strong><?php echo $ivcN($ivcD['citas_proximas'] ?? 0); ?></strong><span>Citas desde hoy</span></div><i class="bx bx-chevron-right"></i></a>
+        <div class="ivc-mini-card"><i class="bx bx-user-check"></i><div><strong><?php echo $ivcN($ivcD['clientes'] ?? 0); ?></strong><span>Clientes registrados</span></div></div>
+    </div>
+    <div class="row g-4 ivc-dash-charts">
+        <div class="col-12 col-xl-8">
+            <article class="ivc-panel"><div class="ivc-panel-head"><div><span class="ivc-eyebrow">DESEMPEÑO</span><h2>Ventas por mes</h2><p>Importe de pedidos completados · últimos 12 meses</p></div><span class="ivc-soft-pill">MXN</span></div><div class="ivc-chart-holder ivc-chart-wide"><canvas id="ivcVentasMensuales" role="img" aria-label="Ventas por mes"></canvas></div></article>
+        </div>
+        <div class="col-12 col-xl-4">
+            <article class="ivc-panel"><div class="ivc-panel-head"><div><span class="ivc-eyebrow">OPERACIÓN</span><h2>Estado de pedidos</h2><p>Distribución por etapa</p></div></div><div class="ivc-chart-holder ivc-chart-donut"><canvas id="ivcEstadosPedidos" role="img" aria-label="Estado de pedidos"></canvas></div></article>
+        </div>
+        <div class="col-12 col-xl-6">
+            <article class="ivc-panel"><div class="ivc-panel-head"><div><span class="ivc-eyebrow">VENTAS</span><h2>Productos más vendidos</h2><p>Unidades en pedidos completados</p></div></div><div class="ivc-chart-holder"><canvas id="ivcTopProductos" role="img" aria-label="Productos más vendidos"></canvas></div></article>
+        </div>
+        <div class="col-12 col-xl-6">
+            <article class="ivc-panel"><div class="ivc-panel-head"><div><span class="ivc-eyebrow">CATÁLOGO</span><h2>Productos por categoría</h2><p>Productos activos en las principales categorías</p></div></div><div class="ivc-chart-holder"><canvas id="ivcCategorias" role="img" aria-label="Productos por categoría"></canvas></div></article>
         </div>
     </div>
-    <div class="col">
-        <div class="card radius-10 border-start border-0 border-3 border-success">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <p class="mb-0 text-secondary">Pedidos Finalizados</p>
-                        <h4 class="my-1 text-success"><?php  echo $data['finalizados']['total']; ?></h4>
-                    </div>
-                    <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='fas fa-check-circle'></i>
-                    </div>
-                </div>
-            </div>
+    <div class="row g-4 mt-0">
+        <div class="col-12 col-xl-7">
+            <article class="ivc-panel ivc-panel-table"><div class="ivc-panel-head"><div><span class="ivc-eyebrow">ACTIVIDAD</span><h2>Pedidos recientes</h2></div><a href="<?php echo BASE_URL; ?>pedidos" class="ivc-link">Ver todos <i class="bx bx-right-arrow-alt"></i></a></div>
+                <div class="table-responsive"><table class="table ivc-data-table"><thead><tr><th>Pedido</th><th>Fecha</th><th>Importe</th><th>Etapa</th></tr></thead><tbody>
+                <?php foreach ($ivcD['pedidos_recientes'] ?? [] as $p): ?>
+                  <tr><td><strong>#<?php echo (int)$p['id']; ?></strong></td><td><?php echo $ivcH($p['fecha']); ?></td><td><?php echo $ivcMoneda($p['monto']); ?></td><td><span class="ivc-state ivc-state-<?php echo (int)$p['proceso']; ?>"><?php echo $ivcH($ivcEstados[(string)$p['proceso']] ?? 'Sin clasificar'); ?></span></td></tr>
+                <?php endforeach; ?>
+                <?php if (empty($ivcD['pedidos_recientes'])): ?><tr><td colspan="4" class="text-center py-4">Todavía no hay pedidos registrados.</td></tr><?php endif; ?>
+                </tbody></table></div>
+            </article>
+        </div>
+        <div class="col-12 col-xl-5">
+            <article class="ivc-panel ivc-panel-table"><div class="ivc-panel-head"><div><span class="ivc-eyebrow">INVENTARIO</span><h2>Atención de existencias</h2></div><a href="<?php echo BASE_URL; ?>productos" class="ivc-link">Ir a productos <i class="bx bx-right-arrow-alt"></i></a></div>
+                <div class="table-responsive"><table class="table ivc-data-table"><thead><tr><th>Producto</th><th class="text-end">Disponible</th></tr></thead><tbody>
+                <?php foreach ($ivcD['inventario_bajo'] ?? [] as $p): ?>
+                  <tr><td><?php echo $ivcH($p['nombre']); ?></td><td class="text-end"><span class="ivc-inventory-tag <?php echo (int)$p['cantidad'] <= 0 ? 'ivc-is-empty' : ''; ?>"><?php echo (int)$p['cantidad']; ?> ud.</span></td></tr>
+                <?php endforeach; ?>
+                <?php if (empty($ivcD['inventario_bajo'])): ?><tr><td colspan="2" class="text-center py-4">No hay alertas de inventario.</td></tr><?php endif; ?>
+                </tbody></table></div>
+            </article>
         </div>
     </div>
-    <div class="col">
-        <div class="card radius-10 border-start border-0 border-3 border-warning">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <p class="mb-0 text-secondary">Total Productos</p>
-                        <h4 class="my-1 text-warning"><?php  echo $data['productos']['total']; ?></h4>
-                    </div>
-                    <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto"><i class='bx bxs-group'></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card radius-10 border-start border-0 border-3 border-warning">
-            
-            </div>
-        </div>
-    </div>
-</div>
-<!--end row-->
-
-<div class="row">
-    <div class="col-12 col-lg-4">
-        <div class="card radius-10">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h6 class="mb-0">Pedidos</h6>
-                    </div>
-                </div>
-                <div class="chart-container-2 mt-4">
-                    <canvas id="reportePedidos"></canvas>
-                </div>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Finalizados <span class="badge bg-success rounded-pill"><?php  echo $data['finalizados']['total']; ?></span>
-                </li>
-                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Proceso <span class="badge bg-primary rounded-pill"><?php  echo $data['procesos']['total']; ?></span>
-                </li>
-                <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Pendientes <span class="badge bg-warning text-dark rounded-pill"><?php  echo $data['pendientes']['total']; ?></span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="col-12 col-lg-4">
-        <div class="card radius-10 w-100">
-            <div class="card-header bg-transparent">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h6 class="mb-0">Productos con Stock Mínimo</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="chart-container-1">
-                    <canvas id="chart4"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-lg-4">
-        <div class="card radius-10 w-100">
-            <div class="card-header bg-transparent">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h6 class="mb-0">Productos más vendidos</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="chart-container-1">
-                    <canvas id="topProductos"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php  include_once 'Views/template/footer-admin.php'; ?>
-
-<script>
-    // chart 2
-
-    var ctx = document.getElementById("reportePedidos").getContext('2d');
-
-    var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke1.addColorStop(0, '#fc4a1a');
-    gradientStroke1.addColorStop(1, '#f7b733');
-
-    var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke2.addColorStop(0, '#4776e6');
-    gradientStroke2.addColorStop(1, '#8e54e9');
-
-
-    var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
-
-    gradientStroke3.addColorStop(0, '#42e695');
-    gradientStroke3.addColorStop(1, '#3bb2b8');
-
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["Pendientes", "Proceso", "Finalizados"],
-            datasets: [{
-                backgroundColor: [
-                    gradientStroke1,
-                    gradientStroke2,
-                    gradientStroke3
-                ],
-                hoverBackgroundColor: [
-                    gradientStroke1,
-                    gradientStroke2,
-                    gradientStroke3
-                ],
-                data: [<?php  echo $data['pendientes']['total']; ?>, 
-                <?php  echo $data['procesos']['total']; ?>, 
-                <?php  echo $data['finalizados']['total']; ?>],
-                borderWidth: [1, 1, 1]
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            cutoutPercentage: 75,
-            legend: {
-                position: 'bottom',
-                display: false,
-                labels: {
-                    boxWidth: 8
-                }
-            },
-            tooltips: {
-                displayColors: false,
-            }
-        }
-    });
-</script>
-
-<script src="<?php  echo BASE_URL; ?>assets/js/index.js"></script>
-
-</body>
-
-</html>
+    <p class="ivc-dashboard-disclaimer"><i class="bx bx-info-circle"></i> Los importes reflejan pedidos registrados en el sistema, incluidos los de pruebas. No equivalen a una conciliación bancaria.</p>
+</section>
+<script id="ivcDashboardData" type="application/json"><?php echo json_encode($ivcChart, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE); ?></script>
+<?php include_once 'Views/template/footer-admin.php'; ?>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-admin-dashboard-e1.js?v=4911"></script>
+</body></html>

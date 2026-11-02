@@ -258,6 +258,29 @@
     return await response.json();
   }
 
+  let successShown = false;
+  function showMailSuccess() {
+    if (successShown) return;
+    successShown = true;
+    const homeUrl = form.dataset.inicioUrl || '/';
+    const goHome = () => window.location.assign(homeUrl);
+    if (typeof Swal === 'undefined') {
+      window.setTimeout(goHome, 5000);
+      return;
+    }
+    Swal.fire({
+      icon: 'success',
+      title: '¡Solicitud de cita recibida!',
+      html: '<p style="line-height:1.6;margin:6px 0 0">Enviamos un correo con los datos de tu cita y un enlace para <strong>confirmarla</strong>.</p><p style="color:#5b7790;font-size:13px;margin-top:12px">Serás redirigido al inicio en 5 segundos.</p>',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#167ab5',
+      timer: 5000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      customClass: {popup: 'ivc-cita-swal'},
+    }).then(goHome);
+  }
+
   async function sendConfirmation() {
     if (!tokenForEmail || emailBusy) return;
     emailBusy = true;
@@ -274,9 +297,10 @@
       payload.append('selectHorarios', chosenTimeLabel); // El email espera el TEXTO (08:00), no el ID.
       payload.append('iCorreo', $('iCorreo').value.trim());
       const res = await postJson(form.dataset.correoUrl, payload);
-      if (res.icono !== 'success') throw new Error(res.msg || 'No se envió el correo');
+      if (res.icono !== 'success' || res.correo_enviado !== true) throw new Error(res.msg || 'No se envió el correo');
       resultMessage.textContent = `Te enviamos un correo a ${$('iCorreo').value.trim()} con un enlace para confirmar la cita. Revisa también la carpeta de spam.`;
       mailWarning.hidden = true;
+      showMailSuccess();
     } catch (error) {
       console.error('La cita ya está registrada, pero falló el correo:', error);
       resultMessage.textContent = 'Tu cita ya está registrada en el sistema. No vuelvas a reservar este mismo horario.';

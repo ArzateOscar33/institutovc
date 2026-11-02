@@ -1,6 +1,4 @@
-/** Instituto Visual California — Configurador V4.2.
- * Fase exclusiva de selección y cotización. NO toca listaCarrito ni PayPal.
- */
+/** Instituto Visual California — Configurador de lentes graduados. */
 (() => {
   'use strict';
   const drawer = document.getElementById('ivc42Drawer');
@@ -17,6 +15,18 @@
   const typesNode = $('ivc42Types');
   const materialsNode = $('ivc42Materials');
   const quoteBtn = $('ivc42Quote');
+  const nextBtn = $('ivc42Next');
+  const backBtn = $('ivc42Back');
+  const toPriceBtn = $('ivc42ToPrice');
+  const backRecipeBtn = $('ivc42BackToRecipe');
+  const retryBtn = $('ivc42Retry');
+  const panel1 = $('ivc42Panel1');
+  const panel2 = $('ivc42Panel2');
+  const panel3 = $('ivc42Panel3');
+  const progress1 = $('ivc42Progress1');
+  const progress2 = $('ivc42Progress2');
+  const progress3 = $('ivc42Progress3');
+  let currentStep = 1;
   const message = $('ivc42Message');
   const result = $('ivc42Result');
   const fileInput = $('ivc42File');
@@ -27,6 +37,9 @@
   let previousFocus = null;
   let loading = false;
   let existingFetched = false;
+  let prepared = null;
+  let uploaded = {file:null,id:null};
+  let quoteGeneration = 0;
   const money = n => new Intl.NumberFormat('es-MX', {style:'currency', currency:'MXN'}).format(Number(n));
   const currentQty = () => {
     const val = Number($('product-quanity')?.value || 1);
@@ -34,11 +47,68 @@
   };
   const currentMode = () => document.querySelector('input[name="ivc42RecetaModo"]:checked')?.value || 'ARCHIVO';
   function notify(s, error = false) { message.textContent = s; message.classList.toggle('is-error', error); }
-  function clearResult() { result.hidden = true; result.replaceChildren(); }
+  function setStep(step) {
+    if (step > 1 && (!selectedMica || !currentQty())) {
+      notify('Selecciona tus micas y comprueba la cantidad antes de continuar.', true);
+      return false;
+    }
+    if (step === 3) {
+      const mode = currentMode();
+      if (mode === 'ARCHIVO' && !fileInput.files?.length) {
+        notify('Adjunta tu receta para continuar o selecciona otra opción de graduación.', true);
+        return false;
+      }
+      if (mode === 'EXISTENTE' && !(Number(existingSelect.value) > 0)) {
+        notify('Elige una receta guardada para continuar.', true);
+        return false;
+      }
+    }
+    currentStep = step;
+    panel1.hidden = step !== 1;
+    panel2.hidden = step !== 2;
+    panel3.hidden = step !== 3;
+    nextBtn.hidden = step !== 1;
+    $('ivc42Step2Actions').hidden = step !== 2;
+    $('ivc42Step3Actions').hidden = step !== 3;
+    for (const [index,node] of [[1,progress1],[2,progress2],[3,progress3]]) {
+      node.classList.toggle('is-active',index===step);
+      node.classList.toggle('is-complete',index<step);
+      if (index===step) node.setAttribute('aria-current','step');
+      else node.removeAttribute('aria-current');
+    }
+    if (step > 1) $('ivc42ChosenLens').textContent = selectedMica.nombre_comercial;
+    if (step === 3) $('ivc42FinalLens').textContent = selectedMica.nombre_comercial;
+    const hints = {
+      1:'Selecciona las micas que necesitas para continuar.',
+      2:'Adjunta tu receta, elige una guardada o solicita una valoración.',
+      3:'Consulta el total y agrega tus lentes al carrito sin desplazarte.'
+    };
+    $('ivc42FooterHelp').textContent=hints[step];
+    notify('');
+    $('ivc42Content').scrollTop = 0;
+    const title = step === 1 ? $('ivc42StepOne') : step === 2 ? $('ivc42StepTwo') : $('ivc42StepThree');
+    title.focus({preventScroll:true});
+    return true;
+  }
+  function clearResult() {
+    prepared=null;
+    result.hidden=true;result.replaceChildren();
+    if (currentStep===3) {
+      $('ivc42FrameTotal').textContent='—';
+      $('ivc42LensTotal').textContent='—';
+      $('ivc42Estimate').textContent='—';
+    }
+    quoteBtn.disabled=true;
+  }
   function setBusy(busy) {
-    loading = busy;
-    quoteBtn.disabled = busy || !selectedMica || catalog.length === 0 || !currentQty();
-    quoteBtn.textContent = busy ? 'Consultando y guardando…' : 'Calcular y guardar cotización';
+    loading=busy;
+    quoteBtn.disabled=busy || !prepared || currentStep!==3;
+    nextBtn.disabled=busy || !selectedMica || catalog.length===0 || !currentQty();
+    backBtn.disabled=busy;
+    backRecipeBtn.disabled=busy;
+    toPriceBtn.disabled=busy;
+    retryBtn.disabled=busy;
+    quoteBtn.textContent = busy ? 'Preparando precio…' : 'Agregar al carrito';
   }
   function make(tag, cls, txt) {
     const e = document.createElement(tag); if(cls) e.className=cls;
@@ -47,7 +117,7 @@
   async function fetchJson(path, options = {}) {
     const response = await fetch(base + path, {credentials:'same-origin', cache:'no-store', ...options});
     let obj;
-    try { obj = await response.json(); } catch (_) { throw new Error('El servidor no devolvió JSON. Comprueba que el módulo esté instalado.'); }
+    try { obj = await response.json(); } catch (_) { throw new Error('No pudimos consultar la información. Intenta nuevamente.'); }
     if (!response.ok || !obj || !obj.ok) {
       const err = new Error(typeof obj?.msg === 'string' ? obj.msg : 'No se pudo completar la solicitud.');
       err.status = response.status;
@@ -56,10 +126,7 @@
     return obj;
   }
   function displayEstimate() {
-    const q = currentQty() || 1;
-    $('ivc42FrameTotal').textContent = money(framePrice * q);
-    $('ivc42LensTotal').textContent = selectedMica ? money(Number(selectedMica.precio_venta) * q) : 'Selecciona un material';
-    $('ivc42Estimate').textContent = selectedMica ? money((framePrice + Number(selectedMica.precio_venta)) * q) : '—';
+    // Los importes de catálogo se muestran al elegir micas; el total final solo proviene de PHP.
     setBusy(loading);
   }
   function renderMaterials() {
@@ -96,7 +163,7 @@
       catalog = Array.isArray(res.micas) ? res.micas.filter(m => Number(m.precio_venta)>0 && m.unidad_cobro === 'PAR' && m.moneda === 'MXN') : [];
       currentType = catalog[0]?.tipo_lente || '';
       renderTypes(); renderMaterials(); displayEstimate();
-      notify(catalog.length ? 'Selecciona un par de micas y cómo proporcionarás tu graduación.' : 'No hay micas habilitadas por par. Contacta a la óptica.', !catalog.length);
+      notify(catalog.length ? 'Elige las micas que prefieras y continúa al paso 2 para adjuntar tu receta.' : 'Por el momento no hay micas disponibles. Contacta a la óptica.', !catalog.length);
     } catch(e) {notify(e.message,true);}
   }
   function renderMode() {
@@ -104,7 +171,7 @@
     $('ivc42UploadPanel').hidden=mode !== 'ARCHIVO';
     $('ivc42ExistingPanel').hidden=mode !== 'EXISTENTE';
     const notice=$('ivc42SpecialNotice');
-    const text = mode === 'VALORACION' ? 'Al habilitarse la compra configurada, podrás pagar el paquete y agendar una valoración. La fabricación requerirá confirmar que las micas seleccionadas sean adecuadas.' :
+    const text = mode === 'VALORACION' ? 'Podrás completar tu compra y después agendar una valoración. La óptica confirmará tu graduación antes de preparar los lentes.' :
       mode === 'PENDIENTE' ? 'Podrás entregar tu receta posteriormente. La óptica deberá revisarla antes de elaborar las micas.' : '';
     notice.textContent=text;notice.hidden=!text;
     if(mode==='EXISTENTE' && !existingFetched) loadExisting();
@@ -125,14 +192,22 @@
   }
   function show() {
     previousFocus = document.activeElement;
+    prepared=null;
+    clearResult();
     backdrop.hidden=false;drawer.hidden=false;drawer.setAttribute('aria-hidden','false');
     document.body.classList.add('ivc42-open');
+    setStep(1);
     closeBtn.focus();loadCatalog();displayEstimate();renderMode();
   }
   function hide() {
     backdrop.hidden=true; drawer.hidden=true; drawer.setAttribute('aria-hidden','true');
     document.body.classList.remove('ivc42-open');previousFocus?.focus?.();
   }
+  nextBtn.addEventListener('click', () => setStep(2));
+  backBtn.addEventListener('click', () => setStep(1));
+  backRecipeBtn.addEventListener('click', () => setStep(2));
+  toPriceBtn.addEventListener('click', () => {if(setStep(3)) createQuote();});
+  retryBtn.addEventListener('click',createQuote);
   openBtn.addEventListener('click',show);
   closeBtn.addEventListener('click',hide);
   backdrop.addEventListener('click',hide);
@@ -147,7 +222,7 @@
   });
   document.querySelectorAll('input[name="ivc42RecetaModo"]').forEach(i=>i.addEventListener('change',renderMode));
   existingSelect.addEventListener('change',clearResult);
-  fileInput.addEventListener('change',clearResult);
+  fileInput.addEventListener('change',()=>{uploaded={file:null,id:null};clearResult();});
   document.querySelectorAll('[data-ivcd-qty]').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(()=>{clearResult();displayEstimate();})));
 
   async function saveNewRecipe() {
@@ -155,64 +230,70 @@
     if(!file) throw new Error('Selecciona una fotografía o PDF de la receta.');
     if(file.size > 10485760 || file.size < 1) throw new Error('El archivo debe tener entre 1 byte y 10 MB.');
     if(!/\.(jpg|jpeg|png|pdf)$/i.test(file.name)) throw new Error('Solo JPG, PNG o PDF.');
+    if (uploaded.file===file && uploaded.id) return uploaded.id;
     const token = await fetchJson('recetas/token');
     const form = new FormData();
     form.set('csrf',token.csrf);form.set('modalidad','ARCHIVO');form.set('receta_archivo',file);
     const saved=await fetchJson('recetas/guardar',{method:'POST',body:form});
     if(!Number.isInteger(Number(saved.id_receta)) || Number(saved.id_receta)<1) throw new Error('No se recibió el identificador de la receta guardada.');
+    uploaded={file,id:Number(saved.id_receta)};
     return Number(saved.id_receta);
   }
   async function createQuote() {
-    if(loading || !selectedMica) return;
+    if(loading || !selectedMica || currentStep !== 3) return;
     clearResult();
+    retryBtn.hidden=true;
     const qty=currentQty();
-    if(!qty) {notify('La cantidad no es válida o excede las existencias.',true);return;}
-    setBusy(true);notify('Validando tu sesión y preparando la cotización…');
+    if(!qty) {notify('La cantidad no es válida o excede las existencias.',true);retryBtn.hidden=false;return;}
+    const generation=++quoteGeneration;
+    setBusy(true);notify('Calculando el precio de tus lentes…');
     try {
       const mode=currentMode();let idReceta=null;
-      // Autenticación ANTES de almacenar cualquier archivo.
+      // Comprobar sesión antes de subir la receta o consultar el total.
       const auth=await fetchJson('cotizaciones/token');
       if(mode==='EXISTENTE') {
         idReceta=Number(existingSelect.value);
         if(!Number.isInteger(idReceta)||idReceta<1) throw new Error('Selecciona una receta guardada válida.');
       } else if(mode==='ARCHIVO') {
-        notify('Guardando tu receta en un directorio privado…');
+        notify('Guardando tu receta de forma segura…');
         idReceta=await saveNewRecipe();
       }
-      notify('PHP está consultando los precios y generando la cotización…');
+      notify('Confirmando el total de tus lentes…');
       const payload={csrf:auth.csrf,productos:[{
         id_producto:productId,cantidad:qty,id_mica:Number(selectedMica.id_mica),
         id_receta:idReceta, solicita_valoracion:mode==='VALORACION'
       }]};
       const data=await fetchJson('cotizaciones/crear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       const q=data.cotizacion;
-      if(!q || !q.id_cotizacion) throw new Error('No se recibió la cotización definitiva.');
-      notify('Cotización calculada y registrada correctamente.');
-      result.replaceChildren();
-      result.append(make('div','','Cotización #'+q.id_cotizacion+' · '+(q.moneda||'MXN')));
-      result.append(make('strong','',money(q.total)));
-      result.append(make('div','','Armazones: '+money(q.subtotal_armazones)+' · Micas: '+money(q.subtotal_micas)));
-      result.append(make('p','','Válida hasta '+(q.expira_en||'dentro de 15 minutos')+'. La receta permanece pendiente de revisión. No se ha realizado ningún cobro ni se han añadido micas al carrito.'));
-      // IVC Fase 4.3: se añade la configuración tras una cotización real de PHP.
-      const addToCart=make('button','ivc42-add-to-cart','Agregar lentes configurados al carrito →');
-      addToCart.type='button';
-      addToCart.addEventListener('click', () => {
-        if(!window.IVCCart43 || typeof window.IVCCart43.addConfigured !== 'function') {
-          notify('Actualiza la página: falta la integración del carrito 4.3.',true);return;
-        }
-        const saved=window.IVCCart43.addConfigured({
-          idProducto:productId,cantidad:qty,idMica:Number(selectedMica.id_mica),
-          idReceta:idReceta,solicitaValoracion:mode==='VALORACION',idCotizacion:Number(q.id_cotizacion)
-        });
-        if(saved) {addToCart.disabled=true;addToCart.textContent='Agregado al carrito ✓';hide();window.IVCCart43.open();}
-      });
-      result.append(addToCart);
+      if(!q || !q.id_cotizacion || !Number.isFinite(Number(q.total))) throw new Error('No pudimos calcular el total. Intenta nuevamente.');
+      if (generation!==quoteGeneration || currentStep!==3) return;
+      prepared={q,qty,idReceta,mode,idMica:Number(selectedMica.id_mica)};
+      $('ivc42FrameTotal').textContent=money(q.subtotal_armazones);
+      $('ivc42LensTotal').textContent=money(q.subtotal_micas);
+      $('ivc42Estimate').textContent=money(q.total);
+      result.replaceChildren(make('p','','Precio confirmado. Se añadirá la configuración al carrito; todavía no se ha realizado ningún cobro.'));
       result.hidden=false;
+      notify('Tu precio está listo. Puedes agregar los lentes al carrito.');
     } catch(e) {
-      if(e.status===401) notify('Para guardar la cotización debes iniciar sesión con una cuenta verificada. Usa el icono de usuario del encabezado.',true);
-      else notify(e.message||'No fue posible guardar la cotización.',true);
+      notify(e.status===401 ? 'Inicia sesión para continuar. Usa el icono de usuario del encabezado.' : (e.message||'No fue posible consultar el precio.'),true);
+      retryBtn.hidden=false;
     } finally {setBusy(false);}
   }
-  quoteBtn.addEventListener('click',createQuote);
+  quoteBtn.addEventListener('click',()=>{
+    if(loading || currentStep!==3 || !prepared) return;
+    const {q,qty,idReceta,mode,idMica}=prepared;
+    if (currentQty()!==qty) {
+      clearResult();notify('La cantidad cambió. Consulta el precio nuevamente.',true);
+      retryBtn.hidden=false;return;
+    }
+    if(!window.IVCCart43 || typeof window.IVCCart43.addConfigured!=='function') {
+      notify('No pudimos abrir el carrito. Actualiza la página e inténtalo de nuevo.',true);return;
+    }
+    const saved=window.IVCCart43.addConfigured({
+      idProducto:productId,cantidad:qty,idMica,idReceta,
+      solicitaValoracion:mode==='VALORACION',idCotizacion:Number(q.id_cotizacion)
+    });
+    if(saved) {quoteBtn.disabled=true;quoteBtn.textContent='Agregado ✓';hide();window.IVCCart43.open();}
+  });
   displayEstimate();
 })();

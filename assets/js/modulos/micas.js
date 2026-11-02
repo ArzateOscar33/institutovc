@@ -50,6 +50,7 @@
     botones.forEach(([action, icon, title]) => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'ivc-action'; b.dataset.action = action;
+      b.dataset.ivcPermiso = action === 'historial' ? 'micas.leer' : 'micas.administrar';
       b.dataset.id = row.id_mica; b.title = title; b.setAttribute('aria-label', title);
       const i = document.createElement('i'); i.className = icon; i.setAttribute('aria-hidden', 'true');
       b.append(i); box.append(b);
@@ -64,7 +65,7 @@
   async function api(recurso, opciones = {}) {
     const respuesta = await fetch(base + '/micas/' + recurso, {credentials:'same-origin', cache:'no-store', ...opciones});
     const tipo = respuesta.headers.get('content-type') || '';
-    if (!tipo.includes('application/json')) throw new Error('El servidor respondió con una página HTML. Verifica que tu sesión administrativa siga activa.');
+    if (!tipo.includes('application/json')) throw new Error('No se pudo consultar la información. Verifica tu sesión y vuelve a intentarlo.');
     const body = await respuesta.json();
     if (!respuesta.ok || !body.ok) throw new Error(body.msg || 'No se pudo completar la operación.');
     return body;

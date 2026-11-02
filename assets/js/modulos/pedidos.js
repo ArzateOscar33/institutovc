@@ -1,6 +1,7 @@
 /* Instituto Visual California — 4.8.1: revisión óptica unificada desde Pedidos; autoridad en PHP. */
 (() => {
     'use strict';
+    const soloLectura = document.getElementById('ivc-pedidos-v47')?.dataset.soloLectura === '1';
     const root = document.getElementById('ivc-pedidos-v47');
     if (!root) return;
     const base = (typeof base_url === 'string' ? base_url : '/institutovc/').replace(/\/?$/, '/');
@@ -20,7 +21,7 @@
     async function json(url, options={}) {
         const r=await fetch(base+url,{credentials:'same-origin',headers:{'Accept':'application/json',...(options.headers||{})},cache:'no-store',...options});
         const value=await r.json().catch(()=>null);
-        if(!r.ok || !value || !value.ok) throw new Error(value?.msg || 'Error de servidor ('+r.status+').');
+        if(!r.ok || !value || !value.ok) throw new Error(value?.msg || 'No fue posible completar la solicitud. Verifica tu sesión e inténtalo de nuevo.');
         return value;
     }
     const proceso=(n)=>({'1':'Pendiente','2':'En preparación','3':'Finalizado'}[String(n)]||'Desconocido');
@@ -47,11 +48,12 @@
                 cell(t,row.fecha);cell(t,money(row.monto));
                 cell(t,pill(row.estado,estadoPago(row.estado)?'ok':'warn'));
                 cell(t,pill(proceso(row.proceso),String(row.proceso)==='3'?'ok':String(row.proceso)==='2'?'info':'warn'));
-                let optica='Sin bloqueo óptico', tipo='ok';
+                let optica='Sin pendientes ópticos', tipo='ok';
                 if(Number(row.opticas_pendientes)>0){optica=String(row.opticas_pendientes)+' pendiente(s)';tipo='stop';}
                 else if(row.valoracion&&row.valoracion!=='REALIZADA'){optica='Valoración: '+row.valoracion;tipo='stop';}
                 cell(t,pill(optica,tipo));
-                const btn=text('button','Ver detalle','btn btn-sm btn-outline-primary');btn.type='button';btn.addEventListener('click',()=>verDetalle(row.id));cell(t,btn);
+                if(soloLectura){cell(t,text('span','Solo lectura','badge bg-secondary'));}
+                else{const btn=text('button','Ver detalle','btn btn-sm btn-outline-primary');btn.type='button';btn.addEventListener('click',()=>verDetalle(row.id));cell(t,btn);}
                 body.append(t);
             });
         }catch(e){body.replaceChildren();aviso(e.message,true);}
@@ -66,11 +68,11 @@
         val(meta,'Cliente',[(p.nombre||''),(p.apellido||'')].join(' '));
         val(meta,'Correo',p.email);val(meta,'Fecha',p.fecha);val(meta,'Total',money(p.monto,p.moneda||'MXN'));
         val(meta,'Estado de pago',p.estado);val(meta,'Etapa comercial',proceso(p.proceso));
-        val(meta,'ID transacción',p.id_transaccion);val(meta,'Cotización',p.id_cotizacion?'#'+p.id_cotizacion:'Compra anterior');
+        val(meta,'Referencia de pago',p.id_transaccion);val(meta,'Cotización',p.id_cotizacion?'#'+p.id_cotizacion:'Compra anterior');
         if(p.estado_valoracion) val(meta,'Valoración visual',p.estado_valoracion);
         summary.append(meta);el.append(summary);
-        if(p.paypal){const pago=sec('Captura PayPal');const pm=text('div','','ivc-pedidos-meta');
-            val(pm,'Estado',p.paypal.estado);val(pm,'Captura',p.paypal.paypal_capture_id||'Pendiente');val(pm,'Importe capturado',money(p.paypal.monto_capturado));pago.append(pm);el.append(pago);}
+        if(p.paypal){const pago=sec('Información del pago');const pm=text('div','','ivc-pedidos-meta');
+            val(pm,'Estado',p.paypal.estado);val(pm,'Referencia de captura',p.paypal.paypal_capture_id||'Pendiente');val(pm,'Importe capturado',money(p.paypal.monto_capturado));pago.append(pm);el.append(pago);}
         if (p.estado_valoracion) {
             const section=sec('Citas para valoración visual');
             const status=text('p','Estado: '+p.estado_valoracion,'mb-2 fw-semibold');section.append(status);
@@ -79,7 +81,7 @@
                 row.append(text('span','Cita #'+cita.id_cita+' · '+cita.fecha+' '+cita.hora+' · '+
                     (String(cita.verify)==='1'?'Confirmada':'Por confirmar')+
                     (String(cita.estado)!=='1'?' (inactiva)':'')));
-                if(p.estado_valoracion==='AGENDADA' && String(cita.verify)==='1' && String(cita.estado)==='1') {
+                if(!soloLectura && p.estado_valoracion==='AGENDADA' && String(cita.verify)==='1' && String(cita.estado)==='1') {
                     const done=text('button','Marcar valoración realizada','btn btn-sm btn-success');done.type='button';
                     done.addEventListener('click',()=>accionValoracion('pedidos/realizarValoracion',
                         {id_pedido:p.id,id_cita:cita.id_cita},'¿Confirmas que la valoración se realizó presencialmente?'));
@@ -87,7 +89,7 @@
                 }
                 section.append(row);
             }
-            if(p.estado_valoracion!=='REALIZADA') {
+            if(!soloLectura && p.estado_valoracion!=='REALIZADA') {
                 const select=document.createElement('select');select.className='form-select form-select-sm';
                 select.append(new Option('Selecciona cita del correo registrado…',''));
                 for(const cita of (p.citas_candidatas||[]))
@@ -119,7 +121,7 @@
             row.append(info);
             if(d.id_mica){
                 const action=text('div','','mt-3 d-flex flex-wrap align-items-center gap-2');
-                if(d.id_receta){
+                if(d.id_receta && !soloLectura){
                     {
                         const btn=text('button','Ver receta','btn btn-sm btn-outline-primary');btn.type='button';
                         const visor=text('div','','ivc-pedidos-visor-receta mt-2');visor.hidden=true;
@@ -157,11 +159,11 @@
                         action.append(btn);row.append(visor);
                     }
                 }
-                if(p.estado_valoracion==='REALIZADA' && d.estado_optico!=='APROBADA' && d.estado_optico!=='CANCELADA') {
+                if(!soloLectura && p.estado_valoracion==='REALIZADA' && d.estado_optico!=='APROBADA' && d.estado_optico!=='CANCELADA') {
                     const crear=text('button','Capturar graduación del Instituto','btn btn-sm btn-outline-success');crear.type='button';
                     crear.addEventListener('click',()=>capturarReceta(d.id,d.producto));action.append(crear);
                 }
-                if(p.estado_valoracion==='REALIZADA' && d.estado_optico!=='APROBADA' && d.estado_optico!=='CANCELADA') {
+                if(!soloLectura && p.estado_valoracion==='REALIZADA' && d.estado_optico!=='APROBADA' && d.estado_optico!=='CANCELADA') {
                     const picker=document.createElement('select');picker.className='form-select form-select-sm';
                     picker.append(new Option('Selecciona receta del cliente…',''));
                     for(const receta of (p.recetas_candidatas||[])) {
@@ -179,7 +181,7 @@
                 const pendiente = d.estado_optico!=='APROBADA' && d.estado_optico!=='CANCELADA';
                 const revisable = pendiente && !!d.id_receta && String(p.proceso)==='1' &&
                     estadoPago(p.estado) && (!p.estado_valoracion || p.estado_valoracion==='REALIZADA');
-                if(revisable && (d.estado_receta==='PENDIENTE' || d.estado_receta==='APROBADA')){
+                if(!soloLectura && revisable && (d.estado_receta==='PENDIENTE' || d.estado_receta==='APROBADA')){
                     const panel=text('div','','ivc-optica481-acciones');
                     panel.append(text('div', 'Primero abre «Ver receta» y revisa el documento o la graduación.', 'ivc-optica481-ayuda'));
                     const aprobar=text('button',d.estado_receta==='APROBADA'?'Validar micas':'Aprobar receta y micas','btn btn-sm btn-success');
@@ -211,11 +213,11 @@
         }
         if(Number(p.opticas_pendientes)>0){el.append(text('div','Existen elementos ópticos pendientes. Abre la receta y utiliza «Aprobar receta y micas» desde el artículo correspondiente antes de avanzar.','alert alert-warning'));}
         const next=String(p.proceso)==='1'?'Iniciar preparación':String(p.proceso)==='2'?'Marcar finalizado':'';
-        const btn=$('ivcPedAvanzar');btn.hidden=!next;btn.textContent=next;
+        const btn=$('ivcPedAvanzar');btn.hidden=soloLectura||!next;btn.textContent=next;
         btn.disabled=Number(p.opticas_pendientes)>0||!!(p.estado_valoracion&&p.estado_valoracion!=='REALIZADA')||!estadoPago(p.estado);
         btn.title=btn.disabled?'Debes resolver las validaciones pendientes.':'';
     }
-    async function verDetalle(id){modal.show();$('ivcPedDetalle').textContent='Consultando detalle…';$('ivcPedAvanzar').hidden=true;
+    async function verDetalle(id){modal.show();$('ivcPedDetalle').textContent='Cargando información del pedido…';$('ivcPedAvanzar').hidden=true;
         try{const res=await json('pedidos/detalle/'+encodeURIComponent(id));render(res.pedido);}catch(e){$('ivcPedDetalle').textContent=e.message;}}
     async function post(path, data){const params=new URLSearchParams({csrf,...data});return json(path,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:params.toString()});}
     async function confirmar(mensaje){if(window.Swal){const res=await Swal.fire({title:'Confirmar operación',text:mensaje,icon:'question',showCancelButton:true,confirmButtonText:'Confirmar',cancelButtonText:'Cancelar'});return res.isConfirmed;}return window.confirm(mensaje);}

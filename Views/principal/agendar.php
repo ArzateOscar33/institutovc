@@ -79,7 +79,7 @@ $agendaIcon = static function (string $name, int $size = 22): string {
                     <?php if (!empty($data['pedidoValoracion'])): ?>
                         <div class="alert alert-info" role="status"><strong>Valoración del pedido #<?php echo (int)$data['pedidoValoracion']['id']; ?></strong><br>Reserva tu cita con el correo de tu cuenta. Se asociará automáticamente al pedido.</div>
                         <?php endif; ?>
-                    <form id="frmAgendar" novalidate method="post" autocomplete="on" data-agendar-url="<?php echo BASE_URL; ?>principal/registrarCita" data-horarios-url="<?php echo BASE_URL; ?>principal/getHorariosDisponibles" data-correo-url="<?php echo BASE_URL; ?>principal/enviarCorreoAgenda">
+                    <form id="frmAgendar" novalidate method="post" autocomplete="on" data-agendar-url="<?php echo BASE_URL; ?>principal/registrarCita" data-horarios-url="<?php echo BASE_URL; ?>principal/getHorariosDisponibles" data-correo-url="<?php echo BASE_URL; ?>principal/enviarCorreoAgenda" data-inicio-url="<?php echo BASE_URL; ?>">
                         <?php if (!empty($data['pedidoValoracion'])): ?>
                         <input type="hidden" name="id_pedido" value="<?php echo (int)$data['pedidoValoracion']['id']; ?>">
                         <input type="hidden" name="csrf_pedido" value="<?php echo htmlspecialchars((string)$data['pedidoValoracion']['csrf'],ENT_QUOTES,'UTF-8'); ?>">
@@ -144,5 +144,5 @@ $agendaIcon = static function (string $name, int $size = 22): string {
     </section>
     <section class="ivc-appt-closing" aria-label="Información de atención"><div class="container ivc-appt-closing-grid"><span><?php echo $agendaIcon('eye', 24); ?> ATENCIÓN VISUAL CERCANA</span><span><?php echo $agendaIcon('calendar', 24); ?> HORARIOS ACTUALIZADOS</span><span><?php echo $agendaIcon('mail', 24); ?> CONFIRMACIÓN POR CORREO</span></div></section>
 </main>
-<script defer src="<?php echo BASE_URL; ?>assets/js/modulos/ivc-agendar.js?v=6.0.0"></script>
+<script defer src="<?php echo BASE_URL; ?>assets/js/modulos/ivc-agendar.js?v=6.1.0"></script>
 <?php include_once 'Views/template/footer.php'; ?>

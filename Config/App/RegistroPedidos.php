@@ -247,6 +247,16 @@ final class RegistroPedidos
                 $u->execute([$idPedido,(int)$reserva['id_reserva']]);
                 if ($u->rowCount()!==1) throw new RuntimeException('No se consumió la reserva.');
             }
+            // Outbox de confirmación en la MISMA transacción que el pedido.
+            // Un problema opcional de correo jamás debe impedir guardar una venta pagada.
+            try {
+                $notificar = $this->db->prepare("INSERT IGNORE INTO pedido_correos
+                    (id_pedido,tipo,estado,proximo_intento)
+                    VALUES (?,'CONFIRMACION_COMPRA','PENDIENTE',NOW())");
+                $notificar->execute([$idPedido]);
+            } catch (PDOException $correoError) {
+                error_log('[IVC] Cola de correo no disponible al registrar el pedido #'.$idPedido);
+            }
             $this->db->commit();
             return ['pedido_id'=>$idPedido,'ya_existia'=>false,'requiere_valoracion'=>$valorar];
         } catch (Throwable $e) {

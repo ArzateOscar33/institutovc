@@ -8,9 +8,9 @@
             <h1>Catálogo de micas</h1>
             <p>Administra los precios finales por par, los materiales y los tratamientos de cada opción.</p>
         </div>
-        <button type="button" class="btn ivc-btn-primary" id="micasNuevo"><i class="fas fa-plus me-2" aria-hidden="true"></i> Nueva mica</button>
+        <button type="button" class="btn ivc-btn-primary" id="micasNuevo" data-ivc-permiso="micas.administrar"><i class="fas fa-plus me-2" aria-hidden="true"></i> Nueva mica</button>
     </div>
-    <div class="ivc-micas-note" role="note"><i class="fas fa-info-circle me-2" aria-hidden="true"></i> Los precios indicados son <strong>por par de micas en MXN</strong>. Toda receta requiere revisión óptica antes de fabricar los lentes. Este módulo <strong>no cambia PayPal</strong> todavía.</div>
+    <div class="ivc-micas-note" role="note"><i class="fas fa-info-circle me-2" aria-hidden="true"></i> Los precios indicados son <strong>por par de micas en MXN</strong>. Los cambios de precios se aplican a nuevas compras; los pedidos anteriores conservan sus importes registrados.</div>
     <div class="ivc-stats-row" aria-label="Resumen del catálogo">
         <div class="ivc-stat"><span>Modelos registrados</span><strong id="micasTotal">—</strong></div>
         <div class="ivc-stat"><span>Opciones activas</span><strong id="micasActivas">—</strong></div>
@@ -38,7 +38,7 @@
     </section>
     <div id="micasMensaje" class="mt-3" aria-live="polite"></div>
 
-    <!-- Editor (sin dependencias ajenas a Bootstrap incluido en la aplicación) -->
+    <!-- Formulario para el catálogo de micas -->
     <div class="modal fade" id="micasModal" tabindex="-1" aria-hidden="true" aria-labelledby="micasModalTitle">
         <div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content ivc-modal-content">
             <form id="micasFormulario" novalidate>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="ivc-modal-notice mt-3">La unidad de venta se guarda automáticamente como <strong>PAR</strong>. Los precios anteriores quedarán en el historial.</div>
                 </div>
-                <div class="modal-footer"><button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button><button class="btn ivc-btn-primary" type="submit" id="micasGuardar">Guardar mica</button></div>
+                <div class="modal-footer"><button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button><button class="btn ivc-btn-primary" type="submit" id="micasGuardar" data-ivc-permiso="micas.administrar">Guardar mica</button></div>
             </form>
         </div></div>
     </div>

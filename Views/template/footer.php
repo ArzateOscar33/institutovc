@@ -129,6 +129,6 @@
 <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script defer src="<?php echo BASE_URL; ?>assets/js/ivc-animations.js?v=3.0.0"></script>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-carrito-configurado-v43.css?v=4.3.0">
-<script src="<?php echo BASE_URL; ?>assets/js/ivc-carrito-configurado-v43.js?v=4.3.0"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-carrito-configurado-v43.js?v=4.9.1c"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
   const setMessage=(msg,good=false)=>{el('rxAdminAlert').textContent=msg;el('rxAdminAlert').style.color=good?'#136a4e':'#b23636';};
   async function api(path, init={}) {
     const response=await fetch(base+'recetasAdmin/'+path,{credentials:'same-origin',headers:{'Accept':'application/json'},...init});
-    const data=await response.json();if(!response.ok||!data.ok) throw new Error(data.msg||'Error de servidor');return data;
+    const data=await response.json();if(!response.ok||!data.ok) throw new Error(data.msg||'No pudimos completar la consulta. Inténtalo nuevamente.');return data;
   }
   const cell=(row,value)=>{const td=row.insertCell();td.textContent=String(value??'—');return td;};
   const label=st=>({PENDIENTE:'Pendiente',APROBADA:'Aprobada',REQUIERE_CORRECCION:'Requiere corrección',RECHAZADA:'Rechazada'})[st]||st;

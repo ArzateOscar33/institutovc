@@ -1,4 +1,4 @@
-/** Fase 3: guarda receta en cuenta del cliente (aún NO la vincula al pedido). */
+/** Registro de recetas desde la cuenta del cliente. */
 (() => {
   'use strict';
   const form=document.getElementById('ivcRxSaveCard');if(!form)return;
@@ -40,7 +40,7 @@
     loading=true;save.disabled=true;save.textContent='Guardando…';feedback('');
     try{body.append('csrf',await ensureToken());const result=await request('guardar',{method:'POST',body});
       window.ivcRecetaGuardada=result.id_receta;
-      feedback('Receta #'+result.id_receta+' guardada correctamente. Está pendiente de revisión. No está vinculada todavía al pedido ni se suma a PayPal.',true);
+      feedback('Tu receta se guardó correctamente y está pendiente de revisión. Puedes seleccionarla al configurar tus lentes.',true);
       await list();
     }catch(e){feedback(e.message);}finally{loading=false;save.disabled=false;save.textContent='Guardar receta para revisión';}
   });

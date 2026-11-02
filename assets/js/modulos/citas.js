@@ -1,257 +1,116 @@
-//calendario
-let calendarEl = document.getElementById("calendar");
-
-let frmAgenda = document.getElementById("formularioAgenda");
-let eliminarAgenda = document.getElementById("btnEliminarAgenda");
-
-//mopdal y formulario para nueva cita
-let modalAgenda = new bootstrap.Modal(document.getElementById("modalAgenda"));
-let modalAgendarNuevaCita = new bootstrap.Modal(
-	document.getElementById("modalAgendarNuevaCita")
-);
-
-//let modalAgenda = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAgenda'));
-//let modalAgendarNuevaCita = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAgendarNuevaCita'));//
-
-//let modalAgendarNuevaCita = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAgendarNuevaCita'));
-
-let frmNuevaCita = document.getElementById("frmAgendarCita");
-let btnAgendarNuevaCita = document.getElementById("btnAgendarNuevaCita");
-let fechaCita = document.getElementById("fechaNuevaCita");
-
-const iapPaterno = document.querySelector("#iapPaterno");
-const iapMaterno = document.querySelector("#iapMaterno");
-const iNombre = document.querySelector("#iNombre");
-const iCorreo = document.querySelector("#iCorreo");
-const iTelefono = document.querySelector("#iTelefono");
-const selectHorarios = document.querySelector("#selectHorarios");
-
-// Establecer fecha mínima (hoy)
-const hoy = new Date();
-const fechaMinima = hoy.toISOString().split("T")[0];
-fechaCita.setAttribute("min", fechaMinima);
-
-const btnAgendar = document.querySelector("#btnAgendar");
-
-document.addEventListener("DOMContentLoaded", function () {
-	var calendarEl = document.getElementById("calendar");
-	var calendar = new FullCalendar.Calendar(calendarEl, {
-		locale: "es",
-		events: base_url + "/citas/listar",
-		initialView: "dayGridMonth",
-		headerToolbar: {
-			left: "prev,next,today",
-			center: "title",
-			right: "dayGridMonth,timeGridWeek,listWeek",
-		},
-		validRange: {
-			start: new Date(hoy.setDate(hoy.getDate() + 1))
-				.toISOString()
-				.split("T")[0], // Restringe a fechas posteriores a hoy
-		},
-		dateClick: function (info) {
-			document.getElementById("fechaNuevaCita").value = info.dateStr;
-			//
-			modalAgendarNuevaCita.show();
-		},
-		eventClick: function (info) {
-			modalAgenda.show();
-			let id_cita = info.event.id;
-
-			document.getElementById("tituloModalAgenda").textContent =
-				"Cita Agendada";
-			// Extraer solo la parte de la fecha (YYYY-MM-DD)
-			const fechaEvento = info.event.startStr.split("T")[0];
-			const horaEventoCompleta = info.event.startStr.split("T")[1]; // Hora completa (HH:mm:ss-08:00)
-			const horaEvento = horaEventoCompleta.split(":").slice(0, 2).join(":"); // Solo HH:mm
-
-			document.getElementById("fechaCitaAgenda").value = fechaEvento;
-			document.getElementById("horaCitaAgenda").value = horaEvento; // Input de hora
-			document.getElementById("id_Cita").value = info.event.id;
-
-			document.getElementById("nombrePaciente").value = info.event.title;
-		},
-	});
-	calendar.render();
-	//formulario para modificar las citas
-	frmAgenda.addEventListener("submit", function (e) {
-		e.preventDefault();
-	});
-
-	// Deshabilitar domingos
-	fechaCita.addEventListener("change", function () {
-		const fechaSeleccionada = fechaCita.value;
-
-		if (fechaSeleccionada) {
-			const url = base_url + "citas/getHorariosDisponibles";
-			const formData = new FormData();
-			formData.append("fechaNuevaCita", fechaSeleccionada);
-
-			const http = new XMLHttpRequest();
-			http.open("POST", url, true);
-			http.send(formData);
-
-			http.onreadystatechange = function () {
-				if (this.readyState === 4 && this.status === 200) {
-					try {
-						const horarios = JSON.parse(this.responseText);
-						selectHorarios.innerHTML =
-							'<option value="">Selecciona un horario</option>';
-						if (Array.isArray(horarios) && horarios.length > 0) {
-							horarios.forEach((horario) => {
-								const option = document.createElement("option");
-								option.value = horario.id_horario;
-								option.textContent = horario.horario;
-								selectHorarios.appendChild(option);
-							});
-						} else {
-							Swal.fire(
-								"Aviso",
-								"No hay horarios disponibles para esta fecha",
-								"warning"
-							);
-						}
-					} catch (error) {
-						console.error("Error al procesar la respuesta:", error);
-					}
-				}
-			};
-		} else {
-			selectHorarios.innerHTML =
-				'<option value="">Selecciona un horario</option>';
-		}
-	});
-
-	frmNuevaCita.addEventListener("submit", function (e) {
-		e.preventDefault();
-
-		if (
-			iapPaterno.value === "" ||
-			iapMaterno.value === "" ||
-			iNombre.value === "" ||
-			iCorreo.value === "" ||
-			iTelefono.value === "" ||
-			fechaCita.value === "" ||
-			selectHorarios.value === ""
-		) {
-			Swal.fire("Aviso", "Todos los campos son requeridos", "warning");
-		} else {
-			let formData = new FormData(this);
-			const url = base_url + "citas/registrarCita";
-			const http = new XMLHttpRequest();
-			http.open("POST", url, true);
-			http.send(formData);
-
-			http.onreadystatechange = function () {
-				if (this.readyState === 4 && this.status === 200) {
-					try {
-						const res = JSON.parse(this.responseText);
-						Swal.fire({
-							title: "Aviso",
-							text: res.msg,
-							icon: res.icono,
-						});
-						if (res.icono === "success") {
-							setTimeout(() => {
-								// window.location.reload();
-								enviarCorreoAgenda(iCorreo.value, res.token);
-							}, 2000);
-						}
-					} catch (error) {
-						console.error("Error al procesar JSON:", error, this.responseText);
-						Swal.fire(
-							"Error",
-							"Hubo un problema con la respuesta del servidor",
-							"error"
-						);
-					}
-				}
-			};
-		}
-	});
-
-	function alertas(msg, icono) {
-		Swal.fire("Aviso?", msg.toUpperCase(), icono);
-	}
-
-    function enviarCorreoAgenda(correo, token) {
-
-		// Obtén los valores de los campos 
-		const iNombreEC = document.getElementById("iNombre").value;
-	   const fechaCitaEC = document.getElementById("fechaNuevaCita").value;
-	   const iapMaternoEC = document.getElementById("iapMaterno").value;
-	   const iapPaternoEC=document.getElementById("iapPaterno").value
-		   // Obtén el elemento select y su opción seleccionada
-		   const selectHorariosEC = document.getElementById("selectHorarios");
-		   const horarioId = selectHorarios.value; // ID del horario seleccionado (value del option)
-		   const horarioTexto = selectHorarios.options[selectHorarios.selectedIndex].text; // Texto del horario seleccionado
-	   
-
-	  let formData = new FormData();
-	  formData.append("token", token);
-	  formData.append("iNombre", iNombreEC);
-	  formData.append("fechaNuevaCita", fechaCitaEC);
-	  formData.append("selectHorarios", horarioTexto);
-	  formData.append("iapMaterno", iapMaternoEC);
-	  formData.append("iapPaterno", iapPaternoEC);
-	  formData.append("iCorreo", correo);
-	  //console.log( iNombreEC, fechaCitaEC, horarioTexto);
-	  const url = base_url + "citas/enviarCorreoAgenda";
-	  const http = new XMLHttpRequest();
-	  http.open("POST", url, true);
-	  http.send(formData);
-	  http.onreadystatechange = function () {
-		  if (this.readyState == 4 && this.status == 200) {
-			//console.log(this.responseText);
-			  const res = JSON.parse(this.responseText);
-			  
-			  Swal.fire({
-				  title: "Aviso",
-				  text: res.msg,
-				  icon: res.icono,
-			  });
-			  if (res.icono == "success") {
-				  setTimeout(() => {
-					  window.location.reload();
-				  }, 2000);
-			  }
-		  }
-	  };
-  }
-
-	eliminarAgenda.addEventListener("click", function () {
-		modalAgenda.hide();
-		Swal.fire({
-			title: "Advertencia ",
-			text: "Esta Seguro de Eliminar ",
-			icon: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: "Si, Eliminar!",
-			cancelButtonText: "Cancelar ",
-		}).then((result) => {
-			if (result.isConfirmed) {
-				const id_cita = document.getElementById("id_Cita").value;
-				const url = base_url + "citas/eliminarCita/" + id_cita;
-				const http = new XMLHttpRequest();
-				http.open("GET", url, true);
-				http.send();
-				http.onreadystatechange = function () {
-					if (this.readyState == 4 && this.status == 200) {
-						const res = JSON.parse(this.responseText);
-						//console.log(res);
-						if (res.icono == "success") {
-							calendar.refetchEvents();
-						}
-						Swal.fire({
-							title: "Aviso",
-							text: res.msg,
-							icon: res.icono,
-						});
-					}
-				};
-			}
-		});
-	});
-});
+/* IVC — Agenda administrativa V4.9.2-B. Conserva los endpoints y formularios existentes. */
+(() => {
+  'use strict';
+  document.addEventListener('DOMContentLoaded', () => {
+    const $ = id => document.getElementById(id);
+    const calendarEl = $('calendar');
+    if (!calendarEl || typeof FullCalendar === 'undefined') return;
+    const modalNuevoEl = $('modalAgendarNuevaCita'); // Formulario reutilizado del footer-admin.
+    const modalDetalleEl = $('modalAgenda');
+    if (!modalNuevoEl || !modalDetalleEl) return;
+    const modalNuevo = bootstrap.Modal.getOrCreateInstance(modalNuevoEl);
+    const modalDetalle = bootstrap.Modal.getOrCreateInstance(modalDetalleEl);
+    const form = $('frmAgendarCita');
+    const dateInput = $('fechaNuevaCita');
+    const slot = $('selectHorarios');
+    const saveButton = $('btnAgendar');
+    const deleteButton = $('btnEliminarAgenda');
+    const home = String(typeof base_url === 'string' ? base_url : '/institutovc/').replace(/\/?$/, '/');
+    const ymd = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    dateInput.min = ymd(new Date());
+    const alert = options => (typeof Swal === 'undefined' ? Promise.resolve({isConfirmed:window.confirm(options.title+'\n'+(options.text||''))}) : Swal.fire({confirmButtonColor:'#176d9d',...options}));
+    const request = async (url, body) => {
+      const response=await fetch(url,{method:'POST',body,headers:{'Accept':'application/json'}});
+      if(!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    };
+    const updateStats = events => {
+      const confirmed=events.filter(e => Number(e.extendedProps?.verify) === 1).length;
+      if ($('ivcCitasVisibles')) $('ivcCitasVisibles').textContent=events.length;
+      if ($('ivcCitasConfirmadas')) $('ivcCitasConfirmadas').textContent=confirmed;
+      if ($('ivcCitasPendientes')) $('ivcCitasPendientes').textContent=events.length-confirmed;
+    };
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      locale:'es', initialView:'dayGridMonth', height:'auto', nowIndicator:true,
+      headerToolbar:{left:'prev,next today',center:'title',right:'dayGridMonth,timeGridWeek,listWeek'},
+      buttonText:{today:'Hoy',month:'Mes',week:'Semana',list:'Lista'},
+      events:home+'citas/listar',
+      datesSet: () => setTimeout(() => updateStats(calendar.getEvents()),0),
+      eventsSet: events => updateStats(events),
+      eventDidMount: info => {info.el.title=`Cita: ${info.event.title}`;},
+      dateClick: info => {
+        const selected=info.dateStr.slice(0,10);
+        if (selected < ymd(new Date())) {
+          alert({icon:'info',title:'Fecha anterior',text:'Selecciona una fecha de hoy en adelante.'});return;
+        }
+        dateInput.value=selected;
+        dateInput.dispatchEvent(new Event('change'));
+        modalNuevo.show();
+      },
+      eventClick: info => {
+        const ev=info.event;
+        $('id_Cita').value=ev.id;
+        $('nombrePaciente').value=ev.title;
+        $('fechaCitaAgenda').value=(ev.startStr||'').slice(0,10);
+        $('horaCitaAgenda').value=ev.start ? ev.start.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit',hour12:false}) : '—';
+        const isConfirmed=Number(ev.extendedProps?.verify)===1;
+        const status = $('ivcAgendaStatus');
+        status.textContent=isConfirmed?'Confirmada por el paciente':'Pendiente de confirmar';
+        status.classList.toggle('is-confirmed', isConfirmed);
+        status.classList.toggle('is-pending', !isConfirmed);
+        modalDetalle.show();
+      },
+    });
+    calendar.render();
+    $('ivcAbrirNuevaCita')?.addEventListener('click',()=>{form?.reset();dateInput.min=ymd(new Date());modalNuevo.show();});
+    async function loadSlots() {
+      slot.innerHTML='<option value="">Consultando horarios…</option>';
+      if (!dateInput.value) {slot.innerHTML='<option value="">Selecciona una fecha</option>';return;}
+      const payload=new FormData();payload.append('fechaNuevaCita',dateInput.value);
+      try {
+        const data=await request(home+'citas/getHorariosDisponibles',payload);
+        slot.innerHTML='<option value="">Selecciona un horario</option>';
+        if(!Array.isArray(data) || !data.length) {
+          await alert({icon:'info',title:'Sin horarios disponibles',text:'Selecciona otra fecha.'});return;
+        }
+        data.forEach(row => slot.append(new Option(row.horario,row.id_horario)));
+      } catch(e) {
+        slot.innerHTML='<option value="">No fue posible consultar horarios</option>';
+        await alert({icon:'error',title:'Sin conexión',text:'No pudimos consultar la disponibilidad. Vuelve a intentar.'});
+      }
+    }
+    dateInput.addEventListener('change',loadSlots);
+    form?.addEventListener('submit',async event=>{
+      event.preventDefault();
+      if(!form.checkValidity() || !dateInput.value || !slot.value){
+        await alert({icon:'warning',title:'Revisa los datos',text:'Completa la fecha, el horario y los datos del paciente.'});return;
+      }
+      saveButton.disabled=true;
+      try {
+        const reg=await request(home+'citas/registrarCita',new FormData(form));
+        if(reg.icono!=='success' || !reg.token) throw new Error(reg.msg||'No se pudo registrar.');
+        modalNuevo.hide();calendar.refetchEvents();
+        const payload=new FormData();payload.append('token',String(reg.token));
+        const mail=await request(home+'citas/enviarCorreoAgenda',payload);
+        await alert(mail.correo_enviado===true
+          ? {icon:'success',title:'Cita registrada',text:'Enviamos al paciente un correo con el enlace para confirmar la cita.'}
+          : {icon:'warning',title:'Cita registrada',text:'La cita quedó guardada, pero el correo sigue pendiente. Revisa la cola de notificaciones; no registres la misma cita nuevamente.'});
+      } catch(e) {
+        await alert({icon:'warning',title:'Revisa la operación',text:'No pudimos confirmar el resultado. Revisa la agenda antes de intentar registrar otra cita.'});
+        calendar.refetchEvents();
+      } finally {saveButton.disabled=false;}
+    });
+    deleteButton?.addEventListener('click',async () => {
+      const id=Number($('id_Cita').value);
+      const ok=await alert({icon:'warning',title:'¿Cancelar esta cita?',text:'La cita dejará de ocupar el horario. Su historial de correo se conservará.',showCancelButton:true,confirmButtonText:'Sí, cancelar cita',cancelButtonText:'Volver'});
+      if(!ok.isConfirmed || id<1)return;
+      try {
+        const resp=await fetch(home+'citas/eliminarCita/'+id,{method:'GET',headers:{Accept:'application/json'}});
+        const result=await resp.json();
+        if(result.icono!=='success') throw new Error(result.msg||'Operación fallida');
+        modalDetalle.hide();calendar.refetchEvents();
+        await alert({icon:'success',title:'Cita cancelada',text:'El horario vuelve a estar disponible.'});
+      } catch(e) {await alert({icon:'error',title:'No se canceló',text:'Inténtalo nuevamente o consulta con soporte.'});}
+    });
+  });
+})();

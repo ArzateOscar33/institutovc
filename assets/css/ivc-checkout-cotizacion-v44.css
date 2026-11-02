@@ -53,3 +53,66 @@ body.ivc44-with-rx #paypal-button-container { display:none !important; }
 .ivc44-review {margin:14px 0 0;}
 @media(max-width:900px) {.ivc44-grid {grid-template-columns:1fr;}.ivc44-progress {flex-wrap:wrap;}}
 @media(max-width:575px) {.ivc44-panel{padding:17px;}.ivc44-heading{padding:20px;}.ivc44-heading h2{font-size:23px;}.ivc44-progress{padding:12px;gap:10px;}.ivc44-progress span{font-size:11px;}.ivc44-progress span b{width:27px;height:27px;}.ivc44-table th,.ivc44-table td{padding:12px 6px;font-size:12px;}}
+
+/* UX: progreso real del cliente: selección > graduación > pago. */
+.ivc44-progress .ivc44-done{color:#287d69}
+.ivc44-progress .ivc44-done b{background:#e2f4ec;color:#267c67}
+.ivc44-progress span[aria-current="step"]{color:#143d60}
+.ivc44-before{display:flex;align-items:center;gap:9px}
+.ivc44-before.is-loading::before{content:"";width:15px;height:15px;flex:none;border:2px solid #b3d5e7;border-top-color:#287eb6;border-radius:50%;animation:ivc44Spin .8s linear infinite}
+@keyframes ivc44Spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.ivc44-before::before{animation:none!important}}
+
+/* UX checkout: resumen -> pago, una sola acción visible por pantalla. */
+.ivc44-wizard-panel[hidden]{display:none!important}
+.ivc44-root{max-width:1100px;margin:12px auto 30px}
+.ivc44-progress{justify-content:center;margin-bottom:14px;padding:12px 16px}
+.ivc44-progress>span{flex:0 1 210px;justify-content:center}
+.ivc44-compact-heading{padding:18px 23px;margin-bottom:14px}
+.ivc44-compact-heading h2{font-size:24px;margin:6px 0}
+.ivc44-grid{gap:14px}
+.ivc44-panel{padding:17px 20px}
+.ivc44-panel h3{font-size:17px}
+.ivc44-table td{padding:10px 12px}
+.ivc44-back{margin-top:10px}
+.ivc44-totals{margin:10px 0;gap:7px}
+.ivc44-quote-id{padding:7px 0}
+.ivc44-item{padding:9px 0}
+.ivc44-status{margin:8px 0;min-height:0}
+.ivc44-navigation{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:13px 18px;border:1px solid #daebf4;border-radius:12px;background:rgba(255,255,255,.98);margin-top:14px;box-shadow:0 -5px 21px rgba(24,72,99,.08)}
+.ivc44-navigation .ivc44-primary{max-width:260px}
+.ivc44-nav-help{font-size:12px;color:#638299;line-height:1.5;margin-right:auto}
+.ivc44-payment-card{max-width:590px;margin:auto;border-radius:16px;border:1px solid #d7e8f1;padding:22px;background:#fff;box-shadow:0 12px 30px rgba(24,72,99,.05)}
+.ivc44-pay-amount{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px;background:#eaf7fd;border-radius:12px;color:#234f6e;font-size:14px;font-weight:700}
+.ivc44-pay-amount strong{font-size:25px;color:#135985;white-space:nowrap}
+.ivc44-payment-card .ivc45-sandbox{margin-top:14px;padding:15px;border-width:1px}
+.ivc44-payment-card .ivc45-sandbox h4{font-size:17px}
+.ivc44-payment-nav{max-width:590px;margin:14px auto 0}
+.ivc44-secondary{border:1px solid #b5d5e5;background:#fff;color:#1c5b84;border-radius:10px;padding:12px 18px;cursor:pointer;font-size:13px;font-weight:700}
+.ivc44-secondary:hover{background:#eff8fd}
+.ivc44-primary:focus-visible,.ivc44-secondary:focus-visible{outline:3px solid #85caed;outline-offset:2px}
+@media(max-width:700px){
+ .ivc44-progress{padding:9px 5px;gap:5px}
+ .ivc44-progress>span{font-size:11px;flex:1;gap:5px}
+ .ivc44-progress span b{width:25px;height:25px}
+ .ivc44-compact-heading{padding:15px;margin-bottom:10px}
+ .ivc44-grid{gap:10px}
+ .ivc44-panel{padding:13px}
+ .ivc44-navigation{padding:11px;align-items:stretch;flex-direction:column-reverse;gap:6px}
+ .ivc44-navigation .ivc44-primary{width:100%;max-width:none}
+ .ivc44-payment-nav{flex-direction:column;gap:9px}
+ .ivc44-payment-card{padding:13px}
+ .ivc44-pay-amount strong{font-size:20px}
+}
+@media(prefers-reduced-motion:no-preference){.ivc44-wizard-panel:not([hidden]){animation:ivc44In .18s ease-out}@keyframes ivc44In{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}}
+
+/* La acción principal queda visible sin hacer scroll en móviles. */
+@media(max-width:700px){
+ .ivc44-root{padding-bottom:75px}
+ .ivc44-navigation{position:fixed;bottom:0;left:0;right:0;z-index:1090;margin:0;border-radius:14px 14px 0 0;padding:10px 14px max(10px,env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(22,68,102,.18)}
+ .ivc44-navigation .ivc44-nav-help{display:none}
+ .ivc44-navigation .ivc44-primary{min-height:48px}
+ .ivc44-payment-nav{padding:10px 14px max(10px,env(safe-area-inset-bottom))}
+ .ivc44-secondary{width:100%}
+}
+.ivc42-message:empty{display:none}

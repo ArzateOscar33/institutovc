@@ -1,6 +1,13 @@
 <?php include_once 'Views/template/header-admin.php'; ?>
+<section class="ivc-admin-e1 ivc-module-e1">
+  <div class="ivc-page-hero ivc-module-hero">
+    <div><span class="ivc-eyebrow">ADMINISTRACIÓN</span><h1>Usuarios</h1><p>Gestiona los accesos del equipo y mantén actualizado el directorio de usuarios.</p></div>
+    <div class="ivc-hero-actions"><span class="ivc-page-hero-icon"><i class="bx bx-group"></i></span></div>
+  </div>
 
-<button class="btn btn-primary mb-2" type="button" id="nuevo_registro">Nuevo</button>
+
+<div class="d-flex flex-wrap gap-2 mb-3"><button class="btn btn-primary" type="button" id="nuevo_registro">Nuevo usuario</button>
+<?php if (RolesAcceso::permiso('roles.gestionar')): ?><a class="btn btn-outline-primary" href="<?php echo BASE_URL; ?>roles"><i class="bx bx-shield-quarter"></i> Administrar roles y permisos</a><?php endif; ?></div>
 
 <div class="card">
     <div class="card-body">
@@ -12,7 +19,7 @@
                         <th>Nombres</th>
                         <th>Apellidos</th>
                         <th>Correo</th>
-                        <th>Foto</th>
+                        <th>Rol</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -23,15 +30,17 @@
     </div>
 </div>
 
+</section>
 <div id="nuevoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="titleModal"></h5>
-                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar">
                 </button>
             </div>
             <form id="frmRegistro">
+                <input type="hidden" name="csrf" id="ivcRolesCsrf" value="<?php echo htmlspecialchars($data['csrf'],ENT_QUOTES,'UTF-8'); ?>">
                 <div class="modal-body">
                     <input type="hidden" id="id" name="id">
                     <div class="form-group mb-2">
@@ -44,11 +53,20 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="correo">Correo</label>
-                        <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo Electrónico">
+                        <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo electrónico">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="id_rol">Rol de acceso</label>
+                        <select class="form-select" name="id_rol" id="id_rol" required>
+                            <option value="">Selecciona un rol</option>
+                            <?php foreach ($data['roles'] as $r): ?>
+                            <option value="<?php echo (int)$r['id_rol']; ?>"><?php echo htmlspecialchars($r['nombre'],ENT_QUOTES,'UTF-8'); ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group mb-2">
                         <label for="clave">Contraseña</label>
-                        <input id="clave" class="form-control" type="password" name="clave" placeholder="Contraseña">
+                        <input id="clave" class="form-control" type="password" name="clave" placeholder="Mínimo 10 caracteres (usuarios nuevos)">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -63,7 +81,7 @@
 
 <?php include_once 'Views/template/footer-admin.php'; ?>
 
-<script src="<?php echo BASE_URL . 'assets/js/modulos/usuarios.js'; ?>"></script>
+<script src="<?php echo BASE_URL . 'assets/js/modulos/usuarios.js?v=4940'; ?>"></script>
 
 </body>
 

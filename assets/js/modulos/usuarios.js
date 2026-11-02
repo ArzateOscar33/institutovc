@@ -1,105 +1,65 @@
-const nuevo = document.querySelector("#nuevo_registro");
-const frm = document.querySelector("#frmRegistro");
-const titleModal = document.querySelector("#titleModal");
-const btnAccion = document.querySelector("#btnAccion");
-const myModal = new bootstrap.Modal(document.getElementById("nuevoModal"));
+const nuevo = document.getElementById('nuevo_registro');
+const frm = document.getElementById('frmRegistro');
+const titleModal = document.getElementById('titleModal');
+const btnAccion = document.getElementById('btnAccion');
+const myModal = new bootstrap.Modal(document.getElementById('nuevoModal'));
 let tblUsuario;
-document.addEventListener("DOMContentLoaded", function() {
-    tblUsuario = $("#tblUsuarios").DataTable({
-        ajax: {
-            url: base_url + "/usuarios/listar",
-            dataSrc: "",
-        },
-        columns: [
-            { data: "id" },
-            { data: "nombres" },
-            { data: "apellidos" },
-            { data: "correo" },
-            { data: "perfil" },
-            { data: "accion" },
-        ],
-        language,
-        dom,
-        buttons,
+const csrf = document.getElementById('ivcRolesCsrf').value;
+
+document.addEventListener('DOMContentLoaded', () => {
+    tblUsuario = $('#tblUsuarios').DataTable({
+        ajax: {url: base_url + 'usuarios/listar', dataSrc: ''},
+        columns: [{data:'id'},{data:'nombres'},{data:'apellidos'},{data:'correo'},{data:'perfil'},{data:'accion'}],
+        language, dom, buttons
     });
-    //levantar modal
-    nuevo.addEventListener("click", function() {
-        document.querySelector('#id').value = '';
-        titleModal.textContent = "NUEVO USUARIO";
-        btnAccion.textContent = 'Registrar';
-        frm.reset();
-        document.querySelector('#clave').removeAttribute('readonly');
+    nuevo.addEventListener('click', () => {
+        frm.reset(); document.getElementById('id').value='';
+        titleModal.textContent='Nuevo usuario'; btnAccion.textContent='Registrar';
+        document.getElementById('clave').disabled=false;
+        document.getElementById('clave').required=true;
+        document.getElementById('id_rol').disabled=false;
         myModal.show();
     });
-    //submit usuarios
-    frm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        let data = new FormData(this);
-        const url = base_url + "usuarios/registrar";
-        const http = new XMLHttpRequest();
-        http.open("POST", url, true);
-        http.send(data);
-        http.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-            //    console.log(this.responseText);
-                const res = JSON.parse(this.responseText);
-                if (res.icono == "success") {
-                    myModal.hide();
-                    tblUsuario.ajax.reload();
-                }
-                Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
-            }
-        }
+    frm.addEventListener('submit', async (e) => {
+        e.preventDefault(); btnAccion.disabled=true;
+        try {
+            const r=await fetch(base_url+'usuarios/registrar', {method:'POST',body:new FormData(frm),headers:{Accept:'application/json'},credentials:'same-origin'});
+            const j=await r.json();
+            if(r.ok && j.icono==='success') {myModal.hide();tblUsuario.ajax.reload(null,false);}
+            Swal.fire('Usuarios',j.msg,j.icono||'error');
+        } catch(e) {Swal.fire('Error','No se pudo guardar el usuario.','error');}
+        finally {btnAccion.disabled=false;}
     });
 });
 
-function eliminarUser(idUser) {
-    Swal.fire({
-        title: "Aviso?",
-        text: "Esta seguro de eliminar el registro!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, Eliminar!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const url = base_url + "usuarios/delete/" + idUser;
-            const http = new XMLHttpRequest();
-            http.open("GET", url, true);
-            http.send();
-            http.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  //  console.log(this.responseText);
-                    const res = JSON.parse(this.responseText);
-                    if (res.icono == "success") {
-                        tblUsuario.ajax.reload();
-                    }
-                    Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
-                }
-            }
-        }
-    });
+async function editUser(id) {
+    try {
+        const r=await fetch(base_url+'usuarios/edit/'+encodeURIComponent(id),{headers:{Accept:'application/json'},credentials:'same-origin'});
+        const u=await r.json();
+        if(!r.ok || !u.id) throw Error(u.msg||'No autorizado');
+        frm.reset();
+        document.getElementById('id').value=u.id;
+        document.getElementById('nombre').value=u.nombres;
+        document.getElementById('apellido').value=u.apellidos;
+        document.getElementById('correo').value=u.correo;
+        document.getElementById('id_rol').value=String(u.id_rol);
+        // No es necesario volver a solicitar la contraseña para editar.
+        document.getElementById('clave').value='';
+        document.getElementById('clave').required=false;
+        document.getElementById('clave').disabled=true;
+        titleModal.textContent='Editar usuario';btnAccion.textContent='Guardar cambios';
+        myModal.show();
+    } catch(e) {Swal.fire('Usuarios',e.message,'error');}
 }
 
-function editUser(idUser) {
-    const url = base_url + "usuarios/edit/" + idUser;
-    const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.send();
-    http.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           // console.log(this.responseText);
-            const res = JSON.parse(this.responseText);
-            document.querySelector('#id').value = res.id;
-            document.querySelector('#nombre').value = res.nombres;
-            document.querySelector('#apellido').value = res.apellidos;
-            document.querySelector('#correo').value = res.correo;
-            document.querySelector('#clave').setAttribute('readonly', 'readonly');
-            btnAccion.textContent = 'Actualizar';
-            titleModal.textContent = "MODIFICAR USUARIO";
-            myModal.show();
-            //$('#nuevoModal').modal('show');
-        }
-    }
+async function eliminarUser(id) {
+    const confirmacion=await Swal.fire({title:'¿Desactivar usuario?',text:'Perderá acceso al panel administrativo.',icon:'warning',showCancelButton:true,confirmButtonText:'Sí, desactivar',cancelButtonText:'Cancelar'});
+    if(!confirmacion.isConfirmed)return;
+    try {
+        const fd=new FormData();fd.set('csrf',csrf);
+        const r=await fetch(base_url+'usuarios/delete/'+encodeURIComponent(id),{method:'POST',headers:{Accept:'application/json'},credentials:'same-origin',body:fd});
+        const j=await r.json();
+        if(r.ok && j.icono==='success')tblUsuario.ajax.reload(null,false);
+        Swal.fire('Usuarios',j.msg,j.icono||'error');
+    } catch(e) {Swal.fire('Error','No se pudo procesar la solicitud.','error');}
 }

@@ -1,5 +1,5 @@
 <?php
-/** Fase 4.2: configuración y cotización, sin modificar el carrito tradicional. */
+/** Configuración de micas para la ficha de producto. */
 if (!isset($productId, $price, $stock, $isAvailable, $ivcEscape)) { return; }
 ?>
 <section class="ivc42-entry" aria-label="Personalizar lentes oftálmicos">
@@ -9,7 +9,7 @@ if (!isset($productId, $price, $stock, $isAvailable, $ivcEscape)) { return; }
   <button type="button" id="ivc42Open" class="ivc42-entry-button" <?php echo $isAvailable ? '' : 'disabled'; ?>>
     Configurar mis micas <span aria-hidden="true">→</span>
   </button>
-  <small>El botón anterior agrega <strong>solo el armazón</strong>. Las micas se cotizan por separado durante esta fase.</small>
+  <small>¿Prefieres únicamente el armazón? Usa «Agregar al carrito». Para incluir micas, continúa con la configuración.</small>
 </section>
 <div class="ivc42-backdrop" id="ivc42Backdrop" hidden></div>
 <aside class="ivc42-drawer" id="ivc42Drawer" role="dialog" aria-modal="true" aria-labelledby="ivc42Title" aria-hidden="true" hidden
@@ -22,15 +22,25 @@ if (!isset($productId, $price, $stock, $isAvailable, $ivcEscape)) { return; }
       <h2 id="ivc42Title">Configura tus micas</h2></div>
     <button id="ivc42Close" class="ivc42-close" type="button" aria-label="Cerrar configurador">×</button>
   </header>
+  <nav class="ivc42-wizard-progress" aria-label="Pasos para configurar tus lentes">
+    <span id="ivc42Progress1" class="is-active" aria-current="step"><b>1</b> Elige tus micas</span>
+    <span class="ivc42-wizard-line" aria-hidden="true"></span>
+    <span id="ivc42Progress2"><b>2</b> Tu receta</span>
+    <span class="ivc42-wizard-line" aria-hidden="true"></span>
+    <span id="ivc42Progress3"><b>3</b> Precio y carrito</span>
+  </nav>
   <div class="ivc42-content" id="ivc42Content">
     <div class="ivc42-product-recap"><span>Armazón · <?php echo $ivcEscape($productName ?? 'Modelo seleccionado'); ?></span><strong>MXN $<?php echo number_format((float)$price, 2); ?></strong></div>
-    <section aria-labelledby="ivc42StepOne">
-      <div class="ivc42-section-title"><span class="ivc42-num">01</span><h3 id="ivc42StepOne">Elige tu tipo de lente</h3></div>
+    <section id="ivc42Panel1" class="ivc42-wizard-panel" aria-labelledby="ivc42StepOne">
+      <p class="ivc42-step-hint">Paso 1 de 3 · Selecciona el tipo de lente y las micas que prefieres.</p>
+      <div class="ivc42-section-title"><span class="ivc42-num">01</span><h3 id="ivc42StepOne" tabindex="-1">Elige tu tipo de lente</h3></div>
       <div id="ivc42Types" class="ivc42-types" role="group" aria-label="Tipo de lente"></div>
       <div id="ivc42Materials" class="ivc42-materials" role="radiogroup" aria-label="Material de micas"></div>
     </section>
-    <section aria-labelledby="ivc42StepTwo">
-      <div class="ivc42-section-title"><span class="ivc42-num">02</span><h3 id="ivc42StepTwo">¿Cómo proporcionarás tu graduación?</h3></div>
+    <section id="ivc42Panel2" class="ivc42-wizard-panel" aria-labelledby="ivc42StepTwo" hidden>
+      <p class="ivc42-step-hint">Paso 2 de 3 · Indícanos cómo proporcionarás tu graduación.</p>
+      <div class="ivc42-chosen-lens">Micas seleccionadas: <strong id="ivc42ChosenLens">—</strong></div>
+      <div class="ivc42-section-title"><span class="ivc42-num">02</span><h3 id="ivc42StepTwo" tabindex="-1">Tu receta o valoración</h3></div>
       <fieldset class="ivc42-recipe-options">
         <legend class="visually-hidden">Opciones de graduación</legend>
         <label><input type="radio" name="ivc42RecetaModo" value="ARCHIVO" checked> Adjuntar una receta nueva</label>
@@ -51,18 +61,32 @@ if (!isset($productId, $price, $stock, $isAvailable, $ivcEscape)) { return; }
       <p id="ivc42SpecialNotice" class="ivc42-special-notice" hidden></p>
       <p class="ivc42-external-warning"><strong>Recetas externas:</strong> la óptica revisará su legibilidad y compatibilidad antes de fabricar las micas. Si los datos proporcionados son incorrectos, podrá solicitarse una corrección o valoración adicional.</p>
     </section>
+    <section id="ivc42Panel3" class="ivc42-wizard-panel" aria-labelledby="ivc42StepThree" hidden>
+      <p class="ivc42-step-hint">Paso 3 de 3 · Consulta el precio y agrega tus lentes al carrito.</p>
+      <div class="ivc42-section-title"><span class="ivc42-num">03</span><h3 id="ivc42StepThree" tabindex="-1">Precio de tus lentes</h3></div>
+      <div class="ivc42-chosen-lens">Configuración: <strong id="ivc42FinalLens">—</strong></div>
     <section class="ivc42-quote" aria-labelledby="ivc42SummaryTitle">
-      <div class="ivc42-section-title"><span class="ivc42-num">03</span><h3 id="ivc42SummaryTitle">Resumen de referencia</h3></div>
+      <div class="ivc42-section-title"><span class="ivc42-num" aria-hidden="true">✓</span><h3 id="ivc42SummaryTitle">Resumen de tus lentes</h3></div>
       <div><span>Armazón(es)</span><strong id="ivc42FrameTotal">—</strong></div>
       <div><span>Par(es) de micas</span><strong id="ivc42LensTotal">—</strong></div>
-      <div class="ivc42-total"><span>Total estimado</span><strong id="ivc42Estimate">—</strong></div>
-      <p>Los precios vigentes provienen del catálogo de la óptica. La <strong>cotización definitiva la calculará PHP</strong> al guardar tu selección; es válida durante 15 minutos y no reserva inventario.</p>
+      <div class="ivc42-total"><span>Total de tus lentes</span><strong id="ivc42Estimate">—</strong></div>
+      <p>El importe se confirmará desde nuestra tienda. Las existencias se apartan al iniciar el pago.</p>
     </section>
-    <div id="ivc42Message" class="ivc42-message" role="status" aria-live="polite"></div>
     <div id="ivc42Result" class="ivc42-result" hidden></div>
+    </section>
   </div>
   <footer class="ivc42-footer">
-    <button type="button" id="ivc42Quote" class="ivc42-submit" disabled>Calcular y guardar cotización</button>
-    <p>Cotización informativa: <strong>no añade micas al carrito ni realiza cobros</strong>. La compra configurada estará disponible próximamente.</p>
+    <div id="ivc42Message" class="ivc42-message" role="status" aria-live="polite"></div>
+    <button type="button" id="ivc42Next" class="ivc42-submit" disabled>Continuar a mi receta →</button>
+    <div id="ivc42Step2Actions" class="ivc42-footer-actions" hidden>
+      <button type="button" id="ivc42Back" class="ivc42-secondary">← Cambiar mis micas</button>
+      <button type="button" id="ivc42ToPrice" class="ivc42-submit">Ver precio y agregar →</button>
+    </div>
+    <div id="ivc42Step3Actions" class="ivc42-footer-actions" hidden>
+      <button type="button" id="ivc42BackToRecipe" class="ivc42-secondary">← Volver a receta</button>
+      <button type="button" id="ivc42Quote" class="ivc42-submit" disabled>Agregar al carrito</button>
+      <button type="button" id="ivc42Retry" class="ivc42-secondary ivc42-retry" hidden>Reintentar precio</button>
+    </div>
+    <p id="ivc42FooterHelp">Primero elige tus micas. Después podrás agregar tu receta o solicitar una valoración.</p>
   </footer>
 </aside>

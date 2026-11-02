@@ -1,0 +1,14 @@
+/* Confirmación post-pago IVC. Estética azul/blanco, legible y responsive. */
+.ivc-confirmacion-modal {border-radius:22px!important;padding:1.7rem 1.4rem!important;box-shadow:0 25px 85px rgba(17,73,111,.21)!important;max-width:440px!important;font-family:inherit!important}
+.ivc-confirmacion-modal .swal2-title {color:#124566!important;font-size:1.55rem!important;line-height:1.25}
+.ivc-confirmacion-detalle {font-size:1rem;line-height:1.55;color:#456e88;text-align:center}
+.ivc-confirmacion-detalle p {margin:.4rem 0}
+.ivc-confirmacion-numero {color:#356582;font-size:.96rem}
+.ivc-confirmacion-total {font-size:2rem;font-weight:750;letter-spacing:-.03em;color:#126493;margin:.3rem 0 .7rem}
+.ivc-confirmacion-correo {font-size:.9rem;color:#527a94;padding:.6rem;border-radius:10px;background:#eff8fd}
+.ivc-confirmacion-aceptar {display:inline-block;border:0;border-radius:999px;background:#176ba3;color:white;padding:.75rem 2.6rem;font-weight:700;cursor:pointer;transition:background-color .18s ease,transform .18s ease}
+.ivc-confirmacion-aceptar:hover {background:#104d78;transform:translateY(-1px)}
+.ivc-confirmacion-aceptar:focus-visible {outline:3px solid #71bee5;outline-offset:3px}
+.ivc-confirmacion-fallback {position:fixed;z-index:2147483647;inset:0;display:grid;place-items:center;background:rgba(9,42,66,.58);padding:1.2rem}
+.ivc-confirmacion-fallback .ivc-confirmacion-modal {background:white;padding:2rem;border-radius:22px;box-shadow:0 25px 85px rgba(17,73,111,.21);text-align:center}
+@media (prefers-reduced-motion:reduce){.ivc-confirmacion-aceptar{transition:none}.ivc-confirmacion-aceptar:hover{transform:none}}

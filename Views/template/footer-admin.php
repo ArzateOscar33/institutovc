@@ -1,76 +1,72 @@
 </div>
         </div>
-        <div class="modal fade" id="modalAgendarNuevaCita" tab-index="-1" aria-labelledby="my-example-modal" aria-hidden="true" >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-info">
-                            <h5 class="modal-title" id="tituloModalAgendarNuevaCita">Agendar Nueva Cita</h5>
-                            <button type="button"   class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Formulario de nueva cita (mantiene IDs y nombres de las peticiones AJAX) -->
+        <div class="modal fade ivc-agenda-create-modal" id="modalAgendarNuevaCita" tabindex="-1"
+             aria-labelledby="tituloModalAgendarNuevaCita" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                <div class="modal-content ivc-cita-modal-shell">
+                    <div class="modal-header ivc-cita-modal-head">
+                        <div class="ivc-cita-modal-icon" aria-hidden="true"><i class="bx bx-calendar-plus"></i></div>
+                        <div class="ivc-cita-modal-heading">
+                            <span class="ivc-agenda-modal-kicker">AGENDA DE ATENCIÓN</span>
+                            <h2 class="modal-title" id="tituloModalAgendarNuevaCita">Agendar nueva cita</h2>
+                            <p class="ivc-cita-modal-desc">Programa una visita y registra los datos del paciente.</p>
                         </div>
-
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <form class="col-md-12 m-auto" method="POST" role="form" id="frmAgendarCita">
-                                        <div class="row">
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="fechaNuevaCita" name="fechaNuevaCita" type="date"  >
-                                                <label for="" class="form-label">Fecha De La Cita</label>
-                                                <div class="row">
-                                                    <div class="form-group col-md-6 mb-3">
-                                                        <label for="inputname">Apellido Paterno</label>
-                                                        <input type="text" class="form-control mt-1" name="iapPaterno" id="iapPaterno" placeholder="Introduzca su Apellido Paterno">
-                                                    </div>
-                                                    <div class="form-group col-md-6 mb-3">
-                                                        <label for="inputname">Apellido Materno</label>
-                                                        <input type="text" class="form-control mt-1" name="iapMaterno" id="iapMaterno" placeholder="Introduzca su Apellido Materno">
-                                                    </div>
-                                                    <div class="form-group col-md-6 mb-3">
-                                                        <label for="inputname">Nombre</label>
-                                                        <input type="text" class="form-control mt-1" name="iNombre" id="iNombre" placeholder="Introduzca su Nombre">
-                                                    </div>
-                                                    <div class="form-group col-md-6 mb-3">
-                                                        <label for="inputemail">Correo</label>
-                                                        <input type="email" class="form-control mt-1" name="iCorreo" id="iCorreo" placeholder="Introduzca su Coreo">
-                                                    </div>
-                                                    <div class="form-group col-md-6 mb-3">
-                                                        <label for="">Telefono</label>
-                                                        <input type="text" class="form-control mt-1" name="iTelefono" id="iTelefono" placeholder="Introduzca su Num. Telefono">
-                                                    </div>
-                                                    <div class="form-group col-md-6 mb-3">
-                                                        <label for="fechaCita">Selecciona el Horario de tu Cita</label>
-
-
-                                                        <select class="form-select" aria-label="Default select example" name="selectHorarios" id="selectHorarios">
-
-                                                            <option value="">Selecciona un horario</option>
-
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-12 mb-3">
-                                                    <label for="">Comentarios</label>
-                                                    <textarea class="form-control " name="comentarios" id="comentariosAgendarCitaNueva" placeholder="Comentarios u Observaciones"></textarea>
-
-                                                </div>
-
-                                                <button type="submit" id="btnAgendar" name="btnAgendar" class="btn btn-success btn-lg px-3">Agendar Cita</button>
-
-                                    </form>
-
+                        <button type="button" class="btn-close ivc-cita-modal-close" data-bs-dismiss="modal" aria-label="Cerrar ventana"></button>
+                    </div>
+                    <form method="POST" id="frmAgendarCita" autocomplete="off">
+                        <div class="modal-body ivc-cita-modal-body">
+                            <div class="ivc-cita-section-title"><i class="bx bx-calendar-event" aria-hidden="true"></i> 1. Fecha y horario</div>
+                            <div class="ivc-cita-form-grid">
+                                <div class="ivc-agenda-field ivc-cita-field">
+                                    <label for="fechaNuevaCita">Fecha de la cita</label>
+                                    <input type="date" class="form-control" id="fechaNuevaCita" name="fechaNuevaCita">
+                                </div>
+                                <div class="ivc-agenda-field ivc-cita-field">
+                                    <label for="selectHorarios">Horario disponible</label>
+                                    <select class="form-select" name="selectHorarios" id="selectHorarios">
+                                        <option value="">Selecciona un horario</option>
+                                    </select>
                                 </div>
                             </div>
+                            <p class="ivc-cita-zone-note"><i class="bx bx-info-circle" aria-hidden="true"></i> Los horarios corresponden a Tijuana, Baja California.</p>
+                            <div class="ivc-cita-section-title"><i class="bx bx-user" aria-hidden="true"></i> 2. Datos del paciente</div>
+                            <div class="ivc-cita-form-grid">
+                                <div class="ivc-agenda-field ivc-cita-field">
+                                    <label for="iNombre">Nombre</label>
+                                    <input class="form-control" type="text" name="iNombre" id="iNombre" placeholder="Nombre del paciente" autocomplete="given-name">
+                                </div>
+                                <div class="ivc-agenda-field ivc-cita-field">
+                                    <label for="iapPaterno">Apellido paterno</label>
+                                    <input class="form-control" type="text" name="iapPaterno" id="iapPaterno" placeholder="Apellido paterno" autocomplete="family-name">
+                                </div>
+                                <div class="ivc-agenda-field ivc-cita-field">
+                                    <label for="iapMaterno">Apellido materno</label>
+                                    <input class="form-control" type="text" name="iapMaterno" id="iapMaterno" placeholder="Apellido materno">
+                                </div>
+                                <div class="ivc-agenda-field ivc-cita-field">
+                                    <label for="iTelefono">Teléfono</label>
+                                    <input class="form-control" type="tel" name="iTelefono" id="iTelefono" placeholder="Número de contacto" autocomplete="tel">
+                                </div>
+                                <div class="ivc-agenda-field ivc-cita-field ivc-cita-field-full">
+                                    <label for="iCorreo">Correo electrónico</label>
+                                    <input class="form-control" type="email" name="iCorreo" id="iCorreo" placeholder="paciente@ejemplo.com" autocomplete="email">
+                                </div>
+                            </div>
+                            <div class="ivc-cita-section-title"><i class="bx bx-notepad" aria-hidden="true"></i> 3. Información adicional <span class="ivc-cita-optional">Opcional</span></div>
+                            <div class="ivc-agenda-field ivc-cita-field ivc-cita-field-full">
+                                <label for="comentariosAgendarCitaNueva">Comentarios u observaciones</label>
+                                <textarea class="form-control" name="comentarios" id="comentariosAgendarCitaNueva" rows="3" placeholder="Información que el personal deba conocer"></textarea>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <div class="modal-footer ivc-cita-modal-actions">
+                            <button type="button" class="btn ivc-cita-btn-secondary" data-bs-dismiss="modal">Volver</button>
+                            <button type="submit" id="btnAgendar" name="btnAgendar" class="btn ivc-cita-btn-primary"><i class="bx bx-check-circle" aria-hidden="true"></i> Guardar cita</button>
                         </div>
-
-
-                    </div>
+                    </form>
                 </div>
             </div>
+        </div>
         <!--end page wrapper -->
         <!--start overlay-->
         <div class="overlay toggle-icon"></div>
@@ -195,6 +191,19 @@
 
     <script src="<?php echo BASE_URL; ?>assets/js/all.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
+    <?php
+    // Solo para UX: el backend siempre valida el permiso vigente en MySQL.
+    $ivcPermisosCliente = [];
+    foreach (RolesAcceso::catalogo() as $ivcCodigo => $_ivcEtiqueta) {
+        $ivcPermisosCliente[$ivcCodigo] = RolesAcceso::permiso($ivcCodigo);
+    }
+    $ivcPermisosCliente['roles.gestionar'] = RolesAcceso::permiso('roles.gestionar');
+    ?>
+    <script>
+      window.IVC_PERMISOS_ADMIN = <?php echo json_encode($ivcPermisosCliente, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+      window.IVC_APP_BASE = <?php echo json_encode(BASE_URL, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+    </script>
+    <script src="<?php echo BASE_URL; ?>assets/js/ivc-alertas-permisos-v4942.js?v=4942"></script>
 <script>
   const base_url = '<?php echo BASE_URL; ?>';
 </script>

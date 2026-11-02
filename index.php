@@ -20,6 +20,9 @@ if (!empty($array[2])) {
 }
 require_once 'Config/App/Autoload.php';
 require_once 'Config/Helpers.php';
+// Autorización antes de instanciar controladores administrativos.
+require_once 'Config/App/RolesAcceso.php';
+RolesAcceso::aplicar($controller, $metodo);
 $dirControllers = "Controllers/" . $controller . ".php";
 if (file_exists($dirControllers)) {
     require_once $dirControllers;

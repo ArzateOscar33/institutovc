@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     frm.addEventListener("submit", function(e) {
         e.preventDefault();
         if (email.value == "" || clave.value == "") {
-            alertas("todo los campos son requeridos", "warning");
+            alertas("Ingresa tu correo y contraseña.", "warning");
         } else {
             let data = new FormData(this);
             const url = base_url + "admin/validar";
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     const res = JSON.parse(this.responseText);
                     if (res.icono == 'success') {
                         setTimeout(() => {
-                            window.location = base_url + 'admin/home';
+                            window.location = base_url + (res.destino || (res.rol === 'VENDEDOR' ? 'citas' : 'admin/home'));
                         }, 2000);
                     }
                     alertas(res.msg, res.icono);
@@ -29,5 +29,5 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function alertas(msg, icono) {
-    Swal.fire("Aviso?", msg.toUpperCase(), icono);
+    Swal.fire("Acceso al sistema", msg, icono);
 }

@@ -1,0 +1,127 @@
+/* Instituto Visual California — Agenda administrativa */
+.ivc-agenda-admin{--ivc-blue:#176d9d;--ivc-dark:#123e5b;--ivc-line:#dce9f3;max-width:1500px;margin:0 auto;padding:26px 22px 42px;color:var(--ivc-dark)}
+.ivc-agenda-head{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:23px;background:linear-gradient(115deg,#eef8fd,#fff);border:1px solid var(--ivc-line);border-radius:20px;padding:27px 31px}
+.ivc-agenda-kicker{color:#1679b4;font-size:12px;letter-spacing:.12em;font-weight:800;margin-bottom:8px}
+.ivc-agenda-head h1{font-size:29px;font-weight:800;margin:0 0 6px}.ivc-agenda-head p{color:#65859d;margin:0}
+.ivc-agenda-head-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.ivc-agenda-today{color:#58798f;font-size:13px;background:white;padding:10px 14px;border-radius:10px;border:1px solid #deebf3}
+.ivc-agenda-add{background:#176d9d;color:white;border:0;border-radius:11px;padding:12px 18px;font-weight:700;box-shadow:0 8px 18px #176d9d24;transition:background .2s,transform .2s,box-shadow .2s}.ivc-agenda-add:hover{background:#0e5077;transform:translateY(-2px);box-shadow:0 11px 24px #176d9d38}
+.ivc-agenda-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.ivc-agenda-insights article{background:#fff;border:1px solid var(--ivc-line);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.ivc-agenda-insights article:hover{transform:translateY(-2px);border-color:#b3d8ee;box-shadow:0 12px 24px #264d6b10}
+.ivc-agenda-insight-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:12px;font-size:23px}.ivc-agenda-insight-icon.blue{color:#177bb0;background:#e5f4fd}.ivc-agenda-insight-icon.green{color:#158061;background:#e7f8f0}.ivc-agenda-insight-icon.amber{color:#b27a18;background:#fff5de}
+.ivc-agenda-insights small{display:block;color:#6b8395;font-weight:600}.ivc-agenda-insights strong{display:block;font-size:27px;font-weight:800;line-height:1.25}
+.ivc-agenda-card{background:white;border:1px solid var(--ivc-line);border-radius:19px;padding:24px;box-shadow:0 6px 26px #173a5a09}
+.ivc-agenda-card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.ivc-agenda-card-head h2{font-size:20px;font-weight:800;margin:0 0 5px}.ivc-agenda-card-head p{color:#718b9d;margin:0;font-size:14px}
+.ivc-agenda-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:#5e7b8d}.ivc-agenda-legend span{display:inline-flex;align-items:center;gap:6px}.ivc-agenda-legend .dot{height:9px;width:9px;border-radius:50%;display:inline-block}.ivc-agenda-legend .confirmed{background:#35a77e}.ivc-agenda-legend .pending{background:#e3a44a}
+.ivc-agenda-admin .fc-toolbar-title{font-weight:800!important;color:#154665;font-size:21px!important;text-transform:capitalize}
+.ivc-agenda-admin .fc-button-primary{background:#eef6fb!important;color:#1b638e!important;border:1px solid #d0e5f2!important;border-radius:8px!important;box-shadow:none!important}
+.ivc-agenda-admin .fc-button-primary:hover,.ivc-agenda-admin .fc-button-active{background:#186d9b!important;color:#fff!important}
+.ivc-agenda-admin .fc-daygrid-day-frame{transition:background .18s}.ivc-agenda-admin .fc-daygrid-day-frame:hover{background:#f4faff}.ivc-agenda-admin .fc-event{border-radius:6px!important;padding:2px 4px;cursor:pointer;transition:filter .18s,transform .18s}.ivc-agenda-admin .fc-event:hover{filter:brightness(.93);transform:translateY(-1px)}
+.ivc-agenda-admin .fc-theme-standard td,.ivc-agenda-admin .fc-theme-standard th{border-color:#e3edf5}.ivc-agenda-admin .fc .fc-day-today{background:#f1faff!important}
+.ivc-agenda-modal .modal-content{border:1px solid #d9e9f3;border-radius:19px;overflow:hidden;box-shadow:0 20px 65px #16446324}.ivc-agenda-modal .modal-header{padding:21px 26px;background:#f0f8fc;border:0}.ivc-agenda-modal-kicker{font-size:11px;color:#1677aa;font-weight:800;letter-spacing:.1em}.ivc-agenda-modal .modal-title{font-size:21px;font-weight:800;color:#174765}.ivc-agenda-modal .modal-body{padding:24px 26px}.ivc-agenda-modal-status{background:#e9f8f2;color:#187c5f;border-radius:10px;padding:10px 14px;font-weight:700;margin-bottom:17px}.ivc-agenda-modal .modal-footer{padding:16px 26px;border-color:#e1edf5}.ivc-agenda-field{margin-bottom:16px}.ivc-agenda-field label{display:block;font-weight:700;color:#426780;margin-bottom:7px;font-size:13px}.ivc-agenda-field input{border-radius:10px;background:#f7fbfe;color:#244d65}
+.ivc-cita-swal{border-radius:18px!important}
+@media(max-width:850px){.ivc-agenda-head{align-items:flex-start;flex-direction:column;padding:24px}.ivc-agenda-insights{grid-template-columns:1fr 1fr}.ivc-agenda-card-head{flex-direction:column;align-items:flex-start}}
+@media(max-width:560px){.ivc-agenda-admin{padding:14px 10px 27px}.ivc-agenda-head h1{font-size:24px}.ivc-agenda-insights{grid-template-columns:1fr}.ivc-agenda-card{padding:12px}.ivc-agenda-card .fc-toolbar{flex-direction:column;gap:8px}.ivc-agenda-head-actions{width:100%}}
+@media(prefers-reduced-motion:reduce){.ivc-agenda-admin *{transition:none!important;animation:none!important}}
+
+/* ===== MODALES DE AGENDA v4.9.2-B.1 ===== */
+.ivc-agenda-modal, .ivc-agenda-create-modal { --ivc-modal-ink:#153c58; --ivc-modal-blue:#176d9d; --ivc-modal-muted:#65849a; }
+.ivc-agenda-modal .modal-dialog, .ivc-agenda-create-modal .modal-dialog { max-width:min(760px,calc(100vw - 28px)); }
+.ivc-agenda-modal .ivc-cita-modal-shell, .ivc-agenda-create-modal .ivc-cita-modal-shell {
+  border:1px solid #d8e9f3;border-radius:23px;overflow:hidden;
+  box-shadow:0 28px 90px rgba(18,65,100,.24);background:white;
+}
+.ivc-agenda-modal .ivc-cita-modal-head, .ivc-agenda-create-modal .ivc-cita-modal-head {
+  display:flex;align-items:center;gap:16px;position:relative;padding:25px 29px;
+  background:linear-gradient(115deg,#eaf6fd 0%,#f6fbff 58%,#fff 100%);
+  border-bottom:1px solid #deedf6;
+}
+.ivc-agenda-modal .ivc-cita-modal-head::after, .ivc-agenda-create-modal .ivc-cita-modal-head::after {
+  content:"";position:absolute;left:0;bottom:0;width:105px;height:3px;
+  background:linear-gradient(90deg,#1a79b3,#6ec3e7);border-radius:0 5px 5px 0;
+}
+.ivc-cita-modal-icon {height:54px;width:54px;flex:0 0 54px;border-radius:16px;
+  display:grid;place-items:center;background:#fff;color:#1976ad;font-size:29px;
+  box-shadow:0 8px 25px rgba(24,110,160,.12);border:1px solid #dceef7;
+}
+.ivc-agenda-modal .ivc-cita-modal-heading, .ivc-agenda-create-modal .ivc-cita-modal-heading {flex:1;min-width:0;}
+.ivc-agenda-modal .ivc-agenda-modal-kicker,.ivc-agenda-create-modal .ivc-agenda-modal-kicker {letter-spacing:.14em;color:#2986b4;font-size:10px;font-weight:800;}
+.ivc-agenda-modal .modal-title,.ivc-agenda-create-modal .modal-title {font-size:23px;line-height:1.24;font-weight:800;color:#123e5b;margin:3px 0 5px;}
+.ivc-cita-modal-desc {margin:0;font-size:13px;color:#68849a;line-height:1.45;}
+.ivc-agenda-modal .ivc-cita-modal-close,.ivc-agenda-create-modal .ivc-cita-modal-close {align-self:flex-start;flex:0 0 auto;opacity:.65;transition:opacity .2s,transform .2s;}
+.ivc-agenda-modal .ivc-cita-modal-close:hover,.ivc-agenda-create-modal .ivc-cita-modal-close:hover{opacity:1;transform:rotate(90deg);}
+.ivc-agenda-modal .ivc-cita-modal-body,.ivc-agenda-create-modal .ivc-cita-modal-body {padding:24px 29px 13px;}
+.ivc-cita-status-row {display:flex;align-items:center;justify-content:space-between;gap:14px;
+  border:1px solid #e2ecf4;background:#f8fbfe;border-radius:15px;padding:14px 16px;margin-bottom:22px;}
+.ivc-cita-status-heading {display:flex;gap:12px;align-items:center;color:#234d67;}
+.ivc-cita-section-icon {display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:#e8f3fa;color:#1e80b2;font-size:21px;}
+.ivc-cita-status-heading strong {display:block;font-weight:800;font-size:14px;}
+.ivc-cita-status-heading small {display:block;font-size:12px;color:#7690a2;}
+.ivc-agenda-modal .ivc-agenda-modal-status {display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;border:1px solid transparent;
+  border-radius:999px;font-size:12px;font-weight:800;line-height:1.3;padding:8px 12px;margin:0;}
+.ivc-agenda-modal .ivc-agenda-modal-status::before {content:"";display:inline-block;width:8px;height:8px;background:currentColor;border-radius:50%;}
+.ivc-agenda-modal .ivc-agenda-modal-status.is-confirmed {color:#147954;background:#e5f7ef;border-color:#b7e7d2;}
+.ivc-agenda-modal .ivc-agenda-modal-status.is-pending {color:#a06b16;background:#fff5de;border-color:#f8dfac;}
+.ivc-cita-section-title {display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;color:#244f6b;
+  border-bottom:1px solid #e5eef5;padding-bottom:10px;margin:20px 0 16px;}
+.ivc-cita-section-title:first-of-type {margin-top:0;}
+.ivc-cita-section-title i {font-size:19px;color:#2885b6;}
+.ivc-cita-optional {margin-left:auto;font-size:11px;font-weight:600;color:#829bad;}
+.ivc-cita-detail-grid, .ivc-cita-form-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;}
+.ivc-cita-detail-grid-person {grid-template-columns:minmax(0,2fr) minmax(140px,1fr);}
+.ivc-agenda-modal .ivc-cita-field,.ivc-agenda-create-modal .ivc-cita-field {margin:0;min-width:0;}
+.ivc-agenda-modal .ivc-cita-field label,.ivc-agenda-create-modal .ivc-cita-field label{display:block;font-size:12px;font-weight:750;color:#56738a;margin:0 0 7px;}
+.ivc-cita-field-full {grid-column:1/-1;}
+.ivc-cita-input-icon {position:relative;}
+.ivc-cita-input-icon > i {position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:20px;color:#69a5c5;pointer-events:none;z-index:1;}
+.ivc-agenda-modal .ivc-cita-input-icon .form-control {padding-left:41px;}
+.ivc-agenda-modal .ivc-cita-field .form-control,.ivc-agenda-create-modal .ivc-cita-field .form-control,
+.ivc-agenda-create-modal .ivc-cita-field .form-select {
+  min-height:45px;border-radius:11px;border:1px solid #d7e6ef;
+  color:var(--ivc-modal-ink);background:#f9fcff;font-size:14px;font-weight:600;
+  box-shadow:none;transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.ivc-agenda-modal .ivc-cita-field .form-control[readonly] {background:#f5f9fc;color:#244c65;cursor:default;}
+.ivc-agenda-create-modal .ivc-cita-field .form-control:focus,.ivc-agenda-create-modal .ivc-cita-field .form-select:focus {
+  border-color:#64b0d8;background:#fff;box-shadow:0 0 0 3px rgba(51,151,203,.12);
+}
+.ivc-agenda-create-modal .ivc-cita-field textarea.form-control {min-height:95px;resize:vertical;padding-top:12px;}
+.ivc-cita-zone-note {display:flex;align-items:flex-start;gap:7px;color:#708a9d;background:#f2f8fc;border-radius:10px;
+  font-size:12px;padding:11px 13px;margin:14px 0 3px;line-height:1.4;}
+.ivc-cita-zone-note i {font-size:17px;color:#2a8ab9;flex:0 0 auto;}
+.ivc-agenda-modal .ivc-cita-modal-actions,.ivc-agenda-create-modal .ivc-cita-modal-actions {
+  gap:10px;padding:18px 29px;background:#fbfdff;border-top:1px solid #e2ecf5;
+  justify-content:space-between;flex-wrap:wrap;
+}
+.ivc-cita-modal-actions .btn {display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;
+  min-height:43px;padding:10px 17px;font-size:13px;font-weight:800;border:1px solid transparent;
+  transition:transform .18s,background .18s,box-shadow .18s,border-color .18s;}
+.ivc-cita-modal-actions .btn i{font-size:18px;}
+.ivc-cita-btn-secondary {background:#fff;color:#55738a;border-color:#d7e5ed!important;}
+.ivc-cita-btn-secondary:hover {background:#edf6fb;border-color:#b7d7e7!important;color:#1d648f;transform:translateY(-1px);}
+.ivc-cita-btn-primary {background:#176d9d;color:#fff;border-color:#176d9d!important;box-shadow:0 6px 15px rgba(23,109,157,.17);}
+.ivc-cita-btn-primary:hover,.ivc-cita-btn-primary:focus {background:#11567e;color:#fff;transform:translateY(-1px);box-shadow:0 8px 20px rgba(23,109,157,.25);}
+.ivc-cita-btn-danger {background:#fff5f4;color:#b34241;border-color:#f2d2d0!important;}
+.ivc-cita-btn-danger:hover {background:#a93938;color:#fff;transform:translateY(-1px);box-shadow:0 7px 14px rgba(180,55,55,.17);}
+.ivc-cita-modal-actions .btn:focus-visible,.ivc-cita-modal-close:focus-visible {outline:3px solid #7dc4e9;outline-offset:2px;}
+@media(max-width:610px){
+ .ivc-agenda-modal .modal-dialog,.ivc-agenda-create-modal .modal-dialog{max-width:calc(100vw - 16px);margin:8px auto;}
+ .ivc-agenda-modal .ivc-cita-modal-shell,.ivc-agenda-create-modal .ivc-cita-modal-shell{border-radius:16px;}
+ .ivc-agenda-modal .ivc-cita-modal-head,.ivc-agenda-create-modal .ivc-cita-modal-head{padding:17px 15px;gap:11px;}
+ .ivc-cita-modal-icon {height:42px;width:42px;flex-basis:42px;font-size:23px;border-radius:11px;}
+ .ivc-agenda-modal .modal-title,.ivc-agenda-create-modal .modal-title {font-size:19px;}
+ .ivc-cita-modal-desc {font-size:12px;}
+ .ivc-agenda-modal .ivc-cita-modal-body,.ivc-agenda-create-modal .ivc-cita-modal-body{padding:15px;}
+ .ivc-cita-status-row {flex-direction:column;align-items:stretch;gap:12px;}
+ .ivc-agenda-modal .ivc-agenda-modal-status {align-self:flex-start;}
+ .ivc-cita-detail-grid,.ivc-cita-detail-grid-person,.ivc-cita-form-grid {grid-template-columns:1fr;}
+ .ivc-agenda-modal .ivc-cita-modal-actions,.ivc-agenda-create-modal .ivc-cita-modal-actions {padding:13px 15px;}
+ .ivc-cita-modal-actions .btn {flex:1 1 100%;}
+}
+@media(prefers-reduced-motion:reduce){.ivc-agenda-modal *, .ivc-agenda-create-modal * {animation:none!important;transition:none!important;}}
+
+/* Modal forms wrap the body: preserve a scrollable body and visible actions. */
+.ivc-agenda-modal .ivc-cita-modal-shell,.ivc-agenda-create-modal .ivc-cita-modal-shell{display:flex;flex-direction:column;max-height:calc(100dvh - 32px);}
+.ivc-agenda-modal .ivc-cita-modal-shell > form,.ivc-agenda-create-modal .ivc-cita-modal-shell > form{display:flex;flex:1 1 auto;min-height:0;flex-direction:column;overflow:hidden;}
+.ivc-agenda-modal .ivc-cita-modal-body,.ivc-agenda-create-modal .ivc-cita-modal-body{overflow-y:auto;flex:1 1 auto;min-height:0;}
+.ivc-agenda-modal .ivc-cita-modal-actions,.ivc-agenda-create-modal .ivc-cita-modal-actions{flex:0 0 auto;}

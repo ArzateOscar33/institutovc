@@ -16,3 +16,8 @@
 .ivc46-recover-btn:disabled{opacity:.6;cursor:wait}
 .ivc46-recover-ok{color:#146c43;font-weight:600}
 .ivc46-recover-alert{color:#9a2525;font-weight:600}
+
+/* Consulta de una compra solo después de una confirmación incierta. */
+.ivc45-recheck{margin-top:12px;display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border:1px solid #8fbed9;border-radius:9px;background:#fff;color:#175b86;font-weight:750;font-size:13px;cursor:pointer}
+.ivc45-recheck:hover{background:#eff8fd}
+.ivc45-recheck:disabled{opacity:.55;cursor:wait}

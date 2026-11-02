@@ -51,7 +51,7 @@ foreach (($data['imagenes'] ?? []) as $file) {
 $related = is_array($data['relacionados'] ?? null) ? $data['relacionados'] : [];
 ?>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-detalle-v7.css?v=7.0.0">
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-configurador-micas-v42.css?v=4.2.0">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/ivc-configurador-micas-v42.css?v=4.9.1ux3">
 <main id="ivc-product-detail" class="ivcd-product-page">
   <div class="container ivcd-container">
     <nav class="ivcd-breadcrumb" aria-label="Ruta de navegación">
@@ -195,5 +195,5 @@ $related = is_array($data['relacionados'] ?? null) ? $data['relacionados'] : [];
 <!-- El controlador de compra original permanece intacto. -->
 <script src="<?php echo BASE_URL; ?>assets/js/modulos/detail.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/modulos/ivc-detalle-v7.js?v=7.0.0"></script>
-<script src="<?php echo BASE_URL; ?>assets/js/ivc-configurador-micas-v42.js?v=4.3.0"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/ivc-configurador-micas-v42.js?v=4.9.1ux3"></script>
 <?php include_once 'Views/template/footer.php'; ?>

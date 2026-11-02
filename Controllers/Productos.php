@@ -4,7 +4,7 @@ class Productos extends Controller
     public function __construct()
     {
         parent::__construct();
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
         if (empty($_SESSION['nombre_usuario'])) {
             header('Location: '. BASE_URL . 'admin');
             exit;
@@ -22,9 +22,9 @@ class Productos extends Controller
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['imagen'] = '<img class="img-thumbnail" src="' . $data[$i]['imagen'] . '" alt="' . $data[$i]['nombre'] . '" width="50">';
             $data[$i]['accion'] = '<div class="d-flex">
-            <button class="btn btn-success" type="button" onclick="agregarImagenes(' . $data[$i]['id'] . ')"><i class="fas fa-images"></i></button>
-            <button class="btn btn-primary" type="button" onclick="editPro(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="eliminarPro(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-success" type="button" data-ivc-permiso="productos.administrar" onclick="agregarImagenes(' . $data[$i]['id'] . ')"><i class="fas fa-images"></i></button>
+            <button class="btn btn-primary" type="button" data-ivc-permiso="productos.administrar" onclick="editPro(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-danger" type="button" data-ivc-permiso="productos.administrar" onclick="eliminarPro(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
         </div>';
         }
         echo json_encode($data);

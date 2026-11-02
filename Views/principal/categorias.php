@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="shop-single.html" class="h3 text-decoration-none"><?php echo $producto['nombre'];?></a>
+                                <a href="<?php echo BASE_URL . 'principal/detail/' . (int) $producto['id']; ?>" class="h3 text-decoration-none"><?php echo htmlspecialchars((string) $producto['nombre'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?></a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     
                                     <li class="pt-2">

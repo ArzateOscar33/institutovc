@@ -3,6 +3,7 @@
 require_once 'Config/App/PayPalSandboxClient.php';
 require_once 'Config/App/RegistroPedidos.php';
 require_once 'Config/App/ReservasInventario.php';
+require_once 'Config/App/CorreoPedidos.php';
 class Pagos extends Controller
 {
     public function __construct()
@@ -115,6 +116,20 @@ class Pagos extends Controller
         try {
             $servicio=new RegistroPedidos();
             $resultado=$servicio->registrar($idCotizacion,$cliente);
+            // Notificación independiente de la venta: jamás revertir o repetir el cobro por SMTP.
+            $correoEstado = 'NO_PROGRAMADO';
+            try {
+                $notificador = new CorreoPedidos();
+                // Las compras anteriores a esta fase no reciben un correo retroactivo
+                // por el mero hecho de consultar una captura ya conciliada.
+                if (!$resultado['ya_existia']) {
+                    $notificador->encolar((int)$resultado['pedido_id']);
+                }
+                $correoEstado = $notificador->procesarPedido((int)$resultado['pedido_id']);
+            } catch (Throwable $emailError) {
+                error_log('[IVC] Correo pedido #'.(int)$resultado['pedido_id'].': '.$emailError->getMessage());
+                $correoEstado = 'PENDIENTE';
+            }
             $this->json(true, $resultado['ya_existia']
                 ? 'Pago y pedido ya confirmados. No se descontó inventario de nuevo.'
                 : 'Pago Sandbox confirmado. Pedido registrado correctamente.', [
@@ -123,6 +138,7 @@ class Pagos extends Controller
                     'pedido_creado'=>true,'id_pedido'=>$resultado['pedido_id'],
                     'ya_registrada'=>$resultado['ya_existia'], 'recuperacion'=>$repetida,
                     'requiere_valoracion'=>$resultado['requiere_valoracion'],
+                    'correo_estado'=>$correoEstado,
                 ]);
         } catch (Throwable $e) {
             // PayPal ya capturó el dinero. La BD conserva la captura para posterior recuperación.

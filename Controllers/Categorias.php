@@ -4,7 +4,7 @@ class Categorias extends Controller
     public function __construct()
     {
         parent::__construct();
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
         if (empty($_SESSION['nombre_usuario'])) {
             header('Location: '. BASE_URL . 'admin');
             exit;
@@ -21,8 +21,8 @@ class Categorias extends Controller
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['imagen'] = '<img class="img-thumbnail" src="' . $data[$i]['imagen'].'" alt="'.$data[$i]['categoria'].'" width="50">';
             $data[$i]['accion'] = '<div class="d-flex">
-            <button class="btn btn-primary" type="button" onclick="editCat(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="eliminarCat(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-primary" type="button" data-ivc-permiso="categorias.administrar" onclick="editCat(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-danger" type="button" data-ivc-permiso="categorias.administrar" onclick="eliminarCat(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
         </div>';
         }
         echo json_encode($data);
