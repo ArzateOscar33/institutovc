@@ -67,6 +67,7 @@
             <input class="form-control mb-3" type="email" id="correoLogin" name="correoLogin" placeholder="correo@ejemplo.com" autocomplete="email">
             <label for="claveLogin" class="form-label">Contraseña</label>
             <input class="form-control mb-3" type="password" id="claveLogin" name="claveLogin" placeholder="Tu contraseña" autocomplete="current-password">
+            <p class="small"><a href="<?php echo htmlspecialchars(BASE_URL,ENT_QUOTES,'UTF-8'); ?>activacion">¿Compraste en la óptica? Activa tu cuenta web</a></p>
             <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-3"><a href="#" id="btnRegister">Crear una cuenta</a><button type="button" class="btn ivc-btn-primary" id="login">Iniciar sesión</button></div>
           </div>
           <div class="d-none" id="frmRegister">

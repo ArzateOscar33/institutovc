@@ -1,0 +1,10 @@
+{
+  "Config/App/RolesAcceso.php": "645995cabdcf832173487064e680b16d3ab7899e0e4264509109240f5c218fb1",
+  "Controllers/Pos.php": "6e1249e15fefc883dbaafbfb35fccf22f26aded2f6fc778012536c1f0d919d36",
+  "Models/PosPostventa.php": "624c7df866a3802c8b2fd5b00d535a11f1592d91191e38cd38c3d40026a5287a",
+  "Config/App/PosCobros.php": "d42d25fe3e675e092aadc3a86a1e208130884b00829284ba8b65f76b51657006",
+  "Models/PosModel.php": "4248cb031af421e76bdc4ac772b1cd9ff007d65bdf3bf165032dae5b7cc1e801",
+  "Config/App/PosClientes.php": "79270aee2901784fcb5f2c1b8168776e00ede3df3b51c1b014393af47a48fb3e",
+  "Config/App/ActivacionClientesPos.php": "eabaf1eb515c20fc9b604e5a9583b6844cf5b0895ca5e86c0ed80c6cda1fd656",
+  "Models/RecetasAdminModel.php": "ea335a709e95058dc5b6e689a5a36a2a049070acb976086a09bc6d66e490eb97"
+}

@@ -16,7 +16,7 @@
     const q=el('rxSearch').value.trim().toLowerCase(), st=el('rxState').value;
     const showing=items.filter(x=>(!st||x.estado_revision===st)&&(!q||[x.id_receta,x.cliente,x.correo].join(' ').toLowerCase().includes(q)));
     for(const r of showing){
-      const tr=target.insertRow();cell(tr,'#'+r.id_receta);cell(tr,`${r.cliente} · ${r.correo}`);cell(tr,r.modalidad);cell(tr,r.creado_en);cell(tr,label(r.estado_revision));
+      const tr=target.insertRow();cell(tr,'#'+r.id_receta);cell(tr,`${r.cliente} · ${r.correo || 'Sin correo'}`);cell(tr,r.modalidad);cell(tr,r.creado_en);cell(tr,label(r.estado_revision));
       const td=tr.insertCell();const btn=document.createElement('button');btn.type='button';btn.className='btn btn-sm rx-btn';btn.textContent='Revisar';btn.addEventListener('click',()=>openDetail(r.id_receta));td.append(btn);
     }
     if(!showing.length){const tr=target.insertRow();const td=tr.insertCell();td.colSpan=6;td.textContent='No se encontraron recetas.';}
@@ -28,13 +28,13 @@
   async function openDetail(id){try{
     const d=await api('detalle/'+encodeURIComponent(id));current=d.receta;
     el('rxModalTitle').textContent='Receta #'+id+' · '+label(current.estado_revision);
-    const target=el('rxModalInfo');target.replaceChildren();row(target,'Cliente',current.cliente+' · '+current.correo);row(target,'Estado',label(current.estado_revision));row(target,'Fecha de receta',current.fecha_receta);row(target,'DP (mm)',current.distancia_pupilar_total_mm);row(target,'Observaciones del cliente',current.observaciones_cliente);
+    const target=el('rxModalInfo');target.replaceChildren();row(target,'Cliente',current.cliente+' · '+(current.correo || 'Sin correo'));row(target,'Estado',label(current.estado_revision));row(target,'Fecha de receta',current.fecha_receta);row(target,'DP (mm)',current.distancia_pupilar_total_mm);row(target,'Observaciones del cliente',current.observaciones_cliente);
     for(const eye of current.ojos){const div=document.createElement('div');div.className='rx-eye';row(div,eye.ojo,'ESF '+(eye.esfera??'—')+' / CIL '+(eye.cilindro??'—')+' / EJE '+(eye.eje??'—')+' / ADD '+(eye.adicion??'—'));target.append(div);}
     const visor=document.createElement('div');visor.className='mt-3';target.append(visor);
     if(window.IVCRecetaPreview){window.IVCRecetaPreview.montar(visor,current.archivos||[],base);}
     else {row(visor,'Documento','No se pudo cargar el visor; actualiza el navegador.');}
     row(target,'Observación de revisión',current.observaciones_revision);
-    el('rxReviewPane').hidden=current.estado_revision!=='PENDIENTE';el('rxReviewNotes').value='';modal?.show();
+    el('rxReviewPane').hidden=current.estado_revision!=='PENDIENTE' || el('rxReviewPane').dataset.puedeRevisar==='0';el('rxReviewNotes').value='';modal?.show();
   }catch(e){setMessage(e.message);}}
   async function review(estado){if(!current)return;const nota=el('rxReviewNotes').value.trim();if(estado!=='APROBADA'&&!nota){setMessage('Escribe el motivo de la corrección o rechazo.');return;}
     const fd=new FormData();fd.append('csrf',el('rxCsrfAdmin').value);fd.append('id_receta',current.id_receta);fd.append('estado',estado);fd.append('observaciones',nota);

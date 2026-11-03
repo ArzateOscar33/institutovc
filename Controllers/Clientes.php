@@ -123,7 +123,8 @@ class Clientes extends Controller
                 $clave = $_POST['claveLogin'];
                 $verificar = $this->model->getVerificar($correo);
                 if (!empty($verificar)) {
-                    if (password_verify($clave, $verificar['clave'])) {
+                    if (is_string($verificar['clave'] ?? null) && $verificar['clave'] !== '' && password_verify($clave, $verificar['clave'])) {
+                        session_regenerate_id(true);
                         $_SESSION['idCliente'] = $verificar['id'];
                         $_SESSION['correoCliente'] = $verificar['correo'];
                         $_SESSION['nombreCliente'] = $verificar['nombre'];

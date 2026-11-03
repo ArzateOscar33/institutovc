@@ -1,0 +1,6 @@
+/* IVC 4.9.5.3.2: integración visual con tema azul claro */
+.ivc-activacion-box{margin:12px 0;border-radius:12px;background:#ecf7ff;padding:11px;border:1px solid #bad9ea}
+.ivc-activacion-box p{color:#416477;font-size:.8rem;margin:.4rem 0 0}
+.ivc-activacion-btn{background:#17658b;color:white;border:0;border-radius:8px;padding:.6rem .8rem;font-weight:600;cursor:pointer}
+.ivc-activacion-btn:disabled{opacity:.5;cursor:not-allowed}
+.ivc-activacion-codigo{font-size:1.5rem;letter-spacing:.13em;font-weight:700;user-select:all;color:#123d58;background:#e5f7ef;border-radius:10px;padding:.8rem;margin:10px 0;overflow-wrap:anywhere}

@@ -1,0 +1,15 @@
+/* Fase 4.9.5.3: complementos del diseño POS existente */
+.ivc-pv-optica-tag{display:block;font-size:11px;font-weight:750;margin-top:8px;padding:8px 10px;background:#e8f6fa;color:#146889;border-radius:9px;line-height:1.5}
+.ivc-pv-optica-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.ivc-pv-optica-btn{background:#eff8fd;color:#126f9c;border:1px solid #c2e3f0;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:750;cursor:pointer}
+.ivc-pv-optica-btn:hover{background:#d6f0fa}.ivc-pv-optica-btn.secundario{background:#fff;color:#657d91;border-color:#d1e2eb}
+.ivc-pv-modal{max-width:min(650px,calc(100vw - 28px));width:100%;border:1px solid #d1e9f3;border-radius:20px;padding:27px;background:white;color:#1e4561;box-shadow:0 30px 90px #0a385a4f;max-height:calc(100vh - 42px);overflow:auto}
+.ivc-pv-modal::backdrop{background:#102e4588;backdrop-filter:blur(3px)}.ivc-pv-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.ivc-pv-modal-head h2{font-size:23px;color:#12415e;margin:5px 0 0;font-weight:760}.ivc-pv-modal-x{font-size:27px;background:#ecf5fa;border:0;color:#357d9c;border-radius:9px;padding:0 10px;cursor:pointer}
+.ivc-pv-modal-producto{font-size:13px;font-weight:750;color:#266d8f;margin:12px 0}.ivc-pv-modal-aviso{font-size:12px;background:#eaf8fd;padding:13px 15px;border-radius:12px;line-height:1.6;color:#3b708c}
+.ivc-pv-modal-label{display:block;margin:16px 0 7px;font-size:12px;font-weight:750;color:#2d566d}
+.ivc-pv-modal select{width:100%;background:#fbfdff;color:#214b63;border:1px solid #c9e0eb;border-radius:10px;padding:11px;min-height:44px;max-width:100%}
+.ivc-pv-modal select:focus{outline:2px solid #8ad5ee}.ivc-pv-modal-detalle{display:flex;flex-direction:column;gap:5px;background:#f3fafc;padding:12px 15px;border:1px solid #e0eff5;border-radius:11px;margin-top:9px;font-size:12px;color:#547487}
+.ivc-pv-modal-detalle strong{font-size:14px;color:#106f9c}.ivc-pv-modal-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:24px}
+.ivc-pv-modal-actions .ivc-pv-primary{width:auto;padding:12px 22px}.ivc-pv-modal-danger{background:#fff3f4;border:1px solid #f1cbd2;color:#ac4e61;border-radius:10px;padding:12px 16px;font-weight:750}
+@media(max-width:600px){.ivc-pv-modal{padding:18px}.ivc-pv-modal-actions{flex-direction:column-reverse}.ivc-pv-modal-actions button{width:100%!important}}

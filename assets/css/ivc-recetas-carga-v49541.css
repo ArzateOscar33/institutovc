@@ -1,0 +1,11 @@
+/* IVC 4.9.5.4.1 — carga privada de recetas en mostrador */
+.rx-acciones-top { display:flex;gap:.65rem;align-items:center;flex-wrap:wrap }
+.rx-carga-aviso { background:#eff7ff;border:1px solid #d1e7fb;color:#254e70;padding:12px 15px;border-radius:12px;line-height:1.5 }
+.rx-carga-resultados { max-height:230px;overflow-y:auto;margin-top:9px;display:grid;gap:5px }
+.rx-carga-cliente { text-align:left;border:1px solid #d6e6f6;border-radius:10px;padding:10px 13px;background:#fff;color:#183b59;display:grid;gap:3px }
+.rx-carga-cliente:hover,.rx-carga-cliente:focus {border-color:#317cb4;background:#eff7ff}
+.rx-carga-cliente small {color:#55718b}
+.rx-carga-seleccion {background:#e8f7f4;color:#15554c;padding:10px 12px;border-radius:10px;margin-top:8px;font-weight:600}
+#rxCargaModal .modal-content { border:0;border-radius:16px }
+#rxCargaModal label {font-weight:600;color:#254e70}
+@media(max-width:720px){ .rx-acciones-top {width:100%;margin-top:10px} }

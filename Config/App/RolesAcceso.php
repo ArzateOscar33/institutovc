@@ -16,6 +16,7 @@ final class RolesAcceso
             'pedidos.administrar' => 'Administrar pedidos y validar micas',
             'recetas.leer' => 'Consultar recetas y adjuntos',
             'recetas.administrar' => 'Revisar y aprobar recetas',
+            'recetas.cargar' => 'Subir recetas externas y vincularlas a pedidos pendientes',
             'citas.leer' => 'Ver calendario y consultar citas',
             'citas.crear' => 'Agendar citas',
             'citas.administrar' => 'Cancelar y administrar citas',
@@ -26,6 +27,18 @@ final class RolesAcceso
             'micas.leer' => 'Consultar materiales y precios',
             'micas.administrar' => 'Administrar materiales y precios',
             'usuarios.administrar' => 'Crear y editar usuarios',
+            'pos.acceder' => 'Acceder al Punto de Venta',
+            'pos.caja.abrir' => 'Abrir caja y registrar fondo inicial',
+            'pos.caja.cerrar' => 'Cerrar turno y realizar arqueo',
+            'pos.caja.movimientos' => 'Registrar ingresos y retiros de efectivo',
+            'pos.caja.supervisar' => 'Consultar turnos de todas las cajas',
+            'pos.descuentos' => 'Aplicar descuentos en punto de venta',
+            'pos.vender' => 'Registrar ventas y pagos presenciales',
+            'pos.ventas.consultar' => 'Consultar mis ventas y reimprimir tickets',
+            'pos.ventas.todas' => 'Consultar ventas de todos los vendedores',
+            'pos.devoluciones' => 'Registrar devoluciones y reembolsos',
+            'pos.clientes.crear' => 'Registrar clientes presenciales desde POS',
+            'pos.clientes.activar' => 'Emitir códigos de activación web para clientes presenciales',
         ];
     }
 
@@ -72,7 +85,7 @@ final class RolesAcceso
 
     public static function destinoInicial(): string
     {
-        foreach (['dashboard'=>'admin/home','citas.leer'=>'citas','pedidos.listar'=>'pedidos', 'productos.leer'=>'productos', 'categorias.leer'=>'categorias','micas.leer'=>'micas','recetas.leer'=>'recetasAdmin','usuarios.administrar'=>'usuarios'] as $permiso=>$ruta) {
+        foreach (['dashboard'=>'admin/home','pos.acceder'=>'pos','citas.leer'=>'citas','pedidos.listar'=>'pedidos', 'productos.leer'=>'productos', 'categorias.leer'=>'categorias','micas.leer'=>'micas','recetas.leer'=>'recetasAdmin','usuarios.administrar'=>'usuarios'] as $permiso=>$ruta) {
             if (self::permiso($permiso)) return $ruta;
         }
         return 'admin';
@@ -85,6 +98,20 @@ final class RolesAcceso
             if (in_array($m,['index','validar','salir'],true)) return true;
             return self::permiso('dashboard');
         }
+        // Ninguna ruta POS queda pública, ni siquiera los métodos futuros.
+        if ($c==='pos') {
+            if (in_array($m,['index','resumen','venta','categoriasventa','buscarproductos','buscarclientes','previsualizar','catalogomicas','recetascliente'],true)) return self::permiso('pos.acceder');
+            if ($m==='registrarventa') return self::permiso('pos.vender');
+            if (in_array($m,['historial','historialdatos','detalleventa','ticket','comprobantedevolucion'],true)) return self::permiso('pos.ventas.consultar');
+            if ($m==='devolver') return self::permiso('pos.devoluciones');
+            if ($m==='crearcliente') return self::permiso('pos.clientes.crear');
+            if ($m==='emitiractivacion') return self::permiso('pos.clientes.activar');
+            if ($m==='abrir') return self::permiso('pos.caja.abrir');
+            if ($m==='cerrar') return self::permiso('pos.caja.cerrar');
+            if ($m==='movimiento') return self::permiso('pos.caja.movimientos');
+            if ($m==='turnos') return self::permiso('pos.caja.supervisar');
+            return false;
+        }
         if ($c==='roles') return self::permiso('roles.gestionar');
         if ($c==='usuarios') return self::permiso('usuarios.administrar');
         if ($c==='productos' || $c==='categorias' || $c==='micas') {
@@ -92,6 +119,7 @@ final class RolesAcceso
             return self::permiso($c . (in_array($m,$read,true)?'.leer':'.administrar'));
         }
         if ($c==='recetasadmin') {
+            if (in_array($m,['buscarclientes','pendientescliente','cargar'],true)) return self::permiso('recetas.cargar');
             return self::permiso('recetas.'.(in_array($m,['index','listar','detalle','vistaprevia','archivo'],true)?'leer':'administrar'));
         }
         if ($c==='citas') {
@@ -111,7 +139,7 @@ final class RolesAcceso
     {
         $c=strtolower($controlador);$m=strtolower($metodo);
         if ($c==='admin' && in_array($m,['index','validar','salir'],true)) return;
-        if (!in_array($c,['admin','roles','usuarios','productos','categorias','micas','recetasadmin','pedidos','citas'],true)) return;
+        if (!in_array($c,['admin','roles','usuarios','productos','categorias','micas','recetasadmin','pedidos','citas','pos'],true)) return;
         if (!self::usuario()) self::denegar(401,'Inicia sesión para continuar.');
         if (!self::rutaPermitida($controlador,$metodo)) self::denegar(403,'No tienes permiso para realizar esta operación.');
     }

@@ -77,7 +77,7 @@ class RecetasModel
     }
     public function detalle($id)
     {
-        $r = $this->queryOne("SELECT r.*,CONCAT(c.nombre,' ',c.apellidoP,' ',c.apellidoM) AS cliente,c.correo,
+        $r = $this->queryOne("SELECT r.*,CONCAT_WS(' ',c.nombre,c.apellidoP,NULLIF(c.apellidoM,'')) AS cliente,c.correo,
             CONCAT(COALESCE(u.nombres,''),' ',COALESCE(u.apellidos,'')) AS revisor
             FROM recetas_opticas r JOIN clientes c ON c.id=r.id_cliente
             LEFT JOIN usuario u ON u.id=r.id_usuario_revisor WHERE r.id_receta=?", [$id]);

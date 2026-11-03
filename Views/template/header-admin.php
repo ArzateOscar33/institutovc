@@ -53,6 +53,7 @@
             $ivcCatalogoPermitido = $ivcProductos || $ivcCategorias || $ivcMicas;
             $ivcRecetas = RolesAcceso::permiso('recetas.leer');
             $ivcPedidos = RolesAcceso::permiso('pedidos.listar');
+            $ivcPos = RolesAcceso::permiso('pos.acceder');
             $ivcCitas = RolesAcceso::permiso('citas.leer');
             $ivcRoles = RolesAcceso::permiso('roles.gestionar');
             $ivcUsuarios = RolesAcceso::permiso('usuarios.administrar');
@@ -70,6 +71,14 @@
                     <a href="<?php echo BASE_URL; ?>admin/home" class="<?php echo $ivcInicio ? 'ivc-active-link' : ''; ?>">
                         <div class="parent-icon"><i class="bx bx-grid-alt"></i></div>
                         <div class="menu-title">Dashboard</div>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if ($ivcPos): ?>
+                <li class="<?php echo $ivcSeccion === 'pos' ? 'mm-active' : ''; ?>">
+                    <a href="<?php echo BASE_URL; ?>pos" class="<?php echo $ivcSeccion === 'pos' ? 'ivc-active-link' : ''; ?>">
+                        <div class="parent-icon"><i class="bx bx-store-alt"></i></div>
+                        <div class="menu-title">Punto de Venta</div>
                     </a>
                 </li>
                 <?php endif; ?>

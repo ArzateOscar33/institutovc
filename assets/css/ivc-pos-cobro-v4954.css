@@ -1,0 +1,11 @@
+/* IVC 4.9.5.4 · Confirmación de cobro presencial */
+.ivc-pvcob-modal{width:min(620px,94vw);max-height:90vh;overflow-y:auto;padding:22px!important}
+.ivc-pvcob-resumen{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 17px;border-radius:12px;background:#e6f4ff;color:#225271;margin:12px 0}
+.ivc-pvcob-resumen strong{font-size:1.75rem;color:#0a4c75}
+.ivc-pvcob-modal input[type=number],.ivc-pvcob-modal input[type=text],.ivc-pvcob-modal select{width:100%;border:1px solid #b9d1de;padding:.7rem;border-radius:9px;outline-color:#1684b5}
+.ivc-pvcob-check{display:flex;gap:.6rem;align-items:flex-start;margin:14px 0;color:#22475d;line-height:1.5}.ivc-pvcob-check input{margin-top:.35rem}
+.ivc-pvcob-cuentas{margin:17px 0;padding:15px;background:#f1f8fc;border-radius:12px;display:grid;gap:7px}
+.ivc-pvcob-cuentas div{display:flex;justify-content:space-between;gap:12px}
+.ivc-pvcob-aviso{padding:12px;background:#fff6e3;color:#7b5019;border:1px solid #f2d69b;border-radius:9px;font-size:.87rem}
+#pvCobroEstado{font-size:.89rem;color:#235a7d;font-weight:600;margin:8px 0;white-space:normal}
+.ivc-pv-cobrar:disabled{opacity:.5;cursor:not-allowed}

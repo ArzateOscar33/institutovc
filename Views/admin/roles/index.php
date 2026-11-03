@@ -29,6 +29,7 @@
         <?php
         $grupos = [
             'Panel' => ['dashboard'],
+            'Punto de Venta y cajas' => ['pos.acceder','pos.caja.abrir','pos.caja.cerrar','pos.caja.movimientos','pos.caja.supervisar'],
             'Pedidos y recetas' => ['pedidos.listar','pedidos.detalle','pedidos.administrar','recetas.leer','recetas.administrar'],
             'Citas' => ['citas.leer','citas.crear','citas.administrar'],
             'Catálogo e inventario' => ['productos.leer','productos.administrar','categorias.leer','categorias.administrar','micas.leer','micas.administrar'],

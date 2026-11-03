@@ -32,6 +32,8 @@ class RolesModel extends Query
         $deps = [
             'pedidos.detalle'=>['pedidos.listar'], 'pedidos.administrar'=>['pedidos.listar','pedidos.detalle'],
             'recetas.administrar'=>['recetas.leer'], 'citas.crear'=>['citas.leer'], 'citas.administrar'=>['citas.leer'],
+            'pos.caja.abrir'=>['pos.acceder'],'pos.caja.cerrar'=>['pos.acceder'],
+            'pos.caja.movimientos'=>['pos.acceder'],'pos.caja.supervisar'=>['pos.acceder'],
             'productos.administrar'=>['productos.leer'],'categorias.administrar'=>['categorias.leer'],'micas.administrar'=>['micas.leer'],
         ];
         foreach ($codigos as $p) foreach ($deps[$p]??[] as $d) $codigos[]=$d;

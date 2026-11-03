@@ -1,0 +1,22 @@
+/* Fase 4.9.5.1 · identidad clara IVC */
+.ivc-pos{padding:26px 8px 42px;color:#183c58;font-family:inherit}.ivc-pos *{box-sizing:border-box}
+.ivc-pos-encabezado{padding:27px 30px;background:linear-gradient(115deg,#0a619a,#47a9cc);color:#fff;border-radius:22px;display:flex;justify-content:space-between;align-items:center;gap:18px;box-shadow:0 12px 30px #17618b21;margin-bottom:22px}
+.ivc-pos-eyebrow{font-size:11px;font-weight:750;letter-spacing:1.9px;text-transform:uppercase;opacity:.82}
+.ivc-pos-encabezado h1{font-size:clamp(26px,3vw,36px);margin:10px 0;font-weight:750}.ivc-pos-encabezado h1 span{font-size:.65em;font-weight:450;opacity:.94}
+.ivc-pos-encabezado p{margin:0;opacity:.95;max-width:690px}.ivc-pos-status{white-space:nowrap;border-radius:99px;background:#ffffff27;border:1px solid #ffffff7a;padding:11px 18px;font-weight:700}
+.ivc-pos-pulse{display:inline-block;width:9px;height:9px;background:#b1f2d9;border-radius:50%;margin-right:6px}
+.ivc-pos-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:20px}
+.ivc-pos-lateral{display:flex;flex-direction:column;gap:20px}
+.ivc-pos-panel{background:white;border-radius:20px;padding:25px;border:1px solid #e0edf3;box-shadow:0 6px 18px #143d6010;min-width:0}
+.ivc-pos-panel-title{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}.ivc-pos-panel-title h2{font-size:24px;font-weight:760;margin:6px 0 0}.ivc-pos-panel-title h3{font-size:19px;font-weight:700;margin:0}
+.ivc-pos-chip{background:#e6f5fb;color:#17668e;padding:6px 11px;font-weight:700;border-radius:30px;font-size:12px}
+.ivc-pos-form{display:flex;flex-direction:column;gap:10px}.ivc-pos-form label{font-weight:650;color:#31516a;font-size:13px;margin-top:8px}
+.ivc-pos-form .form-control,.ivc-pos-form .form-select{min-height:43px;border:1px solid #c9e0eb;border-radius:10px}.ivc-pos-btn{border:none;border-radius:10px;background:#167ab0;color:#fff;font-weight:700;padding:12px 20px;margin-top:10px;transition:background .15s}
+.ivc-pos-btn:hover{background:#0c5d8a;color:#fff}.ivc-pos-btn:disabled{opacity:.5;cursor:not-allowed}
+.ivc-pos-btn-secundario{background:#147b9e}.ivc-pos-btn-cerrar{background:#bb4962}.ivc-pos-btn-cerrar:hover{background:#93324b}
+.ivc-pos-ayuda{color:#617a8b;font-size:13px;line-height:1.65;margin:12px 0}
+.ivc-pos-indicadores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ivc-pos-indicadores>div{background:#f4f9fc;border:1px solid #dbeaf1;border-radius:13px;padding:18px 15px}.ivc-pos-indicadores span{display:block;color:#59748a;font-size:12px}.ivc-pos-indicadores strong{display:block;font-size:21px;margin-top:6px}.ivc-pos-indicadores .ivc-pos-total{background:#dff1fa;border-color:#c7e5f3}
+.ivc-pos-bloqueo{display:flex;gap:15px;padding:16px;background:#f0f7fb;color:#486679;border-radius:12px;margin-top:26px}.ivc-pos-bloqueo>i{font-size:24px;color:#2374a7}.ivc-pos-bloqueo strong{color:#286285}.ivc-pos-bloqueo p{margin:6px 0 0;line-height:1.6;font-size:13px}
+.ivc-pos-movimiento{display:flex;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid #e8eef2}.ivc-pos-movimiento:last-child{border:0}.ivc-pos-movimiento strong,.ivc-pos-movimiento small,.ivc-pos-movimiento span{display:block}.ivc-pos-movimiento small{color:#58788d}.ivc-pos-movimiento span{color:#8ca1ae;font-size:11px;margin-top:3px}.ivc-pos-movimiento>.ivc-pos-positivo{color:#128267}.ivc-pos-movimiento>.ivc-pos-negativo{color:#bd425b}
+@media(max-width:1024px){.ivc-pos-grid{grid-template-columns:1fr}.ivc-pos-encabezado{flex-wrap:wrap}}
+@media(max-width:576px){.ivc-pos{padding:14px 2px 30px}.ivc-pos-encabezado{padding:22px 18px}.ivc-pos-panel{padding:18px}.ivc-pos-indicadores strong{font-size:18px}}

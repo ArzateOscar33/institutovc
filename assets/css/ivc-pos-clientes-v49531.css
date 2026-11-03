@@ -1,0 +1,17 @@
+/* Registro presencial de clientes · POS 4.9.5.3.1 */
+.ivc-pvc-cliente-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ivc-pvc-cliente-tools input{flex:1 1 180px;min-width:0}
+.ivc-pvc-nuevo{border:1px solid #b8dded;background:#edfaff;color:#116d96;padding:10px 12px;border-radius:11px;font-size:12px;font-weight:750;white-space:nowrap;cursor:pointer}
+.ivc-pvc-nuevo:hover{background:#dbf3fc}.ivc-pvc-nuevo:disabled{opacity:.45;cursor:not-allowed}
+.ivc-pvc-modal{max-width:min(700px,calc(100vw - 28px))}
+.ivc-pvc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 15px;margin-top:15px}
+.ivc-pvc-grid label{display:block;font-size:12px;font-weight:700;color:#2d566d}
+.ivc-pvc-grid label strong{color:#b03f5b}.ivc-pvc-grid label span{font-size:11px;font-weight:500;color:#7490a2}
+.ivc-pvc-grid .ancho{grid-column:span 2}
+.ivc-pvc-grid input,.ivc-pvc-grid textarea{display:block;width:100%;box-sizing:border-box;border:1px solid #c9e0eb;background:#fbfdff;border-radius:10px;padding:11px;margin-top:6px;color:#20465d;font:inherit;font-size:13px}
+.ivc-pvc-grid input:focus,.ivc-pvc-grid textarea:focus{outline:2px solid #8ad5ee}
+.ivc-pvc-hint{color:#698498;font-size:12px;line-height:1.55;margin:15px 0}
+.ivc-pvc-coincidencias{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#315e79}
+.ivc-pvc-coincidencia{border:1px solid #cbe5ed;border-radius:8px;text-align:left;background:#f3fbfe;color:#256384;padding:8px 10px;cursor:pointer}
+.ivc-pvc-coincidencia:hover{background:#dcf3fb}
+@media(max-width:590px){.ivc-pvc-grid{grid-template-columns:1fr}.ivc-pvc-grid .ancho{grid-column:auto}.ivc-pvc-cliente-tools input{flex-basis:100%}.ivc-pvc-nuevo{width:100%}}
